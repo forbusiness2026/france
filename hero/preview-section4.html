@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aperçu multi-écrans — abonnement-iptv-stable.fr</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
+<style>body{margin:0}</style>
+</head>
+<body>
+<style>
+  /* Tout est prefixe par #multi-ecran. Dans le bloc d'origine, * , body, h2,
+     ul, li, .wrap, .card, .grid, .head, .price, .term, .sub, .seg… etaient
+     GLOBAUX : le reset « * {margin:0;padding:0} » remettait a zero les marges
+     de toute la page WordPress, et .card / .grid / .wrap entraient en collision
+     avec le theme et Elementor. */
+  #multi-ecran{
+    --blue:#0A2E66; --blue2:#113E86; --blue3:#1D7AF2;
+    --gold:#FFD27A; --gold-2:#FFB020;
+    --ok:#22e57a; --wa:#25D366;
+    --radius:22px;
+  }
+  #multi-ecran, #multi-ecran *{
+    box-sizing:border-box;
+    font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+  }
+
+  /* Plus de width:100vw / left:50% / margin-left:-50vw : 100vw = la fenetre
+     alors que 50% = le conteneur, donc dans l'editeur Elementor la section
+     etait plus large que le canevas et decalee. width:100% suit le conteneur ;
+     pour du bord a bord, reglez la section Elementor sur « Pleine largeur ». */
+  #multi-ecran.aii-pricing-fw{
+    position:relative; width:100%; max-width:100%; margin:0;
+    background:#fff; padding:clamp(28px,6svh,64px) 0; overflow:hidden;
+  }
+  #multi-ecran .wrap{
+    max-width:1400px; margin:0 auto; padding:0 clamp(16px,3vw,28px); text-align:center;
+    container-type:inline-size; container-name:aiim;
+  }
+
+  /* titre en bleu (avant : #8B1E4A) */
+  #multi-ecran h2{
+    margin:0 0 10px; font-size:clamp(1.45rem,3.2vw,2.4rem);
+    font-weight:900; color:var(--blue); letter-spacing:-.02em; line-height:1.2;
+  }
+  #multi-ecran .sub{
+    max-width:980px; margin:0 auto 18px; color:#1f2b3a;
+    line-height:1.6; font-size:1rem;
+  }
+  #multi-ecran .sub strong{color:var(--blue);font-weight:700}
+
+  /* ===== SELECTEUR 2 / 3 CONNEXIONS ===== */
+  #multi-ecran .seg-wrap{display:flex;justify-content:center;margin:14px auto 22px}
+  #multi-ecran .seg{
+    position:relative; display:inline-flex; align-items:center; padding:6px;
+    border-radius:999px; background:#f8fafc; border:1px solid #e2e8f0;
+    box-shadow:0 4px 12px rgba(15,23,42,.05);
+    /* 92vw se calculait sur la fenetre et debordait un conteneur etroit */
+    width:min(420px,100%);
+  }
+  #multi-ecran .seg button{
+    appearance:none; -webkit-appearance:none; border:0; background:transparent;
+    cursor:pointer; padding:10px 14px; border-radius:999px;
+    font-weight:900; color:#475569; font-size:clamp(.84rem,1.9vw,.95rem);
+    flex:1 1 50%; min-width:0;
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    position:relative; z-index:2;
+    transition:transform .15s ease, color .15s ease;
+  }
+  #multi-ecran .seg button:hover{transform:translateY(-1px)}
+  #multi-ecran .seg button:focus-visible{outline:3px solid rgba(29,122,242,.45);outline-offset:2px}
+  /* pastille en bleu (avant : dégradé #8B1E4A -> #C2185B) */
+  #multi-ecran .seg .pill{
+    position:absolute; inset:6px; width:calc(50% - 6px);
+    border-radius:999px;
+    background:linear-gradient(135deg,var(--blue),var(--blue3));
+    box-shadow:0 8px 20px rgba(10,46,102,.24);
+    transform:translateX(0%); transition:transform .22s ease; z-index:1;
+  }
+  #multi-ecran[data-mode="c3"] .seg .pill{transform:translateX(100%)}
+  #multi-ecran .seg button[aria-selected="true"]{color:#fff}
+
+  @container aiim (max-width:420px){
+    #multi-ecran .seg button{padding:9px 8px;gap:5px;font-size:.8rem}
+  }
+
+  /* ===== GRILLES =====
+     auto-fit : la grille se cale sur la largeur du CONTENEUR.
+     Avant, repeat(4,minmax(280px,1fr)) imposait 1180px et
+     repeat(3,minmax(300px,360px)) imposait 940px, avec des @media qui lisent
+     la fenetre et non le bloc -> debordement a droite dans Elementor. */
+  #multi-ecran .grid{display:grid;gap:20px;align-items:stretch}
+  #multi-ecran .grid[data-grid="c2"]{
+    grid-template-columns:repeat(auto-fit,minmax(min(255px,100%),1fr));
+  }
+  #multi-ecran .grid[data-grid="c3"]{
+    grid-template-columns:repeat(auto-fit,minmax(min(290px,100%),360px));
+    justify-content:center;
+  }
+
+  /* ===== CARTES ===== */
+  /* dégradé en bleu (avant : #8B1E4A -> #C2185B -> #0A2E66) */
+  #multi-ecran .card{
+    display:flex; flex-direction:column; min-width:0;
+    background:linear-gradient(180deg,var(--blue2),var(--blue));
+    color:#fff; border-radius:var(--radius);
+    border:1px solid rgba(255,255,255,.12);
+    box-shadow:0 10px 28px rgba(0,0,0,.12);
+    padding:28px 22px 22px; text-align:left;
+    position:relative; overflow:hidden;
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  #multi-ecran .card:hover{transform:translateY(-4px);box-shadow:0 20px 32px rgba(0,0,0,.2)}
+
+  #multi-ecran .ribbon{
+    position:absolute; top:10px; right:-86px; transform:rotate(35deg);
+    background:#ff3b3b; color:#fff; font-weight:900;
+    padding:6px 74px; font-size:.82rem; z-index:2; pointer-events:none;
+    box-shadow:0 2px 6px rgba(0,0,0,.2);
+  }
+
+  /* margin-top : sans lui le ruban recouvre le titre de formule */
+  #multi-ecran .head{
+    display:flex; align-items:flex-end; justify-content:space-between;
+    gap:10px; margin:22px 0 10px; flex-wrap:wrap;
+  }
+  /* plus de white-space:nowrap : « 12 mois • 2 connexions » debordait
+     une carte etroite */
+  #multi-ecran .term{
+    margin:0; font-weight:900; opacity:.98;
+    font-size:clamp(1rem,1.6vw,1.12rem); line-height:1.3; min-width:0;
+  }
+  #multi-ecran .price{
+    font-size:clamp(1.65rem,3.6vw,2.35rem); font-weight:900;
+    line-height:1; letter-spacing:-.02em; white-space:nowrap;
+  }
+
+  #multi-ecran .bonus-badge{
+    background:rgba(255,176,32,.15); border:1px solid var(--gold-2);
+    color:var(--gold); border-radius:12px; padding:8px 12px;
+    margin:10px 0 8px; font-weight:900; font-size:.9rem; line-height:1.35;
+    display:flex; align-items:flex-start; gap:8px;
+  }
+  #multi-ecran .bonus-badge > span{min-width:0}
+  #multi-ecran .bonus-badge i{
+    font-style:normal; background:var(--gold-2); color:var(--blue);
+    width:22px; height:22px; border-radius:999px;
+    display:inline-grid; place-items:center; font-weight:900;
+    flex:0 0 22px; font-size:.78rem;
+  }
+
+  #multi-ecran .highlight{
+    background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.25);
+    padding:12px 14px; border-radius:14px; font-weight:900;
+    line-height:1.28; font-size:clamp(.88rem,1.35vw,1rem); margin:8px 0 12px;
+  }
+  #multi-ecran .urgency{
+    display:flex; align-items:center; gap:8px; margin:6px 0 14px; font-weight:800;
+    background:#052e6a; border:1px dashed rgba(255,255,255,.45);
+    border-radius:12px; padding:8px 12px;
+    font-size:clamp(.84rem,1.2vw,.95rem); line-height:1.35;
+  }
+  #multi-ecran .urgency i{
+    font-style:normal; background:#fff; color:#052e6a; border-radius:999px;
+    width:20px; height:20px; display:inline-grid; place-items:center;
+    font-size:.8rem; font-weight:900; flex:0 0 20px;
+  }
+
+  #multi-ecran ul{list-style:none;margin:8px 0 0;padding:0;flex:1 1 auto}
+  #multi-ecran li{
+    position:relative; padding-left:24px; margin:7px 0;
+    font-size:clamp(.88rem,1.25vw,.98rem); line-height:1.5;
+  }
+  #multi-ecran li::before{
+    content:"✔"; position:absolute; left:0; top:0;
+    color:var(--ok); font-weight:900;
+  }
+  #multi-ecran li.bonus-item{color:var(--gold);font-weight:900}
+  #multi-ecran li.bonus-item::before{content:"🎁";color:var(--gold)}
+
+  /* ===== BOUTON WHATSAPP ===== */
+  #multi-ecran .cta-wa{
+    display:block; width:min(90%,220px); margin:14px auto 12px; text-align:center;
+    background:var(--wa); color:#fff !important; font-weight:900;
+    border-radius:14px; padding:12px; text-decoration:none; cursor:pointer;
+    box-shadow:0 10px 22px rgba(37,211,102,.4);
+    font-size:clamp(.94rem,1.2vw,1.05rem);
+    transition:transform .15s ease, filter .15s ease;
+    border:1px solid rgba(255,255,255,.2);
+  }
+  #multi-ecran .cta-wa:hover{filter:brightness(.96);transform:translateY(-2px)}
+  #multi-ecran .cta-wa:focus-visible{outline:3px solid rgba(255,255,255,.6);outline-offset:3px}
+
+  #multi-ecran .pay-card{
+    margin:6px auto 0; background:#fff; border-radius:12px; overflow:hidden;
+    padding:6px 10px; display:flex; align-items:center; justify-content:center;
+    min-height:38px; width:fit-content; max-width:100%;
+  }
+  #multi-ecran .pay-card img{display:block;width:auto;max-width:100%;height:26px;object-fit:contain}
+
+  /* ===== BASCULE 2 / 3 CONNEXIONS ===== */
+  #multi-ecran[data-mode="c2"] .grid[data-grid="c2"]{display:grid}
+  #multi-ecran[data-mode="c2"] .grid[data-grid="c3"]{display:none}
+  #multi-ecran[data-mode="c3"] .grid[data-grid="c2"]{display:none}
+  #multi-ecran[data-mode="c3"] .grid[data-grid="c3"]{display:grid}
+
+  @media (prefers-reduced-motion: reduce){
+    #multi-ecran .card,#multi-ecran .cta-wa,#multi-ecran .seg button,#multi-ecran .seg .pill{transition:none}
+    #multi-ecran .card:hover,#multi-ecran .cta-wa:hover,#multi-ecran .seg button:hover{transform:none}
+  }
+</style>
+
+<!-- =========================================================
+     IPTV MULTI-ÉCRANS — 2 ou 3 connexions
+========================================================= -->
+<section id="multi-ecran" class="aii-pricing-fw" data-mode="c2" aria-labelledby="aiim-title">
+  <div class="wrap">
+    <h2 id="aiim-title">Abonnement IPTV multi-écrans : 2 ou 3 connexions simultanées</h2>
+    <p class="sub">
+      Une connexion = un écran qui regarde en même temps. Avec
+      <strong>2 connexions</strong>, deux personnes peuvent suivre deux chaînes
+      différentes au même moment ; avec <strong>3 connexions</strong>, trois.
+      Le catalogue, la qualité HD/4K et les serveurs sont identiques à l'offre
+      un écran — seul le nombre d'écrans simultanés change. Chaque formule
+      ajoute des <strong>mois offerts</strong> sur chacun des écrans.
+    </p>
+
+    <div class="seg-wrap">
+      <div class="seg" id="aiiMultiSeg" role="tablist" aria-label="Nombre de connexions">
+        <span class="pill" aria-hidden="true"></span>
+        <button type="button" id="tabC2" role="tab" aria-selected="true"  aria-controls="gridC2" tabindex="0">👥 2 connexions</button>
+        <button type="button" id="tabC3" role="tab" aria-selected="false" aria-controls="gridC3" tabindex="-1">👨‍👩‍👧 3 connexions</button>
+      </div>
+    </div>
+
+    <!-- ===================== 2 CONNEXIONS ===================== -->
+    <div class="grid" id="gridC2" data-grid="c2" role="tabpanel" aria-labelledby="tabC2">
+
+      <article class="card">
+        <div class="head"><h3 class="term">3 mois • 2 connexions</h3><span class="price">39,99 €</span></div>
+        <div class="bonus-badge"><i>🎁</i> <span>1 mois offert sur chaque écran</span></div>
+        <!-- corrige : annoncait « 2 x (3 + 1) = 8 mois au total ». 8 est un
+             nombre d'ecran-mois, pas une duree : l'abonnement dure 4 mois. -->
+        <div class="highlight">4 mois d'accès, sur 2 écrans simultanés</div>
+        <ul>
+          <li>2 connexions simultanées</li>
+          <li><strong>+1 mois offert sur chaque écran</strong></li>
+          <li class="bonus-item">4 mois pour chacun des 2 écrans</li>
+          <li>HD/4K + VOD illimitée</li>
+          <li>Compatible TV / Box / Mobile / PC</li>
+          <li>Assistance WhatsApp en français</li>
+        </ul>
+        <a href="https://wa.me/33748662375?text=Bonjour%20%2C%20je%20souhaite%20acheter%20l%27offre%20multi-%C3%A9crans%20%3A%203%20mois%20%E2%80%A2%202%20connexions%20%40%2039%2C99%E2%82%AC"
+           class="cta-wa" target="_blank" rel="noopener noreferrer">💬 Acheter via WhatsApp</a>
+        <div class="pay-card"><img src="https://abonnement-iptv-stable.fr/wp-content/uploads/2026/01/payment-icons--e1769636637702.png" width="356" height="51" loading="lazy" decoding="async" alt="Paiement sécurisé"></div>
+      </article>
+
+      <article class="card">
+        <div class="ribbon">Populaire</div>
+        <div class="head"><h3 class="term">6 mois • 2 connexions</h3><span class="price">64,99 €</span></div>
+        <div class="bonus-badge"><i>🎁</i> <span>2 mois offerts sur chaque écran</span></div>
+        <div class="highlight">8 mois d'accès, sur 2 écrans simultanés</div>
+        <ul>
+          <li>2 connexions simultanées</li>
+          <li><strong>+2 mois offerts sur chaque écran</strong></li>
+          <li class="bonus-item">8 mois pour chacun des 2 écrans</li>
+          <li>Serveurs européens, anti-coupure</li>
+          <li>Chaînes + VOD + sport en direct</li>
+          <li>Assistance WhatsApp 7j/7</li>
+        </ul>
+        <a href="https://wa.me/33748662375?text=Bonjour%20%2C%20je%20souhaite%20acheter%20l%27offre%20multi-%C3%A9crans%20%3A%206%20mois%20%E2%80%A2%202%20connexions%20%40%2064%2C99%E2%82%AC"
+           class="cta-wa" target="_blank" rel="noopener noreferrer">💬 Acheter via WhatsApp</a>
+        <div class="pay-card"><img src="https://abonnement-iptv-stable.fr/wp-content/uploads/2026/01/payment-icons--e1769636637702.png" width="356" height="51" loading="lazy" decoding="async" alt="Paiement sécurisé"></div>
+      </article>
+
+      <article class="card">
+        <div class="head"><h3 class="term">12 mois • 2 connexions</h3><span class="price">94,99 €</span></div>
+        <div class="bonus-badge"><i>🎁</i> <span>6 mois offerts sur chaque écran</span></div>
+        <div class="highlight">18 mois d'accès, sur 2 écrans simultanés</div>
+        <ul>
+          <li>2 connexions simultanées</li>
+          <li><strong>12 mois + 6 mois offerts sur chaque écran</strong></li>
+          <li class="bonus-item">18 mois pour chacun des 2 écrans</li>
+          <li>HD/4K + VOD illimitée</li>
+          <li>Replay et guide TV (EPG) inclus</li>
+          <li>Assistance WhatsApp prioritaire</li>
+        </ul>
+        <a href="https://wa.me/33748662375?text=Bonjour%20%2C%20je%20souhaite%20acheter%20l%27offre%20multi-%C3%A9crans%20%3A%2012%20mois%20%E2%80%A2%202%20connexions%20%40%2094%2C99%E2%82%AC"
+           class="cta-wa" target="_blank" rel="noopener noreferrer">💬 Acheter via WhatsApp</a>
+        <div class="pay-card"><img src="https://abonnement-iptv-stable.fr/wp-content/uploads/2026/01/payment-icons--e1769636637702.png" width="356" height="51" loading="lazy" decoding="async" alt="Paiement sécurisé"></div>
+      </article>
+
+      <article class="card">
+        <div class="ribbon">Meilleure valeur</div>
+        <div class="head"><h3 class="term">24 mois • 2 connexions</h3><span class="price">159,99 €</span></div>
+        <div class="bonus-badge"><i>🎁</i> <span>6 mois offerts sur chaque écran</span></div>
+        <!-- corrige : annoncait « 60 mois au total ! » et « 5 ANS de service ».
+             L'abonnement dure 30 mois, soit 2 ans et demi. -->
+        <div class="highlight">30 mois d'accès, sur 2 écrans simultanés</div>
+        <div class="urgency"><i>🎁</i> Deux ans et demi couverts en une fois</div>
+        <ul>
+          <li>2 connexions simultanées</li>
+          <li><strong>24 mois + 6 mois offerts sur chaque écran</strong></li>
+          <li class="bonus-item">30 mois pour l'écran n°1</li>
+          <li class="bonus-item">30 mois pour l'écran n°2</li>
+          <li>HD/4K + VOD illimitée</li>
+          <li>Assistance WhatsApp prioritaire</li>
+        </ul>
+        <a href="https://wa.me/33748662375?text=Bonjour%20%2C%20je%20souhaite%20acheter%20l%27offre%20multi-%C3%A9crans%20%3A%2024%20mois%20%E2%80%A2%202%20connexions%20%40%20159%2C99%E2%82%AC"
+           class="cta-wa" target="_blank" rel="noopener noreferrer">💬 Acheter via WhatsApp</a>
+        <div class="pay-card"><img src="https://abonnement-iptv-stable.fr/wp-content/uploads/2026/01/payment-icons--e1769636637702.png" width="356" height="51" loading="lazy" decoding="async" alt="Paiement sécurisé"></div>
+      </article>
+    </div>
+
+    <!-- ===================== 3 CONNEXIONS ===================== -->
+    <div class="grid" id="gridC3" data-grid="c3" role="tabpanel" aria-labelledby="tabC3">
+
+      <article class="card">
+        <div class="head"><h3 class="term">3 mois • 3 connexions</h3><span class="price">54,99 €</span></div>
+        <div class="bonus-badge"><i>🎁</i> <span>1 mois offert sur chaque écran</span></div>
+        <div class="highlight">4 mois d'accès, sur 3 écrans simultanés</div>
+        <ul>
+          <li>3 connexions simultanées</li>
+          <li><strong>+1 mois offert sur chaque écran</strong></li>
+          <li class="bonus-item">4 mois pour chacun des 3 écrans</li>
+          <li>HD/4K + VOD</li>
+          <li>Compatible TV / Box / Mobile / PC</li>
+          <li>Assistance WhatsApp en français</li>
+        </ul>
+        <a href="https://wa.me/33748662375?text=Bonjour%20%2C%20je%20souhaite%20acheter%20l%27offre%20multi-%C3%A9crans%20%3A%203%20mois%20%E2%80%A2%203%20connexions%20%40%2054%2C99%E2%82%AC"
+           class="cta-wa" target="_blank" rel="noopener noreferrer">💬 Acheter via WhatsApp</a>
+        <div class="pay-card"><img src="https://abonnement-iptv-stable.fr/wp-content/uploads/2026/01/payment-icons--e1769636637702.png" width="356" height="51" loading="lazy" decoding="async" alt="Paiement sécurisé"></div>
+      </article>
+
+      <article class="card">
+        <div class="ribbon">🔥 Offre Famille</div>
+        <div class="head"><h3 class="term">12 mois • 3 connexions</h3><span class="price">149,99 €</span></div>
+        <div class="bonus-badge"><i>🎁</i> <span>4<sup>e</sup> écran offert pendant 12 mois</span></div>
+        <div class="highlight">12 mois d'accès, sur 4 écrans au lieu de 3</div>
+        <ul>
+          <li>3 connexions simultanées achetées</li>
+          <li class="bonus-item"><strong>+1 connexion offerte (4<sup>e</sup> écran)</strong></li>
+          <li class="bonus-item">Soit 4 écrans simultanés pendant 12 mois</li>
+          <!-- ⚠️ « Économisez 149,99 € » supprimé : chez vous l'écart entre
+               2 et 3 connexions sur 12 mois est de 55 € (94,99 → 149,99), donc
+               un 4e écran vaut environ 55 €, pas 149,99 €. Remettez un chiffre
+               seulement s'il correspond a votre grille tarifaire. -->
+          <li>HD/4K + VOD • Replay et guide TV</li>
+          <li>Installation accompagnée sur WhatsApp</li>
+        </ul>
+        <a href="https://wa.me/33748662375?text=Bonjour%20%2C%20je%20souhaite%20acheter%20l%27offre%20multi-%C3%A9crans%20%3A%2012%20mois%20%E2%80%A2%203%20connexions%20%40%20149%2C99%E2%82%AC"
+           class="cta-wa" target="_blank" rel="noopener noreferrer">💬 Acheter via WhatsApp</a>
+        <div class="pay-card"><img src="https://abonnement-iptv-stable.fr/wp-content/uploads/2026/01/payment-icons--e1769636637702.png" width="356" height="51" loading="lazy" decoding="async" alt="Paiement sécurisé"></div>
+      </article>
+
+      <article class="card">
+        <div class="ribbon">Populaire</div>
+        <div class="head"><h3 class="term">6 mois • 3 connexions</h3><span class="price">89,99 €</span></div>
+        <div class="bonus-badge"><i>🎁</i> <span>2 mois offerts sur chaque écran</span></div>
+        <div class="highlight">8 mois d'accès, sur 3 écrans simultanés</div>
+        <ul>
+          <li>3 connexions simultanées</li>
+          <li><strong>+2 mois offerts sur chaque écran</strong></li>
+          <li class="bonus-item">8 mois pour chacun des 3 écrans</li>
+          <li>Serveurs européens, anti-coupure</li>
+          <li>Chaînes + VOD + sport en direct</li>
+          <li>Assistance WhatsApp 7j/7</li>
+        </ul>
+        <a href="https://wa.me/33748662375?text=Bonjour%20%2C%20je%20souhaite%20acheter%20l%27offre%20multi-%C3%A9crans%20%3A%206%20mois%20%E2%80%A2%203%20connexions%20%40%2089%2C99%E2%82%AC"
+           class="cta-wa" target="_blank" rel="noopener noreferrer">💬 Acheter via WhatsApp</a>
+        <div class="pay-card"><img src="https://abonnement-iptv-stable.fr/wp-content/uploads/2026/01/payment-icons--e1769636637702.png" width="356" height="51" loading="lazy" decoding="async" alt="Paiement sécurisé"></div>
+      </article>
+    </div>
+  </div>
+
+  <script>
+  (function(){
+    var section = document.getElementById('multi-ecran');
+    if(!section) return;
+    var btnC2 = document.getElementById('tabC2');
+    var btnC3 = document.getElementById('tabC3');
+    if(!btnC2 || !btnC3) return;
+
+    function setMode(mode, focus){
+      var isC2 = mode === 'c2';
+      section.setAttribute('data-mode', mode);
+      btnC2.setAttribute('aria-selected', isC2 ? 'true' : 'false');
+      btnC3.setAttribute('aria-selected', isC2 ? 'false' : 'true');
+      btnC2.tabIndex = isC2 ? 0 : -1;
+      btnC3.tabIndex = isC2 ? -1 : 0;
+      if(focus){ (isC2 ? btnC2 : btnC3).focus(); }
+    }
+
+    btnC2.addEventListener('click', function(){ setMode('c2'); });
+    btnC3.addEventListener('click', function(){ setMode('c3'); });
+
+    /* navigation clavier attendue d'un role="tablist" */
+    document.getElementById('aiiMultiSeg').addEventListener('keydown', function(e){
+      if(e.key === 'ArrowRight' || e.key === 'ArrowDown'){ e.preventDefault(); setMode('c3', true); }
+      if(e.key === 'ArrowLeft'  || e.key === 'ArrowUp'  ){ e.preventDefault(); setMode('c2', true); }
+      if(e.key === 'Home'){ e.preventDefault(); setMode('c2', true); }
+      if(e.key === 'End' ){ e.preventDefault(); setMode('c3', true); }
+    });
+
+    setMode('c2');
+  })();
+  </script>
+</section>
+
+</body>
+</html>

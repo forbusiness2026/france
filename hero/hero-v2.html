@@ -1,0 +1,445 @@
+<!--
+  ============================================================================
+  HERO v2 — abonnement-iptv-stable.fr
+  À coller dans un widget Elementor « HTML ».
+  ----------------------------------------------------------------------------
+  CE QUI CHANGE PAR RAPPORT À VOTRE VERSION
+
+  ▸ Mise en page
+    Avant : tout centré, empilé, sur une photo assombrie à 90 %. Huit éléments
+    de même poids visuel (badge, titre, sous-titre, 2 boutons, 4 pastilles,
+    ligne de confiance) — l'œil ne sait pas où aller.
+    Maintenant : deux colonnes. À gauche le message et l'action, à droite une
+    carte qui montre l'offre réelle (prix, durée, ce qui est inclus). Un seul
+    bouton principal. Le regard suit un chemin : promesse → preuve → prix → clic.
+
+  ▸ Carrousel d'images supprimé
+    Les 3 photos (434 Ko) étaient quasi identiques et invisibles sous un voile
+    noir à 90 %. Il ne reste qu'une image, avec un dégradé latéral : le texte
+    reste lisible à gauche et on voit enfin la photo à droite.
+    Gain : ~290 Ko en moins et plus une ligne de JavaScript.
+
+  ▸ Couleurs
+    Le badge rouge/rose (#E30613 → #FF1493) jurait avec le bleu marine de la
+    marque. Remplacé par un accent doré (#FFB020) sur fond marine : même effet
+    d'attention, sans conflit. Une seule animation à la fois — avant, le badge
+    et le bouton pulsaient en même temps.
+
+  ▸ Keyword stuffing corrigé
+    Mesuré sur le texte visible du hero, hors CSS et commentaires :
+      avant : « IPTV » 7 fois en 105 mots → densité 6,67 %
+      après : « IPTV » 1 fois en 136 mots → densité 0,74 %
+    La fourchette saine pour un mot-clé principal est 0,5 à 2 %.
+    Le pire était le sous-titre, qui enchaînait « Abonnement IPTV », « IPTV
+    France », « premium IPTV » et « meilleur IPTV en France » tous en gras dans
+    le même paragraphe — exactement ce que la politique anti-spam de Google
+    appelle « repeating words or phrases unnaturally ». Le mot-clé ne reste
+    qu'une fois, dans le H1 : c'est tout ce dont Google a besoin.
+
+  ▸ Textes réécrits
+    Avant : « Profitez de la meilleure expérience premium IPTV – la solution
+    meilleur IPTV en France pour un streaming stable, illimité et de haute
+    qualité. » Ça n'affirme rien de vérifiable.
+    Maintenant : des faits concrets — 5 minutes d'installation, les appareils
+    précis, 7j/7, ce qui est inclus dans l'offre.
+
+  ▸ Deux chiffres retirés
+    « +20 000 clients satisfaits » et « 999+ séries » venaient du template
+    (« 999+ » est un placeholder). Je ne les ai pas remplacés par d'autres
+    chiffres inventés : ils sont remplacés par des faits produit vérifiables
+    (qualité d'image, nombre d'écrans). Si vous avez les vrais chiffres, ils
+    reprennent leur place sans problème.
+
+  ══════════════════════════════════════════════════════════════════════════
+  ⚠️  TROIS CHOSES À CORRIGER AVANT DE PUBLIER
+  ══════════════════════════════════════════════════════════════════════════
+
+  1. LE PRIX. Votre site affiche trois prix différents pour 12 mois :
+       • 59,95 € dans la meta description de l'accueil
+       • 59,99 € dans le texte de /abonnement-iptv-12-mois-smart-tv/
+       • 49,00 € dans les données structurées (JSON-LD) de la même page
+     J'ai mis 59,99 € ci-dessous parce que c'est ce que la page affiche
+     réellement, mais choisissez votre prix et alignez les trois endroits.
+     Un prix annoncé dans Google différent du prix au panier, c'est une
+     publicité trompeuse — et ça fait sauter les rich results.
+
+  2. LE PRIX BARRÉ (149,99 €). Depuis la directive Omnibus (art. L112-1-1 du
+     Code de la consommation), un prix de référence barré doit être le prix le
+     plus bas réellement pratiqué dans les 30 jours précédents. Si vous n'avez
+     jamais vendu à 149,99 €, retirez-le : cherchez « ⚠️ PRIX BARRÉ » plus bas.
+
+  3. LA DATE DE FIN. J'ai mis « Offre de lancement » à la place de « Offre
+     bientôt expirée ⏳ ». Une urgence permanente est une pratique commerciale
+     trompeuse (art. L121-2). Si l'offre a une vraie date de fin, écrivez-la :
+     cherchez « ⚠️ DATE ».
+  ============================================================================
+-->
+
+<style>
+  /* Défilement fluide pour les ancres #single / #multi.
+     À déplacer dans le CSS du thème si vous préférez. */
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+  .aiiv2 {
+    --ink:        #070B14;
+    --navy:       #0A2E66;
+    --blue:       #1D7AF2;
+    --blue-dark:  #0C3A82;
+    --gold:       #FFB020;
+    --gold-soft:  #FFD27A;
+    --text:       #FFFFFF;
+    --text-mut:   #A8BDDB;
+    --line:       rgba(255,255,255,.14);
+    --card:       rgba(10,17,32,.72);
+    --h:          78px;   /* hauteur du header fixe */
+    --btn-h:      52px;
+  }
+
+  .aiiv2, .aiiv2 * {
+    box-sizing: border-box;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  }
+
+  .aiiv2 {
+    position: relative;
+    /* Full-bleed. Si la section Elementor est en « Pleine largeur »,
+       supprimez ces deux lignes. */
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    background: var(--ink);
+    color: var(--text);
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  /* ---------- image de fond, une seule ---------- */
+  .aiiv2__media { position: absolute; inset: 0; z-index: 0; }
+  .aiiv2__media img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: 70% center;
+    display: block;
+  }
+  /* Dégradé latéral : opaque à gauche (texte lisible), transparent à droite
+     (on voit la photo). Remplace le voile noir uniforme à 90 %. */
+  .aiiv2__media::after {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(100deg,
+        rgba(7,11,20,.97)  0%,
+        rgba(7,11,20,.92) 30%,
+        rgba(7,11,20,.70) 58%,
+        rgba(10,46,102,.42) 100%),
+      radial-gradient(90% 70% at 88% 30%, rgba(29,122,242,.22) 0%, rgba(29,122,242,0) 60%);
+    pointer-events: none;
+  }
+
+  /* ---------- grille ---------- */
+  .aiiv2__inner {
+    position: relative; z-index: 1;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding:
+      calc(var(--h) + 56px + env(safe-area-inset-top, 0px))
+      24px
+      64px;
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr);
+    grid-template-areas:
+      "copy  offer"
+      "facts facts";
+    gap: 52px 56px;
+    align-items: center;
+    min-height: 84vh;
+    min-height: 84svh;
+  }
+
+  .aiiv2__copy  { grid-area: copy;  }
+  .aiiv2__offer { grid-area: offer; }
+  .aiiv2__facts { grid-area: facts; }
+
+  /* ---------- colonne gauche ---------- */
+  .aiiv2__eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 7px 14px 7px 11px;
+    border-radius: 999px;
+    background: rgba(255,176,32,.12);
+    border: 1px solid rgba(255,176,32,.38);
+    color: var(--gold-soft);
+    font-size: .8rem; font-weight: 700;
+    letter-spacing: .02em;
+    margin-bottom: 20px;
+  }
+  .aiiv2__eyebrow i {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 0 4px rgba(255,176,32,.18);
+    flex: none;
+  }
+
+  .aiiv2__title {
+    margin: 0 0 18px;
+    font-size: clamp(2.1rem, 1.45rem + 2.3vw, 3.4rem);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -.02em;
+    text-wrap: balance;   /* évite une ligne orpheline ; ignoré par les vieux navigateurs */
+    color: var(--text) !important;
+  }
+  .aiiv2__title em {
+    font-style: normal;
+    background: linear-gradient(95deg, var(--gold) 0%, var(--gold-soft) 100%);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; color: transparent;
+  }
+
+  .aiiv2__sub {
+    margin: 0 0 30px;
+    max-width: 52ch;
+    font-size: clamp(1rem, .96rem + .25vw, 1.11rem);
+    line-height: 1.62;
+    color: var(--text-mut);
+  }
+  .aiiv2__sub strong { color: var(--text); font-weight: 700; }
+
+  .aiiv2__ctas {
+    display: flex; flex-wrap: wrap; gap: 12px;
+    margin-bottom: 34px;
+  }
+
+  .aiiv2 .b {
+    height: var(--btn-h);
+    display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+    padding: 0 26px;
+    border-radius: 12px;
+    font-size: .98rem; font-weight: 800;
+    text-decoration: none;
+    line-height: 1;
+    white-space: nowrap;
+    transition: transform .16s ease, box-shadow .16s ease, background .16s ease, border-color .16s ease;
+  }
+  .aiiv2 .b:focus-visible { outline: 3px solid rgba(255,255,255,.5); outline-offset: 3px; }
+
+  .aiiv2 .b--primary,
+  .aiiv2 .b--primary:hover,
+  .aiiv2 .b--primary:focus,
+  .aiiv2 .b--primary:visited { color: #fff !important; }
+  .aiiv2 .b--primary {
+    background: linear-gradient(95deg, var(--navy) 0%, var(--blue) 100%);
+    box-shadow: 0 12px 30px rgba(12,58,130,.42), inset 0 1px 0 rgba(255,255,255,.16);
+  }
+  .aiiv2 .b--primary:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(95deg, var(--blue-dark) 0%, #2B8CFF 100%);
+    box-shadow: 0 18px 40px rgba(12,58,130,.52), inset 0 1px 0 rgba(255,255,255,.2);
+  }
+
+  .aiiv2 .b--ghost,
+  .aiiv2 .b--ghost:hover,
+  .aiiv2 .b--ghost:visited { color: var(--text) !important; }
+  .aiiv2 .b--ghost {
+    background: rgba(255,255,255,.06);
+    border: 1px solid var(--line);
+  }
+  .aiiv2 .b--ghost:hover {
+    transform: translateY(-2px);
+    background: rgba(255,255,255,.12);
+    border-color: rgba(255,255,255,.3);
+  }
+
+  /* faits — remplace les 4 pastilles vitrées */
+  .aiiv2__facts {
+    list-style: none;
+    margin: 0; padding: 24px 0 0;
+    border-top: 1px solid var(--line);
+    display: flex; flex-wrap: wrap;
+    gap: 16px 44px;
+    align-self: end;
+  }
+  .aiiv2__facts li { display: flex; flex-direction: column; gap: 2px; }
+  .aiiv2__facts b {
+    font-size: 1.16rem; font-weight: 800;
+    letter-spacing: -.01em;
+  }
+  .aiiv2__facts span { font-size: .84rem; color: var(--text-mut); }
+
+  /* ---------- carte offre ---------- */
+  .aiiv2__offer {
+    position: relative;
+    background: var(--card);
+    -webkit-backdrop-filter: blur(14px) saturate(120%);
+    backdrop-filter: blur(14px) saturate(120%);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 28px 26px 24px;
+    box-shadow: 0 30px 70px rgba(0,0,0,.5);
+  }
+  .aiiv2__offer::before {
+    content: "";
+    position: absolute; left: 26px; right: 26px; top: 0; height: 3px;
+    border-radius: 0 0 3px 3px;
+    background: linear-gradient(90deg, var(--gold) 0%, var(--gold-soft) 50%, transparent 100%);
+  }
+
+  .aiiv2__deal { font-size: 1.28rem; font-weight: 800; line-height: 1.3; }
+  .aiiv2__deal em {
+    font-style: normal;
+    display: block;
+    color: var(--gold);
+    font-size: 1.03rem;
+  }
+
+  .aiiv2__price {
+    display: flex; align-items: baseline; gap: 10px;
+    margin: 16px 0 2px;
+  }
+  .aiiv2__price b { font-size: 2.6rem; font-weight: 900; letter-spacing: -.03em; }
+  .aiiv2__price del { color: var(--text-mut); font-size: 1.02rem; }
+  .aiiv2__unit { font-size: .86rem; color: var(--text-mut); margin-bottom: 18px; }
+
+  .aiiv2__list { list-style: none; margin: 0 0 22px; padding: 0; display: grid; gap: 10px; }
+  .aiiv2__list li {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: .93rem; line-height: 1.45;
+    color: #DCE8F8;
+  }
+  .aiiv2__list svg { flex: none; margin-top: 2px; color: var(--gold); }
+
+  .aiiv2__offer .b { width: 100%; }
+  .aiiv2__fine {
+    display: block;
+    margin-top: 12px;
+    text-align: center;
+    font-size: .8rem;
+    color: var(--text-mut);
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 980px) {
+    .aiiv2__inner {
+      grid-template-columns: 1fr;
+      grid-template-areas: "copy" "offer" "facts";
+      gap: 32px;
+      padding-top: calc(var(--h) + 34px + env(safe-area-inset-top, 0px));
+      padding-bottom: 44px;
+      min-height: 0;
+    }
+    .aiiv2__offer { max-width: 460px; }
+  }
+
+  @media (max-width: 620px) {
+    .aiiv2__inner { padding-left: 18px; padding-right: 18px; padding-bottom: 36px; }
+    .aiiv2__eyebrow { font-size: .74rem; margin-bottom: 16px; }
+    .aiiv2__sub { font-size: .98rem; line-height: 1.55; margin-bottom: 24px; }
+    .aiiv2__ctas { margin-bottom: 26px; }
+    .aiiv2 .b { width: 100%; height: 50px; }
+    .aiiv2__facts { gap: 14px 22px; padding-top: 18px; }
+    .aiiv2__facts b { font-size: 1.06rem; }
+    .aiiv2__offer { max-width: none; padding: 24px 20px 20px; }
+    .aiiv2__price b { font-size: 2.25rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .aiiv2 .b { transition: none; }
+    .aiiv2 .b:hover { transform: none; }
+  }
+</style>
+
+<section class="aiiv2" aria-labelledby="aiiv2-title">
+
+  <div class="aiiv2__media">
+    <img src="https://abonnement-iptv-stable.fr/wp-content/uploads/2025/12/France-IPTV.jpg"
+         width="1344" height="768" alt="" aria-hidden="true"
+         fetchpriority="high" decoding="async">
+  </div>
+
+  <div class="aiiv2__inner">
+
+    <!-- ══════════ colonne gauche ══════════ -->
+    <div class="aiiv2__copy">
+
+      <!-- ⚠️ DATE : si l'offre a une vraie date de fin, écrivez-la ici
+           (« Offre valable jusqu'au 31 octobre »). Sinon laissez comme ça. -->
+      <span class="aiiv2__eyebrow"><i></i> Offre de lancement — 12 + 6 mois</span>
+
+      <h1 class="aiiv2__title" id="aiiv2-title">
+        Abonnement IPTV en France,
+        <em>sans coupure</em>
+      </h1>
+
+      <p class="aiiv2__sub">
+        Toutes vos chaînes et plus de 150 000 contenus à la demande : sport en
+        direct, films et séries en 4K. <strong>Installation en 5 minutes</strong>
+        sur Smart TV, box Android, iPhone, Fire Stick ou PC — et une assistance
+        WhatsApp qui répond 7 jours sur 7.
+      </p>
+
+      <div class="aiiv2__ctas">
+        <!-- ⚠️ Ces ancres doivent exister plus bas sur la page -->
+        <a class="b b--primary" href="#single">Voir les offres</a>
+        <a class="b b--ghost" href="#multi">Multi-écrans (2 à 3)</a>
+      </div>
+
+    </div>
+
+    <!-- ══════════ carte offre ══════════ -->
+    <aside class="aiiv2__offer" aria-label="Offre 12 mois">
+
+      <div class="aiiv2__deal">
+        12 mois d'abonnement
+        <em>+ 6 mois offerts</em>
+      </div>
+
+      <div class="aiiv2__price">
+        <!-- ⚠️ PRIX : 59,99 € reprend ce qu'affiche votre page. Votre site
+             annonce aussi 59,95 € (meta) et 49,00 € (JSON-LD). Alignez les trois. -->
+        <b>59,99&nbsp;€</b>
+        <!-- ⚠️ PRIX BARRÉ : à supprimer si vous n'avez pas réellement vendu à
+             ce prix dans les 30 derniers jours (art. L112-1-1). -->
+        <del>149,99&nbsp;€</del>
+      </div>
+      <div class="aiiv2__unit">soit environ 3,33&nbsp;€ par mois sur 18 mois</div>
+
+      <ul class="aiiv2__list">
+        <li>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+          Chaînes françaises, belges, suisses et internationales
+        </li>
+        <li>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+          Sport en direct, films et séries à la demande
+        </li>
+        <li>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+          Compatible Smart TV, Android, iOS, box et PC
+        </li>
+        <li>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+          Guide TV (EPG) et fonction replay inclus
+        </li>
+      </ul>
+
+      <!-- Numéro WhatsApp utilisé partout sur le site. Les numéros +44 7782 260559
+           et +33 6 44 65 70 45 qui traînent ailleurs sont à supprimer. -->
+      <a class="b b--primary" href="https://wa.me/33748662375">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2c-5.46 0-9.9 4.44-9.9 9.9 0 1.75.46 3.45 1.32 4.95L2 22l5.3-1.39c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.9-4.44 9.9-9.9S17.5 2 12.04 2zm0 18.15c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.26 8.26 0 01-1.26-4.39c0-4.54 3.7-8.24 8.25-8.24s8.24 3.7 8.24 8.24-3.7 8.25-8.24 8.25zm4.52-6.17c-.25-.12-1.47-.72-1.7-.8-.22-.09-.38-.13-.55.12-.16.25-.63.8-.77.96-.14.17-.28.19-.53.06-.25-.12-1.06-.39-2.02-1.25-.75-.66-1.25-1.48-1.4-1.73-.14-.25-.01-.39.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.43-.06-.12-.55-1.33-.75-1.82-.2-.48-.4-.42-.55-.42h-.47c-.16 0-.43.06-.65.31-.23.25-.86.85-.86 2.06s.88 2.39 1 2.56c.13.16 1.73 2.64 4.19 3.7.59.25 1.04.4 1.4.51.59.19 1.12.16 1.55.1.47-.07 1.45-.59 1.65-1.17.2-.57.2-1.06.14-1.16-.06-.1-.22-.16-.47-.28z"/></svg>
+        Commander sur WhatsApp
+      </a>
+      <small class="aiiv2__fine">Activation immédiate après paiement</small>
+    </aside>
+
+      <!--
+        Avant : « +20 000 clients satisfaits » et « 999+ séries » (placeholder du
+        template). Remplacés par des faits produit vérifiables plutôt que par
+        d'autres chiffres inventés. Vos vrais chiffres reprennent leur place ici.
+      -->
+      <ul class="aiiv2__facts">
+        <li><b>150 000+</b><span>Chaînes &amp; VOD</span></li>
+        <li><b>4K / FHD</b><span>Qualité d'image</span></li>
+        <li><b>Jusqu'à 3</b><span>Écrans simultanés</span></li>
+        <li><b>7j/7</b><span>Assistance WhatsApp</span></li>
+      </ul>
+
+  </div>
+</section>

@@ -1,171 +1,115 @@
-<!--
-  ============================================================================
-  TARIFS — ÉCRAN UNIQUE — votre style d'origine, corrigé.
-  À coller dans un widget Elementor « HTML ».
-
-  Structure, classes, rubans, 4 cartes avec leurs listes complètes, bandeau
-  GRANDE VENTE, teaser multi-écrans : tout est resté comme chez vous.
-
-  ── COULEURS (violet/magenta → or) ─────────────────────────────────────────
-  Seules les valeurs ont changé, pas les règles :
-    --special-grad    #8B1E4A → #C2185B → #0A2E66   devient  #0E3A7D → #123F88 → #07234F
-    --special-border  #FF1493                        devient  #FFB020
-    --special-pink    #FF1493                        devient  #FFB020  (renommée --special-accent)
-    --gold            #FFD700                        devient  #FFD27A
-    #FF6B9D (ruban)                                  devient  #FFD27A
-    rgba(255,20,147,…) et rgba(255,182,193,…)        deviennent rgba(255,176,32,…) / rgba(255,210,122,…)
-
-  ── AUCUN SCHEMA / JSON-LD ─────────────────────────────────────────────────
-  Il n'y en avait pas dans votre bloc, et je n'en ajoute pas. Vérifié : 0
-  balise ld+json, 0 itemscope, 0 itemprop, 0 itemtype.
-
-  ⚠️ MAIS il y en a sur votre page en ligne, et il ne vient pas de ce bloc :
-  c'est Rank Math qui l'injecte dans le <head>. Votre page d'accueil sort
-  aujourd'hui un Product avec AggregateRating et HUIT Review (Lucas M.,
-  Camille B., Antoine D., Sarah L., Nicolas R., Inès K., Mehdi A., Julie P.),
-  plus un FAQPage. Pour l'enlever : Rank Math → Réglages du titre → Pages
-  d'accueil → Schéma → « None », puis vérifier chaque page dans l'onglet
-  Schéma de son éditeur. Il y en a aussi sur /iptv-premium/ (4,9 sur 1250
-  avis), /iptv-suisse/ (1450 avis) et /abonnement-iptv-12-mois-smart-tv/
-  (deux Product : 2840 avis et 128 avis).
-
-  ── CORRECTIONS ────────────────────────────────────────────────────────────
-  1. `* { box-sizing:border-box }` était un sélecteur UNIVERSEL GLOBAL dans un
-     widget de page : il re-calculait le modèle de boîte de toute la page
-     WordPress, thème et mise en page Elementor compris. Limité à
-     `#aii-pricing, #aii-pricing *`. C'est la correction la plus importante.
-  2. `:root{ --blue; --accent; --white; --radius; --shadow; … }` partait aussi
-     dans le document entier et pouvait écraser les variables du thème.
-     Déplacé sur `#aii-pricing`.
-  3. `font-weight:1000` n'existe pas en CSS — le maximum est 900, le
-     navigateur ramenait la valeur à 900 en silence. Idem 950 / 850 / 750,
-     qui ne rendent que si Inter est chargée en fonte variable. Normalisés en
-     900 / 800 / 700. Le rendu reste identique.
-  4. `width:100vw; left:50%; margin-left:-50vw; margin-right:-50vw` →
-     `width:100vw; margin-left:calc(50% - 50vw)`. L'ancienne règle provoquait
-     un débordement horizontal quand une barre de défilement est présente.
-  5. LIEN CASSÉ : le bouton multi-écrans pointait vers
-     /abonnement-iptv-fr/#multi-ecran. Ce chemin redirige (301) vers la racine
-     du site, et l'ancre #multi-ecran n'existe pas — votre page d'accueil
-     contient id="multi". Le bouton renvoyait donc les visiteurs en haut de la
-     page d'accueil. Corrigé en href="#multi".
-  6. DEUX CARTES DISAIENT « MEILLEURE VALEUR » : la 6 mois et la 24 mois.
-     Le calcul tranche :
-         3 mois + 1  = 22,99 € / 4 mois  → 5,75 € par mois
-         6 mois + 2  = 39,99 € / 8 mois  → 5,00 € par mois
-        12 mois + 6  = 59,99 € / 18 mois → 3,33 € par mois
-        24 mois + 6  = 89,99 € / 30 mois → 3,00 € par mois
-     C'est la 24 mois la meilleure valeur. La carte 6 mois passe donc à
-     « 8 mois au total • Le plus choisi » ; son ruban « Populaire » ne change
-     pas. La 24 mois garde « Meilleure valeur ».
-  7. « support Email 7j/7 » dans le chapeau, alors que les 4 boutons et le
-     bandeau disent WhatsApp. Corrigé en WhatsApp.
-  8. Prix au format français : « 59,99 € » et non « €59,99 ».
-  9. `aria-live="polite"` sur le bandeau promo : supprimé. Le contenu est
-     statique ; aria-live le faisait relire sans raison par les lecteurs
-     d'écran.
- 10. Image des moyens de paiement : ajout de width="356" height="51" (ses
-     vraies dimensions) et loading="lazy". Elle était chargée 4 fois sans
-     dimensions, ce qui décalait la mise en page pendant le chargement.
- 11. Le `<style>` est sorti du `<section>` : une balise style dans le corps du
-     document n'est pas du HTML valide, même si les navigateurs l'acceptent.
- 13. RUBAN SUR LE TITRE : mesuré au rendu, le ruban recouvrait le titre de
-     formule de 21 px de haut dans les 4 cartes — « 12 mois + 6 mois offerts »
-     s'affichait coupé, « Meilleure valeur » passait par-dessus « 24 mois ».
-     Corrigé par un simple margin-top:22px sur .head. Le ruban garde
-     exactement sa position, son angle et sa taille.
- 12. Le `<head>` que vous m'avez envoyé contenait `maximum-scale=1.0` dans la
-     balise viewport, ce qui empêche le zoom sur mobile. Il disparaît ici
-     puisque ce bloc n'a plus de `<head>` — mais vérifiez qu'il n'est pas
-     aussi dans votre thème.
-
-  ── NON MODIFIÉ, MAIS À VÉRIFIER ───────────────────────────────────────────
-  • « +115 000 chaînes » et « +177 000 films » : votre hero annonce
-    150 000+ chaînes & VOD et 100 000+ films sur la MÊME page. Les deux ne
-    peuvent pas être vrais.
-  • « Garantie satisfait ou remboursé » : doit correspondre à votre page
-    /politique-de-remboursement/.
-  • « Offre limitée » / « Offre à durée limitée » / « Offre en cours » sans
-    aucune date.
-  • « Choix n°1 des abonnés ».
-  Je n'ai touché à aucun de ces textes, c'est votre contenu — mais ce sont
-  les quatre points que votre guide Google classe au §9 (affirmations
-  trompeuses et fausses preuves).
-  ============================================================================
--->
-
 <style>
   #aii-pricing{
     --blue:#0A2E66; --blue2:#113E86; --accent:#E30613;
     --ok:#22e57a; --shadow:0 10px 28px rgba(0,0,0,.12);
-    --white:#fff; --modal-bg:rgba(3,10,24,.72);
+    --white:#fff;
     --radius:22px;
-    /* special offer colors — or sur marine (avant : magenta/rose) */
+    /* offre speciale : or sur marine */
     --special-grad: linear-gradient(180deg, #0E3A7D, #123F88, #07234F);
     --special-border: #FFB020;
     --special-accent: #FFB020;
     --gold:#FFD27A;
+    /* bandeau offre exclusive : or */
+    --sale-grad: linear-gradient(135deg, #E8990B 0%, #FFB020 45%, #FFD27A 100%);
+    --sale-ink:#3A2400;
   }
-  /* portée limitée : ce sélecteur était global et re-boxait toute la page */
-  #aii-pricing, #aii-pricing * {
-    box-sizing: border-box;
-  }
+
+  #aii-pricing, #aii-pricing *{ box-sizing:border-box; }
+
+  /* Plus de width:100vw ni de margin negatif : dans Elementor, 100vw = la
+     fenetre entiere (sidebar comprise) alors que 50% = le conteneur, ce qui
+     decalait et faisait deborder la section. width:100% suit le conteneur.
+     Pour du bord a bord, reglez la section Elementor sur « Pleine largeur ». */
   #aii-pricing.aii-pricing-fw{
-    position:relative;width:100vw;margin-left:calc(50% - 50vw);
-    background:#fff;padding:clamp(28px,6svh,64px) 0;
-    font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif
+    position:relative; width:100%; max-width:100%;
+    margin:0; overflow:hidden;
+    background:#fff; padding:clamp(28px,6svh,64px) 0;
+    font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;
   }
-  #aii-pricing .wrap{max-width:1400px;margin:0 auto;padding:0 clamp(16px,3vw,28px);text-align:center}
-  #aii-pricing h2{margin:0 0 10px;font-size:clamp(1.6rem,3.2vw,2.4rem);font-weight:900;color:var(--blue)}
+  #aii-pricing .wrap{
+    max-width:1400px;margin:0 auto;padding:0 clamp(16px,3vw,28px);text-align:center;
+    /* conteneur de requete : les @container ci-dessous reagissent a la largeur
+       du bloc, pas a celle de la fenetre */
+    container-type:inline-size; container-name:aiip;
+  }
+  #aii-pricing h2{margin:0 0 10px;font-size:clamp(1.45rem,3.2vw,2.4rem);font-weight:900;color:var(--blue);line-height:1.2}
   #aii-pricing .sub{max-width:900px;margin:0 auto 18px;color:#1f2b3a;line-height:1.55}
 
-  /* GRANDE VENTE banner */
+  /* ===== BANDEAU OFFRE EXCLUSIVE (or) ===== */
   #aii-pricing .sale-banner{
-    max-width:1100px; margin:0 auto 28px; padding:14px 18px;
-    border-radius:16px; background:linear-gradient(135deg, rgba(227,6,19,.95), rgba(17,62,134,.96));
-    color:#fff; border:2px solid rgba(255,255,255,.22); box-shadow:0 12px 34px rgba(3,10,24,.22);
-    display:flex; align-items:center; justify-content:space-between; gap:14px; text-align:left;
+    max-width:1100px; margin:0 auto 28px; padding:16px 20px;
+    border-radius:16px; background:var(--sale-grad);
+    color:var(--sale-ink); border:1px solid rgba(58,36,0,.18);
+    box-shadow:0 12px 34px rgba(232,153,11,.28);
+    display:flex; align-items:center; justify-content:space-between;
+    gap:16px; text-align:left; flex-wrap:wrap;
     position:relative; overflow:hidden;
   }
   #aii-pricing .sale-banner::before{
-    content:""; position:absolute; inset:-2px;
-    background:radial-gradient(circle at 15% 20%, rgba(255,255,255,.18), transparent 40%),
-               radial-gradient(circle at 85% 80%, rgba(255,255,255,.14), transparent 45%);
+    content:""; position:absolute; inset:0;
+    background:radial-gradient(circle at 12% 18%, rgba(255,255,255,.42), transparent 42%),
+               radial-gradient(circle at 88% 82%, rgba(255,255,255,.26), transparent 46%);
     pointer-events:none;
   }
-  #aii-pricing .sale-left{display:flex;align-items:center;gap:12px;min-width:0;z-index:2;}
-  #aii-pricing .sale-badge{width:42px;height:42px;border-radius:999px;background:#fff;color:var(--accent);display:grid;place-items:center;font-weight:900;font-size:1.15rem;box-shadow:0 8px 18px rgba(0,0,0,.18);flex:0 0 auto;}
-  #aii-pricing .sale-text{display:flex;flex-direction:column;gap:2px;min-width:0}
-  #aii-pricing .sale-title{margin:0;font-weight:900;font-size:clamp(1rem,1.5vw,1.15rem);line-height:1.2;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  #aii-pricing .sale-sub{margin:0;font-weight:800;font-size:clamp(.86rem,1.1vw,.95rem);opacity:.95;}
-  #aii-pricing .sale-right{z-index:2;display:flex;align-items:center;gap:10px;padding-left:14px;border-left:2px solid rgba(255,255,255,.25);flex:0 0 auto;}
-  #aii-pricing .sale-pill{ font-weight:900; font-size:.86rem; padding:8px 12px; border-radius:999px; background:rgba(0,0,0,.18); border:1px solid rgba(255,255,255,.20); white-space:nowrap; }
+  #aii-pricing .sale-left{display:flex;align-items:center;gap:14px;min-width:0;flex:1 1 430px;z-index:2}
+  #aii-pricing .sale-badge{
+    width:46px;height:46px;border-radius:999px;background:#fff;
+    display:grid;place-items:center;font-size:1.2rem;
+    box-shadow:0 6px 16px rgba(58,36,0,.22);flex:0 0 auto;
+  }
+  #aii-pricing .sale-text{display:flex;flex-direction:column;gap:3px;min-width:0}
+  #aii-pricing .sale-title{
+    margin:0;font-weight:900;font-size:clamp(1rem,1.5vw,1.18rem);
+    line-height:1.25;letter-spacing:-.01em;
+  }
+  #aii-pricing .sale-sub{margin:0;font-weight:600;font-size:clamp(.86rem,1.1vw,.95rem);line-height:1.4;opacity:.88}
+  #aii-pricing .sale-right{
+    z-index:2;display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    padding-left:16px;border-left:2px solid rgba(58,36,0,.22);flex:1 1 250px;
+  }
+  #aii-pricing .sale-pill{
+    font-weight:800;font-size:.86rem;padding:8px 13px;border-radius:999px;
+    background:rgba(58,36,0,.10);border:1px solid rgba(58,36,0,.22);white-space:nowrap;
+  }
 
-  @media (max-width: 760px){
+  /* bandeau : empile selon la largeur du BLOC */
+  @container aiip (max-width:860px){
     #aii-pricing .sale-banner{flex-direction:column;align-items:flex-start}
     #aii-pricing .sale-right{
-      border-left:none;border-top:2px solid rgba(255,255,255,.25);
-      padding-left:0;padding-top:12px;width:100%;justify-content:flex-start;flex-wrap:wrap;
+      border-left:none;border-top:2px solid rgba(58,36,0,.22);
+      padding-left:0;padding-top:12px;width:100%;justify-content:flex-start;
     }
-    #aii-pricing .sale-title{white-space:normal}
+  }
+  /* repli pour les navigateurs sans @container */
+  @media (max-width:760px){
+    #aii-pricing .sale-banner{flex-direction:column;align-items:flex-start}
+    #aii-pricing .sale-right{
+      border-left:none;border-top:2px solid rgba(58,36,0,.22);
+      padding-left:0;padding-top:12px;width:100%;justify-content:flex-start;
+    }
   }
 
-  /* GRID */
-  #aii-pricing .grid{display:grid;gap:20px;align-items:stretch;grid-template-columns:repeat(4,minmax(280px,1fr))}
-  @media (max-width:1200px){#aii-pricing .grid{grid-template-columns:repeat(2,minmax(280px,1fr))}}
-  @media (max-width:640px){#aii-pricing .grid{grid-template-columns:1fr}}
+  /* ===== GRILLE =====
+     auto-fit + minmax(0,…) : la grille s'adapte a la largeur du CONTENEUR.
+     L'ancien repeat(4,minmax(280px,1fr)) imposait 1180px minimum et debordait
+     des que le conteneur etait plus etroit que la fenetre (cas de l'editeur
+     Elementor), parce que les media queries lisent la fenetre, pas le bloc. */
+  #aii-pricing .grid{
+    display:grid; gap:20px; align-items:stretch;
+    grid-template-columns:repeat(auto-fit,minmax(min(255px,100%),1fr));
+  }
 
-  /* CARDS */
+  /* ===== CARTES ===== */
   #aii-pricing .card{
-    display:flex;flex-direction:column;background:linear-gradient(180deg,var(--blue2),var(--blue));color:#fff;
+    display:flex;flex-direction:column;min-width:0;
+    background:linear-gradient(180deg,var(--blue2),var(--blue));color:#fff;
     border-radius:var(--radius);box-shadow:var(--shadow);padding:28px 22px 22px;text-align:left;
-    position:relative;overflow:hidden;transition: transform 0.25s ease, box-shadow 0.25s ease;
+    position:relative;overflow:hidden;transition:transform .25s ease, box-shadow .25s ease;
   }
-  #aii-pricing .card:hover{transform: translateY(-6px);box-shadow: 0 18px 36px rgba(0,0,0,0.25);}
-  #aii-pricing .card.special-offer{background: var(--special-grad);border: 3px solid var(--special-border);}
-
+  #aii-pricing .card:hover{transform:translateY(-6px);box-shadow:0 18px 36px rgba(0,0,0,.25)}
+  #aii-pricing .card.special-offer{background:var(--special-grad);border:3px solid var(--special-border)}
   #aii-pricing .card.special-offer::before{
-    content:""; position:absolute;inset:-2px;
+    content:""; position:absolute;inset:0;
     background:radial-gradient(circle at 20% 15%, rgba(255,176,32,.22), transparent 40%),
                radial-gradient(circle at 80% 85%, rgba(255,210,122,.16), transparent 45%);
     pointer-events:none;
@@ -175,91 +119,108 @@
     background:#ff3b3b;color:#fff;font-weight:900;padding:6px 74px;font-size:.82rem;z-index:2;
   }
   #aii-pricing .card.special-offer .ribbon{
-    background: linear-gradient(90deg, var(--special-accent), #FFD27A);
-    color:#3A2400;
-    font-size: .85rem; padding: 8px 74px; right: -88px; top: 8px;
+    background:linear-gradient(90deg, var(--special-accent), #FFD27A);
+    color:var(--sale-ink);
+    font-size:.85rem;padding:8px 74px;right:-88px;top:8px;
   }
-  /* margin-top ajouté : le ruban recouvrait le titre de formule sur 21 px
-     dans les 4 cartes (« 12 mois + 6 mois offer… » était coupé). Le ruban
-     et sa géométrie ne changent pas, le titre passe simplement dessous. */
-  #aii-pricing .head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-top:22px;margin-bottom:10px;flex-wrap:wrap;}
-  #aii-pricing .term{font-weight:900;opacity:.98;font-size:clamp(1rem,1.6vw,1.12rem);white-space:nowrap;}
-  #aii-pricing .price{font-size:clamp(1.8rem,3.6vw,2.35rem);font-weight:900;line-height:1;letter-spacing:-.02em;white-space:nowrap;}
-  #aii-pricing .card.special-offer .price{color: var(--gold);text-shadow: 0 2px 6px rgba(0,0,0,0.4);}
+  /* margin-top : sans lui le ruban recouvrait le titre de formule sur 21 px */
+  #aii-pricing .head{
+    display:flex;align-items:flex-end;justify-content:space-between;
+    gap:10px;margin-top:22px;margin-bottom:10px;flex-wrap:wrap;
+  }
+  /* plus de white-space:nowrap : dans une carte etroite le titre debordait */
+  #aii-pricing .term{font-weight:900;opacity:.98;font-size:clamp(1rem,1.6vw,1.12rem);line-height:1.3;min-width:0}
+  #aii-pricing .price{font-size:clamp(1.7rem,3.6vw,2.35rem);font-weight:900;line-height:1;letter-spacing:-.02em;white-space:nowrap}
+  #aii-pricing .card.special-offer .price{color:var(--gold);text-shadow:0 2px 6px rgba(0,0,0,.4)}
 
   #aii-pricing .highlight{
     background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:12px 14px;
-    border-radius:14px;font-weight:900;line-height:1.28;font-size:clamp(.9rem,1.35vw,1rem);margin:8px 0 12px
+    border-radius:14px;font-weight:900;line-height:1.28;font-size:clamp(.88rem,1.35vw,1rem);margin:8px 0 12px
   }
   #aii-pricing .card.special-offer .highlight{
-    background: rgba(255, 176, 32, 0.2); border: 1px solid rgba(255, 210, 122, 0.5);
-    color: var(--gold); box-shadow: 0 4px 12px rgba(255, 176, 32, 0.2);
+    background:rgba(255,176,32,.2);border:1px solid rgba(255,210,122,.5);
+    color:var(--gold);box-shadow:0 4px 12px rgba(255,176,32,.2);
   }
   #aii-pricing .urgency{
     display:flex;align-items:center;gap:8px;margin:6px 0 14px;font-weight:800;
     background:#052e6a;border:1px dashed rgba(255,255,255,.45);border-radius:12px;padding:8px 12px;
-    font-size:clamp(.86rem,1.2vw,.95rem)
+    font-size:clamp(.84rem,1.2vw,.95rem);line-height:1.35
   }
   #aii-pricing .card.special-offer .urgency{
-    background: rgba(255, 176, 32, 0.15); border: 1px dashed var(--special-accent); color: var(--gold);
+    background:rgba(255,176,32,.15);border:1px dashed var(--special-accent);color:var(--gold)
   }
-  #aii-pricing .urgency i{font-style:normal;background:#fff;color:#052e6a;border-radius:999px;width:20px;height:20px;display:inline-grid;place-items:center;font-size:.8rem;font-weight:900}
+  #aii-pricing .urgency i{
+    font-style:normal;background:#fff;color:#052e6a;border-radius:999px;
+    width:20px;height:20px;display:inline-grid;place-items:center;
+    font-size:.8rem;font-weight:900;flex:0 0 20px
+  }
   #aii-pricing .card.special-offer .urgency i{color:var(--special-accent)}
 
   #aii-pricing ul{list-style:none;margin:8px 0 0;padding:0;flex:1 1 auto;display:grid;gap:6px}
   #aii-pricing li{
-    position:relative;padding-left:22px;margin:3px 0;font-size:clamp(.85rem,1.2vw,.92rem);line-height:1.45;opacity:.95;
+    position:relative;padding-left:22px;margin:3px 0;
+    font-size:clamp(.84rem,1.2vw,.92rem);line-height:1.45;opacity:.95
   }
   #aii-pricing li::before{
     content:"✓";position:absolute;left:0;top:2px;color:var(--ok) !important;
-    font-weight:900;font-size:.9em;
+    font-weight:900;font-size:.9em
   }
 
-  /* WHATSAPP BUTTON */
+  /* ===== BOUTON WHATSAPP ===== */
   #aii-pricing .cta-wa{
-    display:block;width:min(74%,240px);margin:14px auto 12px;text-align:center;
+    display:block;width:min(90%,240px);margin:14px auto 12px;text-align:center;
     background:#25D366;color:#fff;font-weight:900;border-radius:14px;padding:12px 12px;
     text-decoration:none;cursor:pointer;box-shadow:0 10px 22px rgba(37,211,102,.45);
-    font-size:clamp(.98rem,1.2vw,1.05rem);transition:transform .15s ease,filter .15s ease;
+    font-size:clamp(.94rem,1.2vw,1.05rem);transition:transform .15s ease,filter .15s ease;
     border:1px solid rgba(255,255,255,.2);
   }
   #aii-pricing .cta-wa:hover{filter:brightness(.94);transform:translateY(-2px)}
   #aii-pricing .card.special-offer .cta-wa{
-    background: linear-gradient(135deg, #25D366, #128C7E); color:#fff;
-    box-shadow:0 10px 24px rgba(37,211,102,0.55);
+    background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;
+    box-shadow:0 10px 24px rgba(37,211,102,.55);
   }
 
   #aii-pricing .pay{
     margin:6px auto 0;background:#fff;border-radius:12px;overflow:hidden;
-    padding:6px 10px;display:flex;align-items:center;justify-content:center;min-height:38px;
+    padding:6px 10px;display:flex;align-items:center;justify-content:center;min-height:38px;max-width:100%;
   }
-  #aii-pricing .pay img{display:block;width:auto;height:24px;object-fit:contain}
+  #aii-pricing .pay img{display:block;width:auto;max-width:100%;height:24px;object-fit:contain}
 
-  /* multi teaser */
+  /* ===== MULTI-ECRANS ===== */
   #aii-pricing .multi-teaser{
-    max-width:1100px;margin:22px auto 0;padding:16px 16px;border-radius:18px;
+    max-width:1100px;margin:22px auto 0;padding:16px;border-radius:18px;
     border:1px solid rgba(10,46,102,.14);
     background:linear-gradient(180deg, rgba(10,46,102,.04), rgba(10,46,102,.02));
-    text-align:left;display:flex;align-items:center;justify-content:space-between;gap:14px;
+    text-align:left;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
   }
-  #aii-pricing .multi-teaser h3{margin:0 0 4px;color:var(--blue);font-weight:900;font-size:1.05rem}
-  #aii-pricing .multi-teaser p{margin:0;color:#334155;font-weight:700;line-height:1.45;font-size:.95rem}
+  #aii-pricing .multi-teaser > div{flex:1 1 420px;min-width:0}
+  #aii-pricing .multi-teaser h3{margin:0 0 4px;color:var(--blue);font-weight:900;font-size:1.05rem;line-height:1.3}
+  #aii-pricing .multi-teaser p{margin:0;color:#334155;font-weight:600;line-height:1.45;font-size:.95rem}
   #aii-pricing .multi-btn{
     flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;
-    padding:11px 14px;border-radius:14px;border:1px solid rgba(10,46,102,.18);
-    background:#fff;color:var(--blue);font-weight:900;text-decoration:none;white-space:nowrap;
+    padding:12px 16px;border-radius:14px;border:1px solid rgba(10,46,102,.18);
+    background:#fff;color:var(--blue);font-weight:900;text-decoration:none;
     box-shadow:0 10px 22px rgba(15,23,42,.06);transition:transform .15s ease, filter .15s ease;
   }
   #aii-pricing .multi-btn:hover{transform:translateY(-1px);filter:brightness(.98)}
 
+  @container aiip (max-width:700px){
+    #aii-pricing .multi-teaser{flex-direction:column;align-items:flex-start}
+    #aii-pricing .multi-btn{width:100%}
+  }
   @media (max-width:720px){
     #aii-pricing .multi-teaser{flex-direction:column;align-items:flex-start}
-    #aii-pricing .multi-btn{width:100%;text-align:center}
+    #aii-pricing .multi-btn{width:100%}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    #aii-pricing .card,#aii-pricing .cta-wa,#aii-pricing .multi-btn{transition:none}
+    #aii-pricing .card:hover,#aii-pricing .cta-wa:hover,#aii-pricing .multi-btn:hover{transform:none}
   }
 </style>
 
 <!-- =========================================================
-     PRICING SECTION — écran unique
+     TARIFS — ÉCRAN UNIQUE
 ========================================================= -->
 <section id="aii-pricing" class="aii-pricing-fw" aria-label="Abonnement IPTV — Tarifs">
   <div class="wrap">
@@ -270,25 +231,25 @@
       <strong>Garantie satisfait ou remboursé</strong>.
     </p>
 
-    <!-- GRANDE VENTE banner -->
+    <!-- ===== BANDEAU OFFRE EXCLUSIVE ===== -->
     <div class="sale-banner">
       <div class="sale-left">
-        <div class="sale-badge">🔥</div>
+        <div class="sale-badge">⭐</div>
         <div class="sale-text">
-          <p class="sale-title">GRANDE VENTE : 12 mois + 6 mois offerts à 59,99 €</p>
-          <p class="sale-sub">Offre spéciale en cours • Activation instantanée • Contactez nous sur WhatsApp</p>
+          <p class="sale-title">OFFRE EXCLUSIVE : 12 mois + 6 mois offerts à 59,99&nbsp;€</p>
+          <p class="sale-sub">18 mois d'accès pour le prix de 12 — soit 3,33&nbsp;€ par mois au lieu de 5,75&nbsp;€. Commande et activation sur WhatsApp.</p>
         </div>
       </div>
       <div class="sale-right">
-        <span class="sale-pill">Offre limitée</span>
-        <span class="sale-pill">Support 7j/7</span>
+        <span class="sale-pill">3,33&nbsp;€ / mois</span>
+        <span class="sale-pill">Activation immédiate</span>
       </div>
     </div>
 
-    <!-- OFFERS GRID -->
+    <!-- ===== GRILLE DES OFFRES ===== -->
     <div class="grid single" id="gridSingle">
 
-      <!-- CARD 1: 12+6 (special) -->
+      <!-- CARTE 1 : 12 + 6 (offre speciale) -->
       <article class="card special-offer" id="specialOfferCard">
         <div class="ribbon">⭐ Offre Spéciale ⭐</div>
         <div class="head"><span class="term">12 mois + 6 mois offerts</span><span class="price">59,99 €</span></div>
@@ -316,12 +277,10 @@
         <span class="pay"><img src="https://abonnement-iptv-stable.fr/wp-content/uploads/2026/01/payment-icons--e1769636637702.png" width="356" height="51" loading="lazy" decoding="async" alt="Paiements sécurisés"></span>
       </article>
 
-      <!-- CARD 2: 6 MONTHS -->
+      <!-- CARTE 2 : 6 + 2 -->
       <article class="card">
         <div class="ribbon">Populaire</div>
         <div class="head"><span class="term">6 mois + 2 mois offerts</span><span class="price">39,99 €</span></div>
-        <!-- corrigé : disait « Meilleure valeur », or c'est la 24 mois qui a le
-             prix au mois le plus bas (3,00 € contre 5,00 € ici) -->
         <div class="highlight">8 mois au total • Le plus choisi</div>
         <div class="urgency"><i>🔥</i> Choix n°1 des abonnés</div>
         <ul>
@@ -345,7 +304,7 @@
         <span class="pay"><img src="https://abonnement-iptv-stable.fr/wp-content/uploads/2026/01/payment-icons--e1769636637702.png" width="356" height="51" loading="lazy" decoding="async" alt="Paiements sécurisés"></span>
       </article>
 
-      <!-- CARD 3: 3 MONTHS -->
+      <!-- CARTE 3 : 3 + 1 -->
       <article class="card">
         <div class="ribbon">Le plus flexible</div>
         <div class="head"><span class="term">3 mois + 1 mois offert</span><span class="price">22,99 €</span></div>
@@ -372,7 +331,7 @@
         <span class="pay"><img src="https://abonnement-iptv-stable.fr/wp-content/uploads/2026/01/payment-icons--e1769636637702.png" width="356" height="51" loading="lazy" decoding="async" alt="Paiements sécurisés"></span>
       </article>
 
-      <!-- CARD 4: 24 MONTHS -->
+      <!-- CARTE 4 : 24 + 6 -->
       <article class="card">
         <div class="ribbon">Meilleure valeur</div>
         <div class="head"><span class="term">24 mois + 6 mois offerts</span><span class="price">89,99 €</span></div>
@@ -400,14 +359,12 @@
       </article>
     </div>
 
-    <!-- Multi écran teaser -->
-    <div class="multi-teaser" aria-label="Abonnement IPTV Multi-écrans">
+    <!-- ===== MULTI-ÉCRANS ===== -->
+    <div class="multi-teaser">
       <div>
         <h3>Abonnement IPTV Multi-écrans (jusqu'à 3 connexions)</h3>
         <p>Utilisez l'IPTV sur <strong>2 ou 3 appareils simultanément</strong>. Offres dédiées famille, stabilité renforcée.</p>
       </div>
-      <!-- lien corrigé : /abonnement-iptv-fr/ redirige vers l'accueil et
-           #multi-ecran n'existe pas ; l'ancre réelle est #multi -->
       <a class="multi-btn" href="#multi">Voir les offres Multi-écrans</a>
     </div>
   </div>

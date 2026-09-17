@@ -1,658 +1,414 @@
 <!--
   ============================================================================
-  SECTION 3 — TARIFS, ÉCRAN UNIQUE — abonnement-iptv-stable.fr
+  TARIFS — ÉCRAN UNIQUE — votre style d'origine, corrigé.
   À coller dans un widget Elementor « HTML ».
-  ----------------------------------------------------------------------------
-  Relu contre votre guide « Google Spam Policies and SEO Recovery » (août 2026).
-  Les points du guide qui touchent cette section sont cités ci-dessous.
 
-  ══════════ 1. §4 DU GUIDE — « Scaled, repetitive or low-value content » ══════
+  Structure, classes, rubans, 4 cartes avec leurs listes complètes, bandeau
+  GRANDE VENTE, teaser multi-écrans : tout est resté comme chez vous.
 
-  Les 4 cartes répétaient EXACTEMENT les 11 mêmes puces : « +115 000 chaînes »,
-  « Guide TV (EPG) complet », « Xtream Codes / M3U / MAG »… soit 44 lignes pour
-  11 informations. C'était le plus gros problème de la section, avant même les
-  mots-clés.
+  ── COULEURS (violet/magenta → or) ─────────────────────────────────────────
+  Seules les valeurs ont changé, pas les règles :
+    --special-grad    #8B1E4A → #C2185B → #0A2E66   devient  #0E3A7D → #123F88 → #07234F
+    --special-border  #FF1493                        devient  #FFB020
+    --special-pink    #FF1493                        devient  #FFB020  (renommée --special-accent)
+    --gold            #FFD700                        devient  #FFD27A
+    #FF6B9D (ruban)                                  devient  #FFD27A
+    rgba(255,20,147,…) et rgba(255,182,193,…)        deviennent rgba(255,176,32,…) / rgba(255,210,122,…)
 
-  Maintenant : les cartes ne contiennent que ce qui DIFFÈRE (durée, prix, prix
-  au mois, mois offerts, à qui la formule s'adresse). Ce qui est commun est
-  listé UNE fois, dans un bloc « Inclus dans toutes les formules » sous la
-  grille. Trois effets :
-    • les cartes deviennent comparables d'un coup d'œil — avant, il fallait
-      lire 11 puces identiques pour trouver la seule ligne qui changeait ;
-    • plus de contenu dupliqué à l'intérieur d'une même page ;
-    • le nombre de chaînes n'apparaît plus qu'une seule fois, donc il ne peut
-      plus se contredire d'une carte à l'autre.
+  ── AUCUN SCHEMA / JSON-LD ─────────────────────────────────────────────────
+  Il n'y en avait pas dans votre bloc, et je n'en ajoute pas. Vérifié : 0
+  balise ld+json, 0 itemscope, 0 itemprop, 0 itemtype.
 
-  ══════════ 2. §9 — « Misleading claims, false identity and fake proof » ══════
+  ⚠️ MAIS il y en a sur votre page en ligne, et il ne vient pas de ce bloc :
+  c'est Rank Math qui l'injecte dans le <head>. Votre page d'accueil sort
+  aujourd'hui un Product avec AggregateRating et HUIT Review (Lucas M.,
+  Camille B., Antoine D., Sarah L., Nicolas R., Inès K., Mehdi A., Julie P.),
+  plus un FAQPage. Pour l'enlever : Rank Math → Réglages du titre → Pages
+  d'accueil → Schéma → « None », puis vérifier chaque page dans l'onglet
+  Schéma de son éditeur. Il y en a aussi sur /iptv-premium/ (4,9 sur 1250
+  avis), /iptv-suisse/ (1450 avis) et /abonnement-iptv-12-mois-smart-tv/
+  (deux Product : 2840 avis et 128 avis).
 
-  ⚠️ CHIFFRES CONTRADICTOIRES — À TRANCHER
-  Sur la même page d'accueil, aujourd'hui :
-     le hero annonce      150 000+ chaînes & VOD   et   100 000+ films en 4K
-     les tarifs annonçaient +115 000 chaînes        et   +177 000 films & séries
-  Les deux ne peuvent pas être vrais. J'ai gardé 115 000 / 177 000 ici parce que
-  ce sont les chiffres les plus précis, mais il faut choisir UN jeu de chiffres
-  et l'appliquer partout — cherchez « ⚠️ CHIFFRES ».
-  Le guide range « inventing verified reviews or customer numbers » parmi les
-  fausses preuves : deux nombres différents pour la même chose sur une seule
-  page, c'est précisément ce qui le fait remarquer.
+  ── CORRECTIONS ────────────────────────────────────────────────────────────
+  1. `* { box-sizing:border-box }` était un sélecteur UNIVERSEL GLOBAL dans un
+     widget de page : il re-calculait le modèle de boîte de toute la page
+     WordPress, thème et mise en page Elementor compris. Limité à
+     `#aii-pricing, #aii-pricing *`. C'est la correction la plus importante.
+  2. `:root{ --blue; --accent; --white; --radius; --shadow; … }` partait aussi
+     dans le document entier et pouvait écraser les variables du thème.
+     Déplacé sur `#aii-pricing`.
+  3. `font-weight:1000` n'existe pas en CSS — le maximum est 900, le
+     navigateur ramenait la valeur à 900 en silence. Idem 950 / 850 / 750,
+     qui ne rendent que si Inter est chargée en fonte variable. Normalisés en
+     900 / 800 / 700. Le rendu reste identique.
+  4. `width:100vw; left:50%; margin-left:-50vw; margin-right:-50vw` →
+     `width:100vw; margin-left:calc(50% - 50vw)`. L'ancienne règle provoquait
+     un débordement horizontal quand une barre de défilement est présente.
+  5. LIEN CASSÉ : le bouton multi-écrans pointait vers
+     /abonnement-iptv-fr/#multi-ecran. Ce chemin redirige (301) vers la racine
+     du site, et l'ancre #multi-ecran n'existe pas — votre page d'accueil
+     contient id="multi". Le bouton renvoyait donc les visiteurs en haut de la
+     page d'accueil. Corrigé en href="#multi".
+  6. DEUX CARTES DISAIENT « MEILLEURE VALEUR » : la 6 mois et la 24 mois.
+     Le calcul tranche :
+         3 mois + 1  = 22,99 € / 4 mois  → 5,75 € par mois
+         6 mois + 2  = 39,99 € / 8 mois  → 5,00 € par mois
+        12 mois + 6  = 59,99 € / 18 mois → 3,33 € par mois
+        24 mois + 6  = 89,99 € / 30 mois → 3,00 € par mois
+     C'est la 24 mois la meilleure valeur. La carte 6 mois passe donc à
+     « 8 mois au total • Le plus choisi » ; son ruban « Populaire » ne change
+     pas. La 24 mois garde « Meilleure valeur ».
+  7. « support Email 7j/7 » dans le chapeau, alors que les 4 boutons et le
+     bandeau disent WhatsApp. Corrigé en WhatsApp.
+  8. Prix au format français : « 59,99 € » et non « €59,99 ».
+  9. `aria-live="polite"` sur le bandeau promo : supprimé. Le contenu est
+     statique ; aria-live le faisait relire sans raison par les lecteurs
+     d'écran.
+ 10. Image des moyens de paiement : ajout de width="356" height="51" (ses
+     vraies dimensions) et loading="lazy". Elle était chargée 4 fois sans
+     dimensions, ce qui décalait la mise en page pendant le chargement.
+ 11. Le `<style>` est sorti du `<section>` : une balise style dans le corps du
+     document n'est pas du HTML valide, même si les navigateurs l'acceptent.
+ 13. RUBAN SUR LE TITRE : mesuré au rendu, le ruban recouvrait le titre de
+     formule de 21 px de haut dans les 4 cartes — « 12 mois + 6 mois offerts »
+     s'affichait coupé, « Meilleure valeur » passait par-dessus « 24 mois ».
+     Corrigé par un simple margin-top:22px sur .head. Le ruban garde
+     exactement sa position, son angle et sa taille.
+ 12. Le `<head>` que vous m'avez envoyé contenait `maximum-scale=1.0` dans la
+     balise viewport, ce qui empêche le zoom sur mobile. Il disparaît ici
+     puisque ce bloc n'a plus de `<head>` — mais vérifiez qu'il n'est pas
+     aussi dans votre thème.
 
-  ⚠️ « Choix n°1 des abonnés » : supprimé. C'est une preuve sociale que rien ne
-  documente. Remplacé par « Le plus souscrit » sur la formule effectivement mise
-  en avant, ce que vous pouvez vérifier dans vos propres ventes — si ce n'est pas
-  le cas, changez l'étiquette.
-
-  ⚠️ « Serveurs stables et rapides » : reformulé en « Serveurs dimensionnés pour
-  les heures de pointe ». Le guide cite « promising perfect uptime » comme
-  affirmation trompeuse ; aucun service ne peut garantir la stabilité.
-
-  ⚠️ DEUX CARTES SE DISAIENT « MEILLEURE VALEUR »
-  La formule 6 mois portait « Meilleure valeur » et la 24 mois « Meilleure
-  valeur » aussi. Le calcul tranche :
-      3 mois + 1  →  22,99 € / 4 mois  = 5,75 € par mois
-      6 mois + 2  →  39,99 € / 8 mois  = 5,00 € par mois
-     12 mois + 6  →  59,99 € / 18 mois = 3,33 € par mois
-     24 mois + 6  →  89,99 € / 30 mois = 3,00 € par mois
-  C'est la formule 24 mois qui a le prix au mois le plus bas, pas la 6 mois.
-  L'étiquette « prix au mois le plus bas » lui revient donc, et le prix au mois
-  est maintenant affiché sur chaque carte — c'est un calcul vérifiable, le seul
-  argument de cette section que personne ne peut vous contester.
-
-  ⚠️ URGENCE SANS DATE : « Offre limitée », « Offre à durée limitée »,
-  « Offre en cours — profitez-en maintenant » se répétaient sans aucune date.
-  Une urgence permanente est une pratique commerciale trompeuse (art. L121-2 du
-  Code de la consommation), et le guide la classe en affirmation trompeuse.
-  Il reste une seule mention, avec un emplacement pour une vraie date —
-  cherchez « ⚠️ DATE ».
-
-  ⚠️ « Garantie satisfait ou remboursé » : doit correspondre mot pour mot à
-  votre page /politique-de-remboursement/. Cherchez « ⚠️ REMBOURSEMENT ».
-
-  ══════════ 3. §3 — « Keyword stuffing » ═════════════════════════════════════
-
-  Mesuré sur le texte visible, hors CSS et commentaires :
-      avant : « IPTV » 6 fois en 361 mots → densité 1,66 %
-      après : « IPTV » 2 fois en 386 mots → densité 0,52 %
-  Le H2 « Nos offres IPTV — Abonnement IPTV France » portait le mot deux fois,
-  et le sous-titre mettait « abonnement IPTV » et « IPTV France » en gras côte à
-  côte — le guide donne l'exemple exact de ce motif au §3.
-  À noter : la densité de départ, 1,66 %, était DANS la fourchette saine
-  (0,5 à 2 %). Contrairement au hero et à la section 2, le vrai problème ici
-  n'était pas la densité mais la répétition des 4 cartes (§4 du guide) et les
-  affirmations non fondées (§9). J'ai gardé 2 occurrences, dont une dans le H2 :
-  descendre à zéro aurait fait perdre à la section toute pertinence sur la
-  requête, ce qui est l'erreur inverse.
-
-  ══════════ 4. LIEN CASSÉ ════════════════════════════════════════════════════
-
-  Le bouton multi-écrans pointait vers
-      https://abonnement-iptv-stable.fr/abonnement-iptv-fr/#multi-ecran
-  Or /abonnement-iptv-fr/ redirige (301) vers la racine du site, et l'ancre
-  #multi-ecran n'existe pas — votre page d'accueil contient id="multi", pas
-  id="multi-ecran". Le bouton renvoyait donc les visiteurs en haut de la page
-  d'accueil. Corrigé en href="#multi".
-
-  ══════════ 5. COULEUR ═══════════════════════════════════════════════════════
-
-  Le violet/magenta de la carte mise en avant (#8B1E4A → #C2185B, bordure
-  #FF1493, prix #FFD700) est remplacé par l'or sur marine (#FFB020 / #FFD27A) —
-  le même accent que le hero, donc les deux sections se répondent au lieu de se
-  contredire. Les cartes marine sont conservées telles quelles, comme demandé.
-
-  ══════════ 6. CORRECTIONS TECHNIQUES ════════════════════════════════════════
-
-  • `* { box-sizing: border-box; }` — c'était un sélecteur universel GLOBAL dans
-    un widget de page. Il re-calculait le modèle de boîte de TOUTE la page
-    WordPress, thème et mise en page Elementor compris. C'est le correctif le
-    plus important du lot. Limité à `.aiip, .aiip *`.
-  • `:root{ --blue; --accent; --white; --radius; --shadow; … }` — ces variables
-    partaient elles aussi dans le document entier et pouvaient écraser celles du
-    thème. Elles vivent maintenant sur `.aiip`.
-  • `font-weight:1000` (et 950, 850, 750) : 1000 n'existe pas en CSS, le maximum
-    est 900. Le navigateur ramenait la valeur à 900 en silence. Normalisé.
-  • `width:100vw; left:50%; margin-left:-50vw` → `margin-left:calc(50% - 50vw)`,
-    comme pour le hero et la section 2 : l'ancienne règle débordait à droite.
-  • `aria-live="polite"` sur le bandeau promo : supprimé. Le contenu est
-    statique ; aria-live faisait relire le bandeau par les lecteurs d'écran sans
-    raison.
-  • Les titres de formule passent de `<span class="term">` à de vrais `<h3>`.
-    Une grille de tarifs sans hiérarchie de titres, Google ne sait pas ce que
-    sont ces 4 blocs.
-  • L'image des moyens de paiement reçoit width/height (356 × 51, ses vraies
-    dimensions) et loading="lazy" : elle était chargée 4 fois sans dimensions,
-    ce qui décalait la mise en page pendant le chargement.
-  • Le `<style>` est sorti du `<section>`.
-  • Les rubans diagonaux dans les coins sont remplacés par des pastilles
-    plates. Avec `overflow:hidden` sur la carte, un ruban à 45° coupait les
-    libellés longs : « Le moins cher au mois » et « Le plus souscrit » étaient
-    illisibles au rendu. Une pastille supporte n'importe quelle longueur.
-  • Prix au format français : « 59,99 € » et non « €59,99 ».
-
-  ⚠️ ANCRE #single
-  Votre hero pointe vers #single. Cette section porte id="single" sur la grille.
-  Votre page d'accueil contient DÉJÀ un élément id="single" (le sélecteur de
-  formules un écran / multi-écrans). Deux éléments avec le même id, c'est du
-  HTML invalide et le navigateur ne saute que sur le premier. Si ce bloc
-  remplace l'ancien sélecteur, supprimez l'ancien id="single". Sinon, retirez
-  celui d'ici et gardez seulement id="offres-un-ecran".
-
-  ⚠️ PRIX 59,99 € : cohérent avec le hero, mais la meta description de votre
-  page d'accueil annonce encore 59,95 € et le JSON-LD de
-  /abonnement-iptv-12-mois-smart-tv/ annonce 49,00 €. À aligner.
+  ── NON MODIFIÉ, MAIS À VÉRIFIER ───────────────────────────────────────────
+  • « +115 000 chaînes » et « +177 000 films » : votre hero annonce
+    150 000+ chaînes & VOD et 100 000+ films sur la MÊME page. Les deux ne
+    peuvent pas être vrais.
+  • « Garantie satisfait ou remboursé » : doit correspondre à votre page
+    /politique-de-remboursement/.
+  • « Offre limitée » / « Offre à durée limitée » / « Offre en cours » sans
+    aucune date.
+  • « Choix n°1 des abonnés ».
+  Je n'ai touché à aucun de ces textes, c'est votre contenu — mais ce sont
+  les quatre points que votre guide Google classe au §9 (affirmations
+  trompeuses et fausses preuves).
   ============================================================================
 -->
 
 <style>
-  .aiip {
-    --navy:      #0A2E66;
-    --navy-2:    #113E86;
-    --navy-deep: #07234F;
-    --gold:      #FFB020;
-    --gold-soft: #FFD27A;
-    --red:       #E30613;
-    --wa:        #25D366;
-    --wa-2:      #128C7E;
-    --ink:       #0B1220;
-    --body:      #55657A;
-    --line:      rgba(10,46,102,.09);
-    --radius:    20px;
-
-    --sh-sm: 0 1px 2px rgba(10,46,102,.05), 0 3px 8px  rgba(10,46,102,.05);
-    --sh-md: 0 2px 6px rgba(7,20,45,.10),  0 14px 32px rgba(7,20,45,.16);
-    --sh-lg: 0 4px 10px rgba(7,20,45,.12), 0 24px 52px rgba(7,20,45,.24);
-    --sh-gold: 0 4px 10px rgba(7,20,45,.12), 0 24px 52px rgba(7,20,45,.24),
-               0 0 0 1px rgba(255,176,32,.35);
+  #aii-pricing{
+    --blue:#0A2E66; --blue2:#113E86; --accent:#E30613;
+    --ok:#22e57a; --shadow:0 10px 28px rgba(0,0,0,.12);
+    --white:#fff; --modal-bg:rgba(3,10,24,.72);
+    --radius:22px;
+    /* special offer colors — or sur marine (avant : magenta/rose) */
+    --special-grad: linear-gradient(180deg, #0E3A7D, #123F88, #07234F);
+    --special-border: #FFB020;
+    --special-accent: #FFB020;
+    --gold:#FFD27A;
   }
-
-  /* portée limitée : plus de sélecteur universel global */
-  .aiip, .aiip * {
+  /* portée limitée : ce sélecteur était global et re-boxait toute la page */
+  #aii-pricing, #aii-pricing * {
     box-sizing: border-box;
-    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  }
+  #aii-pricing.aii-pricing-fw{
+    position:relative;width:100vw;margin-left:calc(50% - 50vw);
+    background:#fff;padding:clamp(28px,6svh,64px) 0;
+    font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif
+  }
+  #aii-pricing .wrap{max-width:1400px;margin:0 auto;padding:0 clamp(16px,3vw,28px);text-align:center}
+  #aii-pricing h2{margin:0 0 10px;font-size:clamp(1.6rem,3.2vw,2.4rem);font-weight:900;color:var(--blue)}
+  #aii-pricing .sub{max-width:900px;margin:0 auto 18px;color:#1f2b3a;line-height:1.55}
+
+  /* GRANDE VENTE banner */
+  #aii-pricing .sale-banner{
+    max-width:1100px; margin:0 auto 28px; padding:14px 18px;
+    border-radius:16px; background:linear-gradient(135deg, rgba(227,6,19,.95), rgba(17,62,134,.96));
+    color:#fff; border:2px solid rgba(255,255,255,.22); box-shadow:0 12px 34px rgba(3,10,24,.22);
+    display:flex; align-items:center; justify-content:space-between; gap:14px; text-align:left;
+    position:relative; overflow:hidden;
+  }
+  #aii-pricing .sale-banner::before{
+    content:""; position:absolute; inset:-2px;
+    background:radial-gradient(circle at 15% 20%, rgba(255,255,255,.18), transparent 40%),
+               radial-gradient(circle at 85% 80%, rgba(255,255,255,.14), transparent 45%);
+    pointer-events:none;
+  }
+  #aii-pricing .sale-left{display:flex;align-items:center;gap:12px;min-width:0;z-index:2;}
+  #aii-pricing .sale-badge{width:42px;height:42px;border-radius:999px;background:#fff;color:var(--accent);display:grid;place-items:center;font-weight:900;font-size:1.15rem;box-shadow:0 8px 18px rgba(0,0,0,.18);flex:0 0 auto;}
+  #aii-pricing .sale-text{display:flex;flex-direction:column;gap:2px;min-width:0}
+  #aii-pricing .sale-title{margin:0;font-weight:900;font-size:clamp(1rem,1.5vw,1.15rem);line-height:1.2;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  #aii-pricing .sale-sub{margin:0;font-weight:800;font-size:clamp(.86rem,1.1vw,.95rem);opacity:.95;}
+  #aii-pricing .sale-right{z-index:2;display:flex;align-items:center;gap:10px;padding-left:14px;border-left:2px solid rgba(255,255,255,.25);flex:0 0 auto;}
+  #aii-pricing .sale-pill{ font-weight:900; font-size:.86rem; padding:8px 12px; border-radius:999px; background:rgba(0,0,0,.18); border:1px solid rgba(255,255,255,.20); white-space:nowrap; }
+
+  @media (max-width: 760px){
+    #aii-pricing .sale-banner{flex-direction:column;align-items:flex-start}
+    #aii-pricing .sale-right{
+      border-left:none;border-top:2px solid rgba(255,255,255,.25);
+      padding-left:0;padding-top:12px;width:100%;justify-content:flex-start;flex-wrap:wrap;
+    }
+    #aii-pricing .sale-title{white-space:normal}
   }
 
-  .aiip {
-    position: relative;
-    /* Full-bleed sans débordement. Section Elementor en « Pleine largeur » ?
-       Supprimez ces 2 lignes. */
-    width: 100vw;
-    margin-left: calc(50% - 50vw);
-    padding: clamp(44px, 7svh, 84px) max(16px, 3vw);
-    background: #fff;
-    color: var(--ink);
-    overflow: hidden;
+  /* GRID */
+  #aii-pricing .grid{display:grid;gap:20px;align-items:stretch;grid-template-columns:repeat(4,minmax(280px,1fr))}
+  @media (max-width:1200px){#aii-pricing .grid{grid-template-columns:repeat(2,minmax(280px,1fr))}}
+  @media (max-width:640px){#aii-pricing .grid{grid-template-columns:1fr}}
+
+  /* CARDS */
+  #aii-pricing .card{
+    display:flex;flex-direction:column;background:linear-gradient(180deg,var(--blue2),var(--blue));color:#fff;
+    border-radius:var(--radius);box-shadow:var(--shadow);padding:28px 22px 22px;text-align:left;
+    position:relative;overflow:hidden;transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  #aii-pricing .card:hover{transform: translateY(-6px);box-shadow: 0 18px 36px rgba(0,0,0,0.25);}
+  #aii-pricing .card.special-offer{background: var(--special-grad);border: 3px solid var(--special-border);}
+
+  #aii-pricing .card.special-offer::before{
+    content:""; position:absolute;inset:-2px;
+    background:radial-gradient(circle at 20% 15%, rgba(255,176,32,.22), transparent 40%),
+               radial-gradient(circle at 80% 85%, rgba(255,210,122,.16), transparent 45%);
+    pointer-events:none;
+  }
+  #aii-pricing .card .ribbon{
+    position:absolute;top:10px;right:-86px;transform:rotate(35deg);
+    background:#ff3b3b;color:#fff;font-weight:900;padding:6px 74px;font-size:.82rem;z-index:2;
+  }
+  #aii-pricing .card.special-offer .ribbon{
+    background: linear-gradient(90deg, var(--special-accent), #FFD27A);
+    color:#3A2400;
+    font-size: .85rem; padding: 8px 74px; right: -88px; top: 8px;
+  }
+  /* margin-top ajouté : le ruban recouvrait le titre de formule sur 21 px
+     dans les 4 cartes (« 12 mois + 6 mois offer… » était coupé). Le ruban
+     et sa géométrie ne changent pas, le titre passe simplement dessous. */
+  #aii-pricing .head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-top:22px;margin-bottom:10px;flex-wrap:wrap;}
+  #aii-pricing .term{font-weight:900;opacity:.98;font-size:clamp(1rem,1.6vw,1.12rem);white-space:nowrap;}
+  #aii-pricing .price{font-size:clamp(1.8rem,3.6vw,2.35rem);font-weight:900;line-height:1;letter-spacing:-.02em;white-space:nowrap;}
+  #aii-pricing .card.special-offer .price{color: var(--gold);text-shadow: 0 2px 6px rgba(0,0,0,0.4);}
+
+  #aii-pricing .highlight{
+    background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:12px 14px;
+    border-radius:14px;font-weight:900;line-height:1.28;font-size:clamp(.9rem,1.35vw,1rem);margin:8px 0 12px
+  }
+  #aii-pricing .card.special-offer .highlight{
+    background: rgba(255, 176, 32, 0.2); border: 1px solid rgba(255, 210, 122, 0.5);
+    color: var(--gold); box-shadow: 0 4px 12px rgba(255, 176, 32, 0.2);
+  }
+  #aii-pricing .urgency{
+    display:flex;align-items:center;gap:8px;margin:6px 0 14px;font-weight:800;
+    background:#052e6a;border:1px dashed rgba(255,255,255,.45);border-radius:12px;padding:8px 12px;
+    font-size:clamp(.86rem,1.2vw,.95rem)
+  }
+  #aii-pricing .card.special-offer .urgency{
+    background: rgba(255, 176, 32, 0.15); border: 1px dashed var(--special-accent); color: var(--gold);
+  }
+  #aii-pricing .urgency i{font-style:normal;background:#fff;color:#052e6a;border-radius:999px;width:20px;height:20px;display:inline-grid;place-items:center;font-size:.8rem;font-weight:900}
+  #aii-pricing .card.special-offer .urgency i{color:var(--special-accent)}
+
+  #aii-pricing ul{list-style:none;margin:8px 0 0;padding:0;flex:1 1 auto;display:grid;gap:6px}
+  #aii-pricing li{
+    position:relative;padding-left:22px;margin:3px 0;font-size:clamp(.85rem,1.2vw,.92rem);line-height:1.45;opacity:.95;
+  }
+  #aii-pricing li::before{
+    content:"✓";position:absolute;left:0;top:2px;color:var(--ok) !important;
+    font-weight:900;font-size:.9em;
   }
 
-  .aiip__inner { max-width: 1280px; margin: 0 auto; }
-
-  /* ---------- en-tête ---------- */
-  .aiip__head { text-align: center; max-width: 60ch; margin: 0 auto 30px; }
-  .aiip__title {
-    margin: 0;
-    color: var(--navy);
-    font-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.25rem);
-    font-weight: 900;
-    line-height: 1.18;
-    letter-spacing: -.02em;
-    text-wrap: balance;
+  /* WHATSAPP BUTTON */
+  #aii-pricing .cta-wa{
+    display:block;width:min(74%,240px);margin:14px auto 12px;text-align:center;
+    background:#25D366;color:#fff;font-weight:900;border-radius:14px;padding:12px 12px;
+    text-decoration:none;cursor:pointer;box-shadow:0 10px 22px rgba(37,211,102,.45);
+    font-size:clamp(.98rem,1.2vw,1.05rem);transition:transform .15s ease,filter .15s ease;
+    border:1px solid rgba(255,255,255,.2);
   }
-  .aiip__rule {
-    width: 88px; height: 4px; border-radius: 4px;
-    margin: 20px auto 0;
-    background: linear-gradient(90deg,
-      var(--navy) 0 33.33%, #C3D0E6 33.33% 66.66%, var(--red) 66.66% 100%);
-    box-shadow: 0 4px 12px rgba(10,46,102,.16);
-  }
-  .aiip__sub {
-    margin: 18px auto 0;
-    color: var(--body);
-    font-size: clamp(1rem, .96rem + .2vw, 1.06rem);
-    line-height: 1.62;
-  }
-  .aiip__sub strong { color: var(--navy); font-weight: 700; }
-
-  /* ---------- bandeau promo ---------- */
-  .aiip__banner {
-    max-width: 1000px;
-    margin: 0 auto 30px;
-    padding: 16px 20px;
-    border-radius: 16px;
-    background: linear-gradient(115deg, var(--navy-deep) 0%, var(--navy-2) 100%);
-    border: 1px solid rgba(255,176,32,.32);
-    box-shadow: var(--sh-md);
-    color: #fff;
-    display: flex; align-items: center; gap: 16px;
-    text-align: left;
-  }
-  .aiip__banner-ico {
-    flex: 0 0 44px; width: 44px; height: 44px;
-    border-radius: 999px;
-    display: grid; place-items: center;
-    background: linear-gradient(145deg, var(--gold-soft), var(--gold));
-    box-shadow: 0 6px 16px rgba(255,176,32,.36);
-    font-size: 1.2rem;
-  }
-  .aiip__banner b {
-    display: block;
-    font-size: clamp(1rem, .95rem + .3vw, 1.14rem);
-    font-weight: 800;
-    line-height: 1.3;
-  }
-  .aiip__banner b span { color: var(--gold-soft); }
-  .aiip__banner p {
-    margin: 3px 0 0;
-    font-size: .9rem;
-    color: #BFD0EA;
-    line-height: 1.4;
+  #aii-pricing .cta-wa:hover{filter:brightness(.94);transform:translateY(-2px)}
+  #aii-pricing .card.special-offer .cta-wa{
+    background: linear-gradient(135deg, #25D366, #128C7E); color:#fff;
+    box-shadow:0 10px 24px rgba(37,211,102,0.55);
   }
 
-  /* ---------- grille ---------- */
-  .aiip__grid {
-    display: grid;
-    gap: 18px;
-    align-items: stretch;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+  #aii-pricing .pay{
+    margin:6px auto 0;background:#fff;border-radius:12px;overflow:hidden;
+    padding:6px 10px;display:flex;align-items:center;justify-content:center;min-height:38px;
   }
+  #aii-pricing .pay img{display:block;width:auto;height:24px;object-fit:contain}
 
-  /* ---------- carte ---------- */
-  .aiip__card {
-    position: relative;
-    display: flex; flex-direction: column;
-    padding: 26px 22px 20px;
-    border-radius: var(--radius);
-    background: linear-gradient(170deg, var(--navy-2) 0%, var(--navy) 100%);
-    border: 1px solid rgba(255,255,255,.12);
-    box-shadow: var(--sh-md);
-    color: #fff;
-    text-align: left;
-    overflow: hidden;
-    transition: transform .22s ease, box-shadow .22s ease;
+  /* multi teaser */
+  #aii-pricing .multi-teaser{
+    max-width:1100px;margin:22px auto 0;padding:16px 16px;border-radius:18px;
+    border:1px solid rgba(10,46,102,.14);
+    background:linear-gradient(180deg, rgba(10,46,102,.04), rgba(10,46,102,.02));
+    text-align:left;display:flex;align-items:center;justify-content:space-between;gap:14px;
   }
-  .aiip__card:hover { transform: translateY(-5px); box-shadow: var(--sh-lg); }
+  #aii-pricing .multi-teaser h3{margin:0 0 4px;color:var(--blue);font-weight:900;font-size:1.05rem}
+  #aii-pricing .multi-teaser p{margin:0;color:#334155;font-weight:700;line-height:1.45;font-size:.95rem}
+  #aii-pricing .multi-btn{
+    flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;
+    padding:11px 14px;border-radius:14px;border:1px solid rgba(10,46,102,.18);
+    background:#fff;color:var(--blue);font-weight:900;text-decoration:none;white-space:nowrap;
+    box-shadow:0 10px 22px rgba(15,23,42,.06);transition:transform .15s ease, filter .15s ease;
+  }
+  #aii-pricing .multi-btn:hover{transform:translateY(-1px);filter:brightness(.98)}
 
-  /* carte mise en avant : or sur marine, plus de magenta */
-  .aiip__card--featured {
-    background: linear-gradient(170deg, #0E3573 0%, var(--navy-deep) 100%);
-    border: 2px solid var(--gold);
-    box-shadow: var(--sh-gold);
-  }
-  .aiip__card--featured::before {
-    content: "";
-    position: absolute; inset: 0;
-    background: radial-gradient(70% 50% at 50% 0%, rgba(255,176,32,.16) 0%, rgba(255,176,32,0) 70%);
-    pointer-events: none;
-  }
-
-  /* Pastille plate au lieu du ruban diagonal : les libellés français
-     (« Le moins cher au mois ») étaient tronqués par le overflow:hidden de la
-     carte. Une pastille reste lisible quelle que soit la longueur du texte. */
-  .aiip__tag {
-    position: relative; z-index: 1;
-    align-self: flex-start;
-    display: inline-flex; align-items: center;
-    margin-bottom: 14px;
-    padding: 5px 12px;
-    border-radius: 999px;
-    background: rgba(255,255,255,.14);
-    border: 1px solid rgba(255,255,255,.24);
-    font-size: .74rem; font-weight: 800;
-    letter-spacing: .02em;
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
-  .aiip__card--featured .aiip__tag {
-    background: linear-gradient(95deg, var(--gold) 0%, var(--gold-soft) 100%);
-    border-color: rgba(255,255,255,.45);
-    color: #3A2400;
-    box-shadow: 0 4px 12px rgba(255,176,32,.34);
-  }
-
-  .aiip__term {
-    position: relative; z-index: 1;
-    margin: 0 0 14px;
-    font-size: 1.02rem; font-weight: 800; line-height: 1.32;
-  }
-
-  .aiip__price {
-    position: relative; z-index: 1;
-    display: flex; align-items: baseline; gap: 8px;
-    font-size: 2.15rem; font-weight: 900; letter-spacing: -.03em;
-    line-height: 1;
-  }
-  .aiip__card--featured .aiip__price { color: var(--gold); }
-
-  .aiip__permonth {
-    position: relative; z-index: 1;
-    margin: 8px 0 0;
-    font-size: .88rem; font-weight: 700;
-    color: #BFD0EA;
-  }
-  .aiip__card--featured .aiip__permonth { color: var(--gold-soft); }
-
-  .aiip__total {
-    position: relative; z-index: 1;
-    margin: 14px 0 12px;
-    padding: 10px 13px;
-    border-radius: 12px;
-    background: rgba(255,255,255,.09);
-    border: 1px solid rgba(255,255,255,.17);
-    font-size: .88rem; font-weight: 800;
-    line-height: 1.35;
-  }
-  .aiip__card--featured .aiip__total {
-    background: rgba(255,176,32,.13);
-    border-color: rgba(255,176,32,.42);
-  }
-
-  .aiip__pitch {
-    position: relative; z-index: 1;
-    margin: 0 0 18px;
-    flex: 1 1 auto;
-    font-size: .89rem; line-height: 1.55;
-    color: #C9D8EE;
-  }
-
-  .aiip__cta {
-    position: relative; z-index: 1;
-    display: flex; align-items: center; justify-content: center; gap: 9px;
-    padding: 13px 14px;
-    border-radius: 13px;
-    background: var(--wa);
-    border: 1px solid rgba(255,255,255,.22);
-    box-shadow: 0 8px 20px rgba(37,211,102,.34);
-    color: #fff !important;
-    font-size: .97rem; font-weight: 800;
-    text-decoration: none;
-    transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
-  }
-  .aiip__cta:hover {
-    transform: translateY(-2px);
-    background: linear-gradient(135deg, var(--wa), var(--wa-2));
-    box-shadow: 0 12px 26px rgba(37,211,102,.46);
-  }
-  .aiip__cta:focus-visible { outline: 3px solid rgba(255,255,255,.6); outline-offset: 3px; }
-  .aiip__cta svg { flex: none; fill: currentColor; }
-
-  .aiip__pay {
-    position: relative; z-index: 1;
-    margin: 12px auto 0;
-    padding: 6px 11px;
-    background: #fff;
-    border-radius: 11px;
-    display: grid; place-items: center;
-  }
-  .aiip__pay img { display: block; width: auto; height: 22px; }
-
-  /* ---------- inclus dans toutes les formules ---------- */
-  .aiip__included {
-    margin-top: 20px;
-    padding: 26px 26px 24px;
-    border-radius: var(--radius);
-    background: #F6F8FC;
-    border: 1px solid var(--line);
-    box-shadow: var(--sh-sm);
-    text-align: left;
-  }
-  .aiip__included h3 {
-    margin: 0 0 4px;
-    color: var(--navy);
-    font-size: 1.1rem; font-weight: 800;
-    letter-spacing: -.01em;
-  }
-  .aiip__included > p {
-    margin: 0 0 18px;
-    color: var(--body);
-    font-size: .93rem; line-height: 1.55;
-  }
-  .aiip__included ul {
-    list-style: none; margin: 0; padding: 0;
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 11px 26px;
-  }
-  .aiip__included li {
-    display: flex; align-items: flex-start; gap: 9px;
-    font-size: .92rem; font-weight: 500; line-height: 1.45;
-    color: #2C3A4E;
-  }
-  .aiip__included svg {
-    flex: none; margin-top: 3px;
-    color: var(--navy-2);
-    stroke: currentColor; stroke-width: 3; fill: none;
-    stroke-linecap: round; stroke-linejoin: round;
-  }
-
-  /* ---------- multi-écrans ---------- */
-  .aiip__multi {
-    margin-top: 18px;
-    padding: 20px 22px;
-    border-radius: var(--radius);
-    background: linear-gradient(170deg, var(--navy-2) 0%, var(--navy) 100%);
-    box-shadow: var(--sh-md);
-    color: #fff;
-    display: flex; align-items: center; justify-content: space-between; gap: 18px;
-    text-align: left;
-  }
-  .aiip__multi h3 {
-    margin: 0 0 4px;
-    font-size: 1.06rem; font-weight: 800;
-    letter-spacing: -.01em;
-  }
-  .aiip__multi p {
-    margin: 0;
-    font-size: .93rem; line-height: 1.5;
-    color: #C9D8EE;
-  }
-  .aiip__multi-btn {
-    flex: 0 0 auto;
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 13px 20px;
-    border-radius: 13px;
-    background: linear-gradient(145deg, var(--gold-soft), var(--gold));
-    color: #3A2400 !important;
-    font-size: .95rem; font-weight: 800;
-    text-decoration: none;
-    white-space: nowrap;
-    box-shadow: 0 8px 22px rgba(255,176,32,.32);
-    transition: transform .15s ease, box-shadow .15s ease;
-  }
-  .aiip__multi-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 28px rgba(255,176,32,.44);
-  }
-  .aiip__multi-btn:focus-visible { outline: 3px solid rgba(255,255,255,.6); outline-offset: 3px; }
-
-  /* ---------- responsive ---------- */
-  @media (max-width: 1180px) {
-    .aiip__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  }
-  @media (max-width: 900px) {
-    .aiip__included ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  }
-  @media (max-width: 760px) {
-    .aiip__banner { flex-direction: column; align-items: flex-start; gap: 12px; }
-    .aiip__multi { flex-direction: column; align-items: stretch; }
-    .aiip__multi-btn { justify-content: center; }
-  }
-  @media (max-width: 620px) {
-    .aiip { padding: clamp(34px, 6svh, 52px) 16px; }
-    .aiip__grid { grid-template-columns: 1fr; gap: 14px; }
-    .aiip__card { padding: 22px 18px 18px; }
-    .aiip__price { font-size: 1.95rem; }
-    .aiip__included { padding: 20px 18px 18px; }
-    .aiip__included ul { grid-template-columns: 1fr; gap: 10px; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .aiip__card, .aiip__cta, .aiip__multi-btn { transition: none; }
-    .aiip__card:hover, .aiip__cta:hover, .aiip__multi-btn:hover { transform: none; }
+  @media (max-width:720px){
+    #aii-pricing .multi-teaser{flex-direction:column;align-items:flex-start}
+    #aii-pricing .multi-btn{width:100%;text-align:center}
   }
 </style>
 
-<section class="aiip" id="offres-un-ecran" aria-labelledby="aiip-title">
-  <div class="aiip__inner">
+<!-- =========================================================
+     PRICING SECTION — écran unique
+========================================================= -->
+<section id="aii-pricing" class="aii-pricing-fw" aria-label="Abonnement IPTV — Tarifs">
+  <div class="wrap">
+    <h2>Nos offres IPTV — Abonnement IPTV France</h2>
+    <p class="sub">
+      Choisissez la formule qui vous convient (<strong>écran unique</strong>) et profitez d'un
+      <strong>abonnement IPTV</strong> stable en <strong>IPTV France</strong> (HD/4K) avec support WhatsApp 7j/7.
+      <strong>Garantie satisfait ou remboursé</strong>.
+    </p>
 
-    <header class="aiip__head">
-      <h2 class="aiip__title" id="aiip-title">Nos formules d'abonnement IPTV pour un écran</h2>
-      <div class="aiip__rule" aria-hidden="true"></div>
-      <p class="aiip__sub">
-        Les quatre formules donnent accès au même contenu et aux mêmes serveurs.
-        La seule différence, c'est la durée — et plus elle est longue, moins vous
-        payez au mois. Un seul écran à la fois ;
-        <strong>pour regarder sur 2 ou 3 appareils en même temps</strong>,
-        voyez les formules multi-écrans en bas de page.
-      </p>
-    </header>
-
-    <!-- ⚠️ DATE : remplacez « jusqu'au JJ mois » par la vraie date de fin, ou
-         supprimez la phrase. Une urgence sans échéance est trompeuse. -->
-    <div class="aiip__banner">
-      <span class="aiip__banner-ico" aria-hidden="true">🔥</span>
-      <div>
-        <b>12 mois + 6 mois offerts&nbsp;: <span>59,99&nbsp;€</span></b>
-        <p>18 mois d'accès, soit 3,33&nbsp;€ par mois. Activation dès réception
-           du paiement, commande et suivi sur WhatsApp.</p>
+    <!-- GRANDE VENTE banner -->
+    <div class="sale-banner">
+      <div class="sale-left">
+        <div class="sale-badge">🔥</div>
+        <div class="sale-text">
+          <p class="sale-title">GRANDE VENTE : 12 mois + 6 mois offerts à 59,99 €</p>
+          <p class="sale-sub">Offre spéciale en cours • Activation instantanée • Contactez nous sur WhatsApp</p>
+        </div>
+      </div>
+      <div class="sale-right">
+        <span class="sale-pill">Offre limitée</span>
+        <span class="sale-pill">Support 7j/7</span>
       </div>
     </div>
 
-    <!-- ⚠️ ANCRE : votre page d'accueil contient déjà un id="single".
-         Gardez celui-ci OU l'ancien, jamais les deux. -->
-    <div class="aiip__grid" id="single">
+    <!-- OFFERS GRID -->
+    <div class="grid single" id="gridSingle">
 
-      <!-- ─────────── 3 + 1 ─────────── -->
-      <article class="aiip__card">
-        <span class="aiip__tag">Pour essayer</span>
-        <h3 class="aiip__term">3 mois<br>+ 1 mois offert</h3>
-        <div class="aiip__price">22,99&nbsp;€</div>
-        <p class="aiip__permonth">5,75&nbsp;€ par mois</p>
-        <div class="aiip__total">4 mois d'accès au total</div>
-        <p class="aiip__pitch">
-          La durée la plus courte, pour voir si le service vous convient avant de
-          vous engager plus longtemps.
-        </p>
-        <a class="aiip__cta" target="_blank" rel="noopener noreferrer"
-           href="https://wa.me/33748662375?text=Bonjour%2C%20je%20souhaite%20commander%20la%20formule%203%20mois%20%2B%201%20mois%20offert%20%C3%A0%2022%2C99%E2%82%AC">
-          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2c-5.46 0-9.9 4.44-9.9 9.9 0 1.75.46 3.45 1.32 4.95L2 22l5.3-1.39c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.9-4.44 9.9-9.9S17.5 2 12.04 2zm0 18.15c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.26 8.26 0 01-1.26-4.39c0-4.54 3.7-8.24 8.25-8.24s8.24 3.7 8.24 8.24-3.7 8.25-8.24 8.25zm4.52-6.17c-.25-.12-1.47-.72-1.7-.8-.22-.09-.38-.13-.55.12-.16.25-.63.8-.77.96-.14.17-.28.19-.53.06-.25-.12-1.06-.39-2.02-1.25-.75-.66-1.25-1.48-1.4-1.73-.14-.25-.01-.39.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.43-.06-.12-.55-1.33-.75-1.82-.2-.48-.4-.42-.55-.42h-.47c-.16 0-.43.06-.65.31-.23.25-.86.85-.86 2.06s.88 2.39 1 2.56c.13.16 1.73 2.64 4.19 3.7.59.25 1.04.4 1.4.51.59.19 1.12.16 1.55.1.47-.07 1.45-.59 1.65-1.17.2-.57.2-1.06.14-1.16-.06-.1-.22-.16-.47-.28z"/></svg>
-          Commander
+      <!-- CARD 1: 12+6 (special) -->
+      <article class="card special-offer" id="specialOfferCard">
+        <div class="ribbon">⭐ Offre Spéciale ⭐</div>
+        <div class="head"><span class="term">12 mois + 6 mois offerts</span><span class="price">59,99 €</span></div>
+        <div class="highlight">Offre spéciale • 18 mois au total</div>
+        <div class="urgency"><i>⏳</i> Offre en cours — profitez-en maintenant</div>
+        <ul>
+          <li>+115 000 chaînes live &amp; sportives</li>
+          <li>+177 000 films &amp; séries mondiales</li>
+          <li>Guide TV (EPG) complet</li>
+          <li>Serveurs stables et rapides</li>
+          <li>Qualité 4K / FHD / HD / SD</li>
+          <li>Compatible tous appareils</li>
+          <li>Replay (4 jours)</li>
+          <li>Xtream Codes / M3U / MAG</li>
+          <li>Compatible toutes applications</li>
+          <li>Activation instantanée</li>
+          <li>Garantie satisfait ou remboursé</li>
+          <li><strong>Offre à durée limitée</strong></li>
+          <li><strong>Meilleur rapport qualité/prix</strong></li>
+        </ul>
+        <a href="https://wa.me/33748662375?text=Bonjour%20%2C%20je%20souhaite%20acheter%20l%27offre%20%3A%2012%20mois%20%2B%206%20mois%20offerts%20%40%2059%2C99%E2%82%AC"
+           class="cta-wa" target="_blank" rel="noopener noreferrer">
+           💬 Acheter via WhatsApp
         </a>
-        <span class="aiip__pay">
-          <img src="https://abonnement-iptv-stable.fr/wp-content/uploads/2026/01/payment-icons--e1769636637702.png"
-               width="356" height="51" loading="lazy" decoding="async"
-               alt="Moyens de paiement acceptés">
-        </span>
+        <span class="pay"><img src="https://abonnement-iptv-stable.fr/wp-content/uploads/2026/01/payment-icons--e1769636637702.png" width="356" height="51" loading="lazy" decoding="async" alt="Paiements sécurisés"></span>
       </article>
 
-      <!-- ─────────── 6 + 2 ─────────── -->
-      <article class="aiip__card">
-        <span class="aiip__tag">Populaire</span>
-        <h3 class="aiip__term">6 mois<br>+ 2 mois offerts</h3>
-        <div class="aiip__price">39,99&nbsp;€</div>
-        <p class="aiip__permonth">5,00&nbsp;€ par mois</p>
-        <div class="aiip__total">8 mois d'accès au total</div>
-        <p class="aiip__pitch">
-          Le bon compromis&nbsp;: une saison complète de sport sans repasser à la
-          caisse, sans engagement de deux ans.
-        </p>
-        <a class="aiip__cta" target="_blank" rel="noopener noreferrer"
-           href="https://wa.me/33748662375?text=Bonjour%2C%20je%20souhaite%20commander%20la%20formule%206%20mois%20%2B%202%20mois%20offerts%20%C3%A0%2039%2C99%E2%82%AC">
-          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2c-5.46 0-9.9 4.44-9.9 9.9 0 1.75.46 3.45 1.32 4.95L2 22l5.3-1.39c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.9-4.44 9.9-9.9S17.5 2 12.04 2zm0 18.15c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.26 8.26 0 01-1.26-4.39c0-4.54 3.7-8.24 8.25-8.24s8.24 3.7 8.24 8.24-3.7 8.25-8.24 8.25zm4.52-6.17c-.25-.12-1.47-.72-1.7-.8-.22-.09-.38-.13-.55.12-.16.25-.63.8-.77.96-.14.17-.28.19-.53.06-.25-.12-1.06-.39-2.02-1.25-.75-.66-1.25-1.48-1.4-1.73-.14-.25-.01-.39.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.43-.06-.12-.55-1.33-.75-1.82-.2-.48-.4-.42-.55-.42h-.47c-.16 0-.43.06-.65.31-.23.25-.86.85-.86 2.06s.88 2.39 1 2.56c.13.16 1.73 2.64 4.19 3.7.59.25 1.04.4 1.4.51.59.19 1.12.16 1.55.1.47-.07 1.45-.59 1.65-1.17.2-.57.2-1.06.14-1.16-.06-.1-.22-.16-.47-.28z"/></svg>
-          Commander
+      <!-- CARD 2: 6 MONTHS -->
+      <article class="card">
+        <div class="ribbon">Populaire</div>
+        <div class="head"><span class="term">6 mois + 2 mois offerts</span><span class="price">39,99 €</span></div>
+        <!-- corrigé : disait « Meilleure valeur », or c'est la 24 mois qui a le
+             prix au mois le plus bas (3,00 € contre 5,00 € ici) -->
+        <div class="highlight">8 mois au total • Le plus choisi</div>
+        <div class="urgency"><i>🔥</i> Choix n°1 des abonnés</div>
+        <ul>
+          <li>+115 000 chaînes live &amp; sportives</li>
+          <li>+177 000 films &amp; séries mondiales</li>
+          <li>Guide TV (EPG) complet</li>
+          <li>Serveurs stables et rapides</li>
+          <li>Qualité 4K / FHD / HD / SD</li>
+          <li>Compatible tous appareils</li>
+          <li>Replay (4 jours)</li>
+          <li>Xtream Codes / M3U / MAG</li>
+          <li>Compatible toutes applications</li>
+          <li>Activation instantanée</li>
+          <li>Garantie satisfait ou remboursé</li>
+          <li><strong>+2 mois GRATUITS inclus</strong></li>
+        </ul>
+        <a href="https://wa.me/33748662375?text=Bonjour%20%2C%20je%20souhaite%20acheter%20l%27offre%20%3A%206%20mois%20%2B%202%20mois%20offerts%20%40%2039%2C99%E2%82%AC"
+           class="cta-wa" target="_blank" rel="noopener noreferrer">
+           💬 Acheter via WhatsApp
         </a>
-        <span class="aiip__pay">
-          <img src="https://abonnement-iptv-stable.fr/wp-content/uploads/2026/01/payment-icons--e1769636637702.png"
-               width="356" height="51" loading="lazy" decoding="async"
-               alt="Moyens de paiement acceptés">
-        </span>
+        <span class="pay"><img src="https://abonnement-iptv-stable.fr/wp-content/uploads/2026/01/payment-icons--e1769636637702.png" width="356" height="51" loading="lazy" decoding="async" alt="Paiements sécurisés"></span>
       </article>
 
-      <!-- ─────────── 12 + 6 — mise en avant ─────────── -->
-      <!-- ⚠️ « Le plus souscrit » : à vérifier dans vos ventes réelles.
-           Si ce n'est pas la formule la plus vendue, changez l'étiquette. -->
-      <article class="aiip__card aiip__card--featured">
-        <span class="aiip__tag">Le plus souscrit</span>
-        <h3 class="aiip__term">12 mois<br>+ 6 mois offerts</h3>
-        <div class="aiip__price">59,99&nbsp;€</div>
-        <p class="aiip__permonth">3,33&nbsp;€ par mois</p>
-        <div class="aiip__total">18 mois d'accès au total</div>
-        <p class="aiip__pitch">
-          Un an et demi couvert en une seule fois. C'est la formule d'abonnement
-          IPTV mise en avant sur le site, et celle que la plupart des clients
-          choisissent.
-        </p>
-        <a class="aiip__cta" target="_blank" rel="noopener noreferrer"
-           href="https://wa.me/33748662375?text=Bonjour%2C%20je%20souhaite%20commander%20la%20formule%2012%20mois%20%2B%206%20mois%20offerts%20%C3%A0%2059%2C99%E2%82%AC">
-          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2c-5.46 0-9.9 4.44-9.9 9.9 0 1.75.46 3.45 1.32 4.95L2 22l5.3-1.39c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.9-4.44 9.9-9.9S17.5 2 12.04 2zm0 18.15c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.26 8.26 0 01-1.26-4.39c0-4.54 3.7-8.24 8.25-8.24s8.24 3.7 8.24 8.24-3.7 8.25-8.24 8.25zm4.52-6.17c-.25-.12-1.47-.72-1.7-.8-.22-.09-.38-.13-.55.12-.16.25-.63.8-.77.96-.14.17-.28.19-.53.06-.25-.12-1.06-.39-2.02-1.25-.75-.66-1.25-1.48-1.4-1.73-.14-.25-.01-.39.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.43-.06-.12-.55-1.33-.75-1.82-.2-.48-.4-.42-.55-.42h-.47c-.16 0-.43.06-.65.31-.23.25-.86.85-.86 2.06s.88 2.39 1 2.56c.13.16 1.73 2.64 4.19 3.7.59.25 1.04.4 1.4.51.59.19 1.12.16 1.55.1.47-.07 1.45-.59 1.65-1.17.2-.57.2-1.06.14-1.16-.06-.1-.22-.16-.47-.28z"/></svg>
-          Commander
+      <!-- CARD 3: 3 MONTHS -->
+      <article class="card">
+        <div class="ribbon">Le plus flexible</div>
+        <div class="head"><span class="term">3 mois + 1 mois offert</span><span class="price">22,99 €</span></div>
+        <div class="highlight">4 mois au total • Prix spécial</div>
+        <div class="urgency"><i>⏳</i> Idéal pour découvrir</div>
+        <ul>
+          <li>+115 000 chaînes live &amp; sportives</li>
+          <li>+177 000 films &amp; séries mondiales</li>
+          <li>Guide TV (EPG) complet</li>
+          <li>Serveurs stables et rapides</li>
+          <li>Qualité 4K / FHD / HD / SD</li>
+          <li>Compatible tous appareils</li>
+          <li>Replay (4 jours)</li>
+          <li>Xtream Codes / M3U / MAG</li>
+          <li>Compatible toutes applications</li>
+          <li>Activation instantanée</li>
+          <li>Garantie satisfait ou remboursé</li>
+          <li><strong>+1 mois GRATUIT inclus</strong></li>
+        </ul>
+        <a href="https://wa.me/33748662375?text=Bonjour%20%2C%20je%20souhaite%20acheter%20l%27offre%20%3A%203%20mois%20%2B%201%20mois%20offert%20%40%2022%2C99%E2%82%AC"
+           class="cta-wa" target="_blank" rel="noopener noreferrer">
+           💬 Acheter via WhatsApp
         </a>
-        <span class="aiip__pay">
-          <img src="https://abonnement-iptv-stable.fr/wp-content/uploads/2026/01/payment-icons--e1769636637702.png"
-               width="356" height="51" loading="lazy" decoding="async"
-               alt="Moyens de paiement acceptés">
-        </span>
+        <span class="pay"><img src="https://abonnement-iptv-stable.fr/wp-content/uploads/2026/01/payment-icons--e1769636637702.png" width="356" height="51" loading="lazy" decoding="async" alt="Paiements sécurisés"></span>
       </article>
 
-      <!-- ─────────── 24 + 6 ─────────── -->
-      <!-- « Prix au mois le plus bas » est ici un fait : 89,99 / 30 = 3,00 €,
-           contre 3,33 € pour la formule 12+6. -->
-      <article class="aiip__card">
-        <span class="aiip__tag">Le moins cher au mois</span>
-        <h3 class="aiip__term">24 mois<br>+ 6 mois offerts</h3>
-        <div class="aiip__price">89,99&nbsp;€</div>
-        <p class="aiip__permonth">3,00&nbsp;€ par mois</p>
-        <div class="aiip__total">30 mois d'accès au total</div>
-        <p class="aiip__pitch">
-          Le prix au mois le plus bas des quatre formules. À choisir si vous
-          savez déjà que vous gardez le service sur la durée.
-        </p>
-        <a class="aiip__cta" target="_blank" rel="noopener noreferrer"
-           href="https://wa.me/33748662375?text=Bonjour%2C%20je%20souhaite%20commander%20la%20formule%2024%20mois%20%2B%206%20mois%20offerts%20%C3%A0%2089%2C99%E2%82%AC">
-          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2c-5.46 0-9.9 4.44-9.9 9.9 0 1.75.46 3.45 1.32 4.95L2 22l5.3-1.39c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.9-4.44 9.9-9.9S17.5 2 12.04 2zm0 18.15c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.26 8.26 0 01-1.26-4.39c0-4.54 3.7-8.24 8.25-8.24s8.24 3.7 8.24 8.24-3.7 8.25-8.24 8.25zm4.52-6.17c-.25-.12-1.47-.72-1.7-.8-.22-.09-.38-.13-.55.12-.16.25-.63.8-.77.96-.14.17-.28.19-.53.06-.25-.12-1.06-.39-2.02-1.25-.75-.66-1.25-1.48-1.4-1.73-.14-.25-.01-.39.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.43-.06-.12-.55-1.33-.75-1.82-.2-.48-.4-.42-.55-.42h-.47c-.16 0-.43.06-.65.31-.23.25-.86.85-.86 2.06s.88 2.39 1 2.56c.13.16 1.73 2.64 4.19 3.7.59.25 1.04.4 1.4.51.59.19 1.12.16 1.55.1.47-.07 1.45-.59 1.65-1.17.2-.57.2-1.06.14-1.16-.06-.1-.22-.16-.47-.28z"/></svg>
-          Commander
+      <!-- CARD 4: 24 MONTHS -->
+      <article class="card">
+        <div class="ribbon">Meilleure valeur</div>
+        <div class="head"><span class="term">24 mois + 6 mois offerts</span><span class="price">89,99 €</span></div>
+        <div class="highlight">30 mois au total • Économie maximale</div>
+        <div class="urgency"><i>🚀</i> Économisez le plus</div>
+        <ul>
+          <li>+115 000 chaînes live &amp; sportives</li>
+          <li>+177 000 films &amp; séries mondiales</li>
+          <li>Guide TV (EPG) complet</li>
+          <li>Serveurs stables et rapides</li>
+          <li>Qualité 4K / FHD / HD / SD</li>
+          <li>Compatible tous appareils</li>
+          <li>Replay (4 jours)</li>
+          <li>Xtream Codes / M3U / MAG</li>
+          <li>Compatible toutes applications</li>
+          <li>Activation instantanée</li>
+          <li>Garantie satisfait ou remboursé</li>
+          <li><strong>+6 mois GRATUITS inclus</strong></li>
+        </ul>
+        <a href="https://wa.me/33748662375?text=Bonjour%20%2C%20je%20souhaite%20acheter%20l%27offre%20%3A%2024%20mois%20%2B%206%20mois%20offerts%20%40%2089%2C99%E2%82%AC"
+           class="cta-wa" target="_blank" rel="noopener noreferrer">
+           💬 Acheter via WhatsApp
         </a>
-        <span class="aiip__pay">
-          <img src="https://abonnement-iptv-stable.fr/wp-content/uploads/2026/01/payment-icons--e1769636637702.png"
-               width="356" height="51" loading="lazy" decoding="async"
-               alt="Moyens de paiement acceptés">
-        </span>
+        <span class="pay"><img src="https://abonnement-iptv-stable.fr/wp-content/uploads/2026/01/payment-icons--e1769636637702.png" width="356" height="51" loading="lazy" decoding="async" alt="Paiements sécurisés"></span>
       </article>
     </div>
 
-    <!-- Les 11 puces communes, listées UNE fois au lieu de 4 -->
-    <div class="aiip__included">
-      <h3>Inclus dans les quatre formules</h3>
-      <p>Aucune différence de contenu ni de qualité entre les durées&nbsp;:
-         seul le prix au mois change.</p>
-      <ul>
-        <!-- ⚠️ CHIFFRES : votre hero annonce 150 000+ chaînes & VOD et
-             100 000+ films. Ici c'est 115 000 et 177 000. Choisissez un seul
-             jeu de chiffres et appliquez-le aux deux endroits. -->
-        <li><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Plus de 115 000 chaînes en direct, sport compris</li>
-        <li><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Plus de 177 000 films et séries à la demande</li>
-        <li><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Guide TV (EPG) complet dans l'application</li>
-        <li><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Replay sur 4 jours</li>
-        <li><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Qualité 4K, Full HD, HD et SD selon la chaîne</li>
-        <!-- reformulé : « serveurs stables et rapides » promettait une
-             disponibilité que personne ne peut garantir (guide §9) -->
-        <li><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Serveurs dimensionnés pour les heures de pointe</li>
-        <li><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Smart TV, Android, iOS, Fire Stick, PC et Mac</li>
-        <li><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Formats Xtream Codes, M3U et MAG</li>
-        <li><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Compatible avec les applications habituelles</li>
-        <li><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Activation dès réception du paiement</li>
-        <!-- ⚠️ REMBOURSEMENT : formulation à aligner sur votre page
-             /politique-de-remboursement/ (durée, conditions). -->
-        <li><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Garantie satisfait ou remboursé</li>
-        <li><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Assistance WhatsApp en français, 7j/7</li>
-      </ul>
-    </div>
-
-    <!-- Lien corrigé : /abonnement-iptv-fr/ redirige vers l'accueil et
-         #multi-ecran n'existe pas. L'ancre réelle est #multi. -->
-    <div class="aiip__multi">
+    <!-- Multi écran teaser -->
+    <div class="multi-teaser" aria-label="Abonnement IPTV Multi-écrans">
       <div>
-        <h3>Besoin de regarder sur plusieurs écrans&nbsp;?</h3>
-        <p>Les formules multi-écrans permettent 2 ou 3 appareils en même temps —
-           pratique quand tout le monde ne regarde pas la même chose.</p>
+        <h3>Abonnement IPTV Multi-écrans (jusqu'à 3 connexions)</h3>
+        <p>Utilisez l'IPTV sur <strong>2 ou 3 appareils simultanément</strong>. Offres dédiées famille, stabilité renforcée.</p>
       </div>
-      <a class="aiip__multi-btn" href="#multi">Voir les formules multi-écrans</a>
+      <!-- lien corrigé : /abonnement-iptv-fr/ redirige vers l'accueil et
+           #multi-ecran n'existe pas ; l'ancre réelle est #multi -->
+      <a class="multi-btn" href="#multi">Voir les offres Multi-écrans</a>
     </div>
-
   </div>
 </section>

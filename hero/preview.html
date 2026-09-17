@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aperçu hero — abonnement-iptv-stable.fr</title>
+<!-- Fichier d'APERÇU LOCAL uniquement. Ne pas coller dans WordPress :
+     collez hero-cleaned.html dans un widget Elementor « HTML ». -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
+<style>body{margin:0}</style>
+</head>
+<body>
+<!--
+  ============================================================================
+  HERO — abonnement-iptv-stable.fr
+  À coller dans un widget Elementor « HTML » (pas de <html>/<head>/<body> ici).
+  ----------------------------------------------------------------------------
+  Ce qui a changé par rapport à hero-original.html :
+
+  1. Fragment seul. Les balises <!DOCTYPE>, <html>, <head>, <body> ne peuvent pas
+     vivre dans une page WordPress — le navigateur les jette et Elementor peut
+     casser la mise en page. Supprimées.
+  2. Les DEUX <meta name="google-site-verification"> sont supprimées. Elles étaient
+     en double, et une balise de vérification placée dans le corps de la page ne
+     fonctionne pas. Elle est déjà présente une fois dans le <head> du site (via
+     Site Kit) — c'est le bon endroit.
+  3. Le <link> Google Fonts est supprimé : Elementor charge déjà ses polices dans
+     le <head>. Un <link> dans le corps bloque le rendu. Si Inter n'est pas encore
+     active, ajoutez-la une fois via Elementor → Réglages → Polices personnalisées.
+  4. Full-bleed corrigé : « width:100vw; left:50%; margin-left:-50vw; margin-right:-50vw »
+     provoquait un débordement horizontal. Remplacé par « margin-left:calc(50% - 50vw) ».
+     ⚠️ Mieux encore : réglez la section Elementor sur « Pleine largeur » et
+     supprimez le bloc .aii-hero{width/margin} ci-dessous.
+  5. Les variables CSS sont passées de :root à .aii-hero. --h et --btn-h sur :root
+     risquaient d'écraser des variables du thème ailleurs dans la page.
+  6. Images : la première est maintenant une vraie balise <img fetchpriority="high">
+     au lieu d'un background CSS. Le navigateur peut la découvrir tout de suite →
+     meilleur LCP. Les 2 autres passent en loading="lazy" : avant, les 3 images
+     (434 Ko au total) se chargeaient au premier affichage.
+  7. CSS mort supprimé : « .aii-promo-badge::before/::after{content:none} » et la
+     règle @media(max-width:400px) qui ciblait « .euro-price » — cette classe
+     n'existe nulle part dans le markup.
+  8. Accessibilité : aria-label sur <section> remplacé par aria-labelledby vers le
+     <h1> (un aria-label masque le titre aux lecteurs d'écran). Images décoratives
+     en aria-hidden + alt="".
+  9. Carrousel JS : l'intervalle tournait indéfiniment, même onglet fermé et même
+     hero hors écran. Il se met maintenant en pause quand l'onglet est caché ou
+     quand le hero n'est plus visible.
+ 10. Sous-titre réécrit : il contenait « Abonnement IPTV », « IPTV France »,
+     « premium IPTV » et « meilleur IPTV en France » en gras dans un seul
+     paragraphe — c'est du keyword stuffing (voir §5 de l'audit). Réécrit en
+     français naturel, un seul mot-clé principal.
+ 11. min-height : ajout d'un repli en vh avant svh (Safari < 15.4, Firefox < 101).
+
+  ⚠️ DEUX POINTS À VÉRIFIER DE VOTRE CÔTÉ (je n'ai pas touché aux chiffres) :
+     • Les 4 statistiques (+20 000 clients, 150 000+ chaînes, 100 000+ films,
+       999+ séries) viennent du template. « 999+ » est visiblement un
+       placeholder. Mettez vos chiffres réels ou retirez le bloc.
+     • « Offre bientôt expirée ⏳ » sans date : si l'offre ne se termine jamais,
+       c'est une pratique commerciale trompeuse au sens du Code de la
+       consommation (art. L121-2). Mettez une vraie date, ou retirez la mention
+       d'expiration et gardez juste « 12 MOIS = 6 MOIS GRATUITS ».
+  ============================================================================
+-->
+
+<style>
+  /* Défilement fluide pour les ancres #single / #multi.
+     À déplacer idéalement dans le CSS du thème — ici c'est une règle globale. */
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+
+  .aii-hero {
+    /* variables scopées au hero, plus sur :root */
+    --blue: #0A2E66;
+    --blue2: #113E86;
+    --blue-hover: #0C3A82;
+    --blue2-hover: #1550AA;
+    --btn-h: 46px;
+    --h: 78px; /* hauteur du header fixe — à ajuster si vous changez le menu */
+    --cta-glow: rgba(56, 189, 248, .28);
+    --cta-glow-strong: rgba(59, 130, 246, .35);
+  }
+
+  .aii-hero,
+  .aii-hero * {
+    box-sizing: border-box;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  }
+
+  .aii-hero {
+    position: relative;
+    /* Full-bleed sans débordement horizontal.
+       Si la section Elementor est en « Pleine largeur », supprimez ces 2 lignes. */
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+  }
+
+  .aii-wrap {
+    position: relative;
+    width: 100%;
+    min-height: 86vh;      /* repli */
+    min-height: 86svh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    isolation: isolate;
+    padding-top: calc(var(--h) + 36px + env(safe-area-inset-top, 0px));
+    padding-bottom: clamp(22px, 5svh, 56px);
+    background: #05070B;
+  }
+
+  /* couches d'images alternées */
+  .aii-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    opacity: 0;
+    transition: opacity 900ms ease;
+    z-index: 0;
+    transform: translateZ(0);
+    will-change: opacity;
+  }
+  .aii-bg.is-active { opacity: 1; }
+
+  .aii-wrap::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0,0,0,.90) 0%, rgba(0,0,0,.62) 40%, rgba(0,0,0,.90) 100%);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .aii-inner {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .aii-content {
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    text-align: center;
+    max-width: 780px;
+  }
+
+  .aii-promo-badge {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    padding: 8px 16px;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #E30613 0%, #FF1493 50%, #C80511 100%);
+    color: #fff;
+    font-weight: 800;
+    font-size: .85rem;
+    border: 2px solid rgba(255,255,255,.25);
+    box-shadow: 0 4px 16px rgba(255,20,147,.35);
+    margin-bottom: 2px;
+    position: relative;
+    overflow: hidden;
+    line-height: 1.2;
+    animation: aii-badge-pulse 2s ease-in-out infinite;
+  }
+  @keyframes aii-badge-pulse {
+    0%, 100% { box-shadow: 0 4px 16px rgba(255,20,147,.35); }
+    50%      { box-shadow: 0 8px 24px rgba(255,20,147,.60); }
+  }
+
+  .aii-title {
+    font-weight: 900;
+    letter-spacing: -.01em;
+    line-height: 1.12;
+    margin: 4px 0 0;
+  }
+  .aii-title .t1 { display: block; font-size: clamp(2.3rem, 1.7rem + 2.6vw, 3.6rem); }
+  .aii-title .t2 { display: block; font-size: clamp(1.05rem, .9rem + .9vw, 1.4rem); opacity: .98; }
+  .aii-title,
+  .aii-title .t1,
+  .aii-title .t2 { color: #fff !important; }
+
+  .aii-sub {
+    font-size: clamp(1rem, .95rem + .4vw, 1.18rem);
+    font-weight: 500;
+    max-width: 68ch;
+    color: #EAF7FF;
+    text-shadow: 0 2px 14px rgba(8,14,24,.55);
+    margin-bottom: 4px;
+  }
+  .aii-sub b { color: #fff; }
+
+  .aii-cta-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0;
+  }
+
+  .aii-hero .btn {
+    height: var(--btn-h);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 0 22px;
+    border-radius: 14px;
+    font-weight: 900;
+    text-decoration: none;
+    line-height: 1;
+    white-space: nowrap;
+    transition: transform .14s ease, box-shadow .14s ease, background .14s ease, border-color .14s ease, color .14s ease;
+    position: relative;
+  }
+
+  .aii-hero .btn-blue,
+  .aii-hero .btn-blue:hover,
+  .aii-hero .btn-blue:focus,
+  .aii-hero .btn-blue:active,
+  .aii-hero .btn-blue:visited { color: #fff !important; }
+
+  .aii-hero .btn-blue {
+    background:
+      radial-gradient(120% 140% at 15% 0%, rgba(255,255,255,.18) 0%, rgba(255,255,255,0) 55%),
+      linear-gradient(90deg, var(--blue) 0%, var(--blue2) 65%, #1D7AF2 100%);
+    box-shadow:
+      0 10px 30px rgba(10,46,102,.30),
+      0 0 0 1px rgba(255,255,255,.12) inset,
+      0 0 26px var(--cta-glow);
+    overflow: hidden;
+    transform: translateZ(0);
+    animation: aii-pulse 1.8s ease-in-out infinite;
+  }
+  .aii-hero .btn-blue::before {
+    content: "";
+    position: absolute;
+    top: -40%;
+    left: -60%;
+    width: 60%;
+    height: 180%;
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,.22) 45%, transparent 100%);
+    transform: rotate(18deg);
+    opacity: 0;
+    pointer-events: none;
+  }
+  .aii-hero .btn-blue:hover::before {
+    opacity: 1;
+    animation: aii-shine 900ms ease forwards;
+  }
+  @keyframes aii-shine { 0% { left: -70%; } 100% { left: 130%; } }
+  @keyframes aii-pulse {
+    0%, 100% {
+      box-shadow:
+        0 10px 30px rgba(10,46,102,.30),
+        0 0 0 1px rgba(255,255,255,.12) inset,
+        0 0 22px var(--cta-glow);
+    }
+    50% {
+      box-shadow:
+        0 14px 38px rgba(10,46,102,.36),
+        0 0 0 1px rgba(255,255,255,.14) inset,
+        0 0 34px var(--cta-glow-strong);
+    }
+  }
+  .aii-hero .btn-blue:hover {
+    transform: translateY(-2px);
+    background:
+      radial-gradient(120% 140% at 15% 0%, rgba(255,255,255,.22) 0%, rgba(255,255,255,0) 60%),
+      linear-gradient(90deg, var(--blue-hover) 0%, var(--blue2-hover) 65%, #2B8CFF 100%);
+    box-shadow:
+      0 16px 46px rgba(10,46,102,.40),
+      0 0 0 1px rgba(255,255,255,.14) inset,
+      0 0 42px var(--cta-glow-strong);
+  }
+
+  .aii-hero .btn-outline {
+    background: transparent;
+    color: #fff !important;
+    border: 2px solid rgba(255,255,255,.55);
+    box-shadow: 0 10px 26px rgba(0,0,0,.18);
+    backdrop-filter: blur(2px);
+  }
+  .aii-hero .btn-outline:hover {
+    transform: translateY(-2px);
+    background: rgba(255,255,255,.12);
+    border-color: #fff;
+    box-shadow: 0 16px 40px rgba(0,0,0,.22);
+  }
+  .aii-hero .btn:focus-visible {
+    outline: 3px solid rgba(255,255,255,.38);
+    outline-offset: 3px;
+  }
+
+  .aii-stats {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 4px;
+  }
+  .aii-stats .stat {
+    min-width: 150px;
+    background: rgba(255,255,255,.10);
+    backdrop-filter: blur(2px);
+    border: 1px solid rgba(255,255,255,.18);
+    border-radius: 12px;
+    padding: 10px 12px;
+  }
+  .aii-stats .stat b { font-size: 1.12rem; }
+  .aii-stats .stat small { display: block; opacity: .9; }
+
+  .aii-hero .trust {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    color: #dbeafe;
+    font-size: .95rem;
+    margin-top: 4px;
+  }
+
+  @media (max-width: 1024px) {
+    .aii-wrap { padding-top: calc(var(--h) + 28px + env(safe-area-inset-top, 0px)); }
+  }
+
+  @media (max-width: 560px) {
+    .aii-wrap {
+      min-height: 78vh;
+      min-height: 78svh;
+      padding-top: calc(var(--h) + 14px);
+      padding-bottom: 14px;
+    }
+    .aii-content { gap: 6px; }
+    .aii-promo-badge {
+      font-size: .75rem;
+      padding: 6px 12px;
+      gap: 6px;
+      border-radius: 8px;
+      margin-bottom: 1px;
+      max-width: 95%;
+      background: linear-gradient(90deg, #E30613 0%, #FF1493 60%, #C80511 100%);
+    }
+    .aii-sub {
+      font-size: .98rem;
+      line-height: 1.35;
+      max-width: 54ch;
+      margin-bottom: 2px;
+    }
+    .aii-hero .btn {
+      height: 44px;
+      padding: 0 18px;
+      width: 100%;
+      max-width: 320px;
+      border-radius: 16px;
+    }
+    .aii-stats { gap: 8px; margin-top: 2px; }
+    .aii-stats .stat { min-width: 146px; padding: 8px 10px; border-radius: 12px; }
+    .aii-stats .stat b { font-size: 1.05rem; }
+    .aii-stats .stat small { font-size: .82rem; }
+    .aii-hero .trust { font-size: .9rem; margin-top: 2px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .aii-bg { transition: none; }
+    .aii-hero .btn-blue { animation: none; }
+    .aii-hero .btn-blue:hover::before { animation: none; }
+    .aii-promo-badge { animation: none; }
+  }
+</style>
+
+<section class="aii-hero" aria-labelledby="aii-hero-title">
+  <div class="aii-wrap" id="aii-hero-fr">
+
+    <!-- Fonds alternés. La 1re est en fetchpriority="high" (candidat LCP),
+         les suivantes en lazy pour ne pas charger 434 Ko au premier affichage. -->
+    <img class="aii-bg is-active" alt="" aria-hidden="true"
+         fetchpriority="high" decoding="async"
+         src="https://abonnement-iptv-stable.fr/wp-content/uploads/2025/12/France-IPTV.jpg">
+    <img class="aii-bg" alt="" aria-hidden="true"
+         loading="lazy" decoding="async"
+         src="https://abonnement-iptv-stable.fr/wp-content/uploads/2025/12/Abonnement-IPTV-premium.jpg">
+    <img class="aii-bg" alt="" aria-hidden="true"
+         loading="lazy" decoding="async"
+         src="https://abonnement-iptv-stable.fr/wp-content/uploads/2025/11/France-IPTV.jpg">
+
+    <div class="aii-inner">
+      <div class="aii-content">
+
+        <!-- ⚠️ « Offre bientôt expirée » : mettez une vraie date ou retirez-le (voir en-tête) -->
+        <span class="aii-promo-badge">
+          <span>🔥 12 MOIS ACHETÉS = 6 MOIS OFFERTS ⏳</span>
+        </span>
+
+        <h1 class="aii-title" id="aii-hero-title">
+          <span class="t1">Abonnement IPTV</span>
+          <span class="t2">Meilleur IPTV France &ndash; HD/4K stable et illimité</span>
+        </h1>
+
+        <!-- Sous-titre réécrit : un seul mot-clé principal, plus de chaîne de variantes -->
+        <p class="aii-sub">
+          Chaînes, films et séries en <b>4K/HD</b>, sport en direct, VOD et replay.
+          Installation en quelques minutes sur Smart TV, Android, iOS, box et PC,
+          avec une assistance 7j/7. Un <b>abonnement IPTV</b> pensé pour la France :
+          serveurs stables, zéro coupure pendant les matchs.
+        </p>
+
+        <div class="aii-cta-row">
+          <!-- ⚠️ Les sections #single et #multi doivent exister plus bas sur la page -->
+          <a class="btn btn-blue" href="#single">Voir les offres (1 écran)</a>
+          <a class="btn btn-outline" href="#multi">Offres multi-écrans (2&ndash;3)</a>
+        </div>
+
+        <!-- ⚠️ Chiffres repris du template — à remplacer par les vrais (voir en-tête) -->
+        <div class="aii-stats">
+          <div class="stat"><b>+20 000</b><small>Clients satisfaits</small></div>
+          <div class="stat"><b>150 000+</b><small>Chaînes &amp; VOD</small></div>
+          <div class="stat"><b>100 000+</b><small>Films en 4K</small></div>
+          <div class="stat"><b>999+</b><small>Séries &amp; sport en direct</small></div>
+        </div>
+
+        <div class="trust">Paiement sécurisé • Assistance WhatsApp • IPTV France</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  var wrap = document.getElementById('aii-hero-fr');
+  if (!wrap) return;
+
+  var layers = Array.prototype.slice.call(wrap.querySelectorAll('.aii-bg'));
+  if (layers.length < 2) return;
+
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var i = 0, timer = null, onScreen = true;
+  var INTERVAL = 3000;
+
+  function step() {
+    layers[i].classList.remove('is-active');
+    i = (i + 1) % layers.length;
+    layers[i].classList.add('is-active');
+  }
+
+  function start() {
+    if (timer || !onScreen || document.hidden) return;
+    timer = setInterval(step, INTERVAL);
+  }
+
+  function stop() {
+    if (!timer) return;
+    clearInterval(timer);
+    timer = null;
+  }
+
+  // Pause quand l'onglet passe en arrière-plan
+  document.addEventListener('visibilitychange', function () {
+    document.hidden ? stop() : start();
+  });
+
+  // Pause quand le hero n'est plus visible à l'écran
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      onScreen = entries[0].isIntersecting;
+      onScreen ? start() : stop();
+    }, { threshold: 0 }).observe(wrap);
+  }
+
+  start();
+})();
+</script>
+
+<!-- cibles factices pour tester les ancres -->
+<div id="single" style="height:60vh;background:#0e1420;color:#fff;display:grid;place-items:center;font:700 1.5rem Inter,sans-serif">#single — offres 1 écran</div>
+<div id="multi" style="height:60vh;background:#131b2c;color:#fff;display:grid;place-items:center;font:700 1.5rem Inter,sans-serif">#multi — offres multi-écrans</div>
+</body>
+</html>

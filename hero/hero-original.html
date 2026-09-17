@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta name="google-site-verification" content="tElArytN0aJJpROI6GoWLqhN2UWtuoSJsRff9sxJipw" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IPTV France – offre 12+6 mois gratuits</title>
+  <meta name="google-site-verification" content="tElArytN0aJJpROI6GoWLqhN2UWtuoSJsRff9sxJipw" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
+  <style>
+    /* Activation du défilement fluide pour toute la page */
+    html {
+      scroll-behavior: smooth;
+    }
+    :root{
+      --blue:#0A2E66; --blue2:#113E86;
+      --btn-h:46px; --h:78px;
+      --blue-hover:#0C3A82;
+      --blue2-hover:#1550AA;
+      --cta-glow: rgba(56, 189, 248, .28);
+      --cta-glow-strong: rgba(59, 130, 246, .35);
+    }
+
+    .aii-hero, .aii-hero *{box-sizing:border-box;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+    .aii-hero{
+      position:relative;
+      width:100vw; left:50%; right:50%;
+      margin-left:-50vw; margin-right:-50vw;
+    }
+    .aii-wrap{
+      position:relative;
+      width:100%;
+      min-height:86svh;
+      display:flex;
+      align-items:center;
+      overflow:hidden;
+      isolation:isolate;
+      padding-top:calc(var(--h) + 36px + env(safe-area-inset-top,0px));
+      padding-bottom:clamp(22px,5svh,56px);
+      background:#05070B;
+    }
+    .aii-bg{
+      position:absolute; inset:0;
+      background-position:center;
+      background-size:cover;
+      background-repeat:no-repeat;
+      opacity:0;
+      transition:opacity 900ms ease;
+      z-index:0;
+      transform:translateZ(0);
+      will-change:opacity;
+    }
+    .aii-bg.is-active{opacity:1;}
+    .aii-wrap::after{
+      content:"";
+      position:absolute; inset:0;
+      background:linear-gradient(135deg, rgba(0,0,0,.90) 0%, rgba(0,0,0,.62) 40%, rgba(0,0,0,.90) 100%);
+      z-index:1;
+      pointer-events:none;
+    }
+    .aii-inner{
+      position:relative;
+      z-index:2;
+      width:100%;
+      max-width:1200px;
+      margin:0 auto;
+      padding:0 20px;
+      display:flex;
+      justify-content:center;
+    }
+    .aii-content{
+      color:#fff;
+      display:flex;
+      flex-direction:column;
+      gap: 10px;
+      align-items:center;
+      text-align:center;
+      max-width:780px;
+    }
+    .aii-promo-badge {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      padding: 8px 16px;
+      border-radius: 10px;
+      background: linear-gradient(90deg, #E30613 0%, #FF1493 50%, #C80511 100%);
+      color: white;
+      font-weight: 800;
+      font-size: 0.85rem;
+      border: 2px solid rgba(255,255,255,0.25);
+      box-shadow: 0 4px 16px rgba(255, 20, 147, 0.35);
+      margin-bottom: 2px;
+      position: relative;
+      overflow: hidden;
+      line-height: 1.2;
+      animation: valentinePulse 2s ease-in-out infinite;
+    }
+    @keyframes valentinePulse {
+      0%, 100% { box-shadow: 0 4px 16px rgba(255, 20, 147, 0.35); }
+      50% { box-shadow: 0 8px 24px rgba(255, 20, 147, 0.6); }
+    }
+    .aii-promo-badge::before,
+    .aii-promo-badge::after {
+      content: none;
+    }
+    .aii-title{
+      font-weight:900;
+      letter-spacing:-.01em;
+      line-height:1.12;
+      margin: 4px 0 0;
+    }
+    .aii-title .t1{display:block;font-size:clamp(2.3rem,1.7rem + 2.6vw,3.6rem)}
+    .aii-title .t2{display:block;font-size:clamp(1.05rem,.9rem + .9vw,1.4rem);opacity:.98}
+    .aii-title, .aii-title .t1, .aii-title .t2 { color:#fff !important; }
+    .aii-sub{
+      font-size:clamp(1rem,.95rem + .4vw,1.18rem);
+      font-weight:500;
+      max-width:68ch;
+      color:#EAF7FF;
+      text-shadow:0 2px 14px rgba(8,14,24,.55);
+      margin-bottom: 4px;
+    }
+    .aii-sub b{color:#fff}
+    .aii-cta-row{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:center;
+      margin-top: 0;
+    }
+    .btn{
+      height:var(--btn-h);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:0 22px;
+      border-radius:14px;
+      font-weight:900;
+      text-decoration:none;
+      line-height:1;
+      white-space:nowrap;
+      transition:transform .14s ease, box-shadow .14s ease, background .14s ease, border-color .14s ease, color .14s ease;
+      position:relative;
+    }
+    .btn-blue,
+    .btn-blue:hover,
+    .btn-blue:focus,
+    .btn-blue:active,
+    .btn-blue:visited{
+      color:#fff !important;
+    }
+    .btn-blue{
+      background:
+        radial-gradient(120% 140% at 15% 0%, rgba(255,255,255,.18) 0%, rgba(255,255,255,0) 55%),
+        linear-gradient(90deg,var(--blue) 0%,var(--blue2) 65%, #1D7AF2 100%);
+      box-shadow:
+        0 10px 30px rgba(10,46,102,.30),
+        0 0 0 1px rgba(255,255,255,.12) inset,
+        0 0 26px var(--cta-glow);
+      overflow:hidden;
+      transform:translateZ(0);
+      animation:aii-pulse 1.8s ease-in-out infinite;
+    }
+    .btn-blue::before{
+      content:"";
+      position:absolute;
+      top:-40%;
+      left:-60%;
+      width:60%;
+      height:180%;
+      background:linear-gradient(90deg, transparent 0%, rgba(255,255,255,.22) 45%, transparent 100%);
+      transform:rotate(18deg);
+      opacity:0;
+      pointer-events:none;
+    }
+    .btn-blue:hover::before{
+      opacity:1;
+      animation:aii-shine 900ms ease forwards;
+    }
+    @keyframes aii-shine{0%{left:-70%}100%{left:130%}}
+    @keyframes aii-pulse{
+      0%,100%{
+        box-shadow:
+          0 10px 30px rgba(10,46,102,.30),
+          0 0 0 1px rgba(255,255,255,.12) inset,
+          0 0 22px var(--cta-glow);
+      }
+      50%{
+        box-shadow:
+          0 14px 38px rgba(10,46,102,.36),
+          0 0 0 1px rgba(255,255,255,.14) inset,
+          0 0 34px var(--cta-glow-strong);
+      }
+    }
+    .btn-blue:hover{
+      transform:translateY(-2px);
+      background:
+        radial-gradient(120% 140% at 15% 0%, rgba(255,255,255,.22) 0%, rgba(255,255,255,0) 60%),
+        linear-gradient(90deg,var(--blue-hover) 0%,var(--blue2-hover) 65%, #2B8CFF 100%);
+      box-shadow:
+        0 16px 46px rgba(10,46,102,.40),
+        0 0 0 1px rgba(255,255,255,.14) inset,
+        0 0 42px var(--cta-glow-strong);
+    }
+    .btn-outline{
+      background:transparent;
+      color:#fff !important;
+      border:2px solid rgba(255,255,255,.55);
+      box-shadow:0 10px 26px rgba(0,0,0,.18);
+      backdrop-filter: blur(2px);
+    }
+    .btn-outline:hover{
+      transform:translateY(-2px);
+      background:rgba(255,255,255,.12);
+      border-color:#fff;
+      box-shadow:0 16px 40px rgba(0,0,0,.22);
+    }
+    .btn:focus-visible{
+      outline:3px solid rgba(255,255,255,.38);
+      outline-offset:3px;
+    }
+    .aii-stats{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:10px;
+      margin-top: 4px;
+    }
+    .stat{
+      min-width:150px;
+      background:rgba(255,255,255,.10);
+      backdrop-filter:blur(2px);
+      border:1px solid rgba(255,255,255,.18);
+      border-radius:12px;
+      padding:10px 12px
+    }
+    .stat b{font-size:1.12rem}
+    .stat small{display:block;opacity:.9}
+    .trust{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:center;
+      color:#dbeafe;
+      font-size:.95rem;
+      margin-top: 4px;
+    }
+    @media(max-width:1024px){
+      .aii-wrap{padding-top:calc(var(--h) + 28px + env(safe-area-inset-top,0px))}
+    }
+    @media(max-width:560px){
+      .aii-wrap{
+        min-height:78svh;
+        padding-top:calc(var(--h) + 14px);
+        padding-bottom:14px;
+      }
+      .aii-content{
+        gap: 6px;
+      }
+      .aii-promo-badge {
+        font-size: 0.75rem;
+        padding: 6px 12px;
+        gap: 6px;
+        border-radius: 8px;
+        margin-bottom: 1px;
+        max-width: 95%;
+        background: linear-gradient(90deg, #E30613 0%, #FF1493 60%, #C80511 100%);
+      }
+      .aii-sub{
+        font-size:.98rem;
+        line-height:1.35;
+        max-width:54ch;
+        margin-bottom: 2px;
+      }
+      .btn{
+        height:44px;
+        padding:0 18px;
+        width:100%;
+        max-width:320px;
+        border-radius:16px;
+      }
+      .aii-stats{
+        gap:8px;
+        margin-top: 2px;
+      }
+      .stat{
+        min-width:146px;
+        padding:8px 10px;
+        border-radius:12px;
+      }
+      .stat b{font-size:1.05rem}
+      .stat small{font-size:.82rem}
+      .trust{
+        font-size:.9rem;
+        margin-top: 2px;
+      }
+    }
+    @media(max-width:400px){
+      .aii-promo-badge .euro-price {
+        font-size: 1.1em;
+        padding: 4px 12px;
+      }
+    }
+    @media (prefers-reduced-motion: reduce){
+      .aii-bg{transition:none;}
+      .btn-blue{animation:none;}
+      .btn-blue:hover::before{animation:none;}
+      .aii-promo-badge{animation:none;}
+    }
+  </style>
+</head>
+<body>
+
+<section class="aii-hero" aria-label="Abonnement IPTV – offre 12+6 gratuits">
+  <div class="aii-wrap" id="aii-hero-fr">
+    <!-- fonds alternés -->
+    <div class="aii-bg is-active" style="background-image:url('https://abonnement-iptv-stable.fr/wp-content/uploads/2025/12/France-IPTV.jpg');"></div>
+    <div class="aii-bg" style="background-image:url('https://abonnement-iptv-stable.fr/wp-content/uploads/2025/12/Abonnement-IPTV-premium.jpg');"></div>
+    <div class="aii-bg" style="background-image:url('https://abonnement-iptv-stable.fr/wp-content/uploads/2025/11/France-IPTV.jpg');"></div>
+
+    <div class="aii-inner">
+      <div class="aii-content">
+        <!-- badge inchangé -->
+        <span class="aii-promo-badge">
+          <span>🔥 ACHETEZ 12 MOIS – 6 MOIS GRATUITS ! Offre bientôt expirée ⏳</span>
+        </span>
+
+        <h1 class="aii-title">
+          <span class="t1">Abonnement IPTV</span>
+          <span class="t2">Meilleur IPTV France – HD/4K stable et illimité</span>
+        </h1>
+
+        <p class="aii-sub">
+          <b>Abonnement IPTV</b> premium pour <b>IPTV France</b> : chaînes, films & séries en 4K/HD, sport en direct,
+          VOD et replay. Installation simple sur Smart TV, Android, iOS, Box & PC, support 7j/7.
+          Profitez de la meilleure expérience <b>premium IPTV</b> – la solution <b>meilleur IPTV en France</b> pour un
+          streaming <b>stable</b>, <b>illimité</b> et de haute qualité.
+        </p>
+
+        <!-- Liens modifiés pour ancres internes #single et #multi -->
+        <div class="aii-cta-row">
+          <a class="btn btn-blue" href="#single">Voir les offres (1 écran)</a>
+          <a class="btn btn-outline" href="#multi">Offres multi-écrans (2–3)</a>
+        </div>
+
+        <div class="aii-stats" aria-label="Preuves sociales">
+          <div class="stat"><b>+20 000</b><small>Clients satisfaits</small></div>
+          <div class="stat"><b>150 000+</b><small>Chaînes & VODs</small></div>
+          <div class="stat"><b>100 000+</b><small>Films en 4K</small></div>
+          <div class="stat"><b>999+</b><small>Séries & sport en direct</small></div>
+        </div>
+
+        <div class="trust">Paiement sécurisé • Assistance WhatsApp • IPTV France</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- script carrousel inchangé -->
+<script>
+  (function(){
+    const wrap = document.getElementById('aii-hero-fr');
+    if(!wrap) return;
+    const layers = Array.from(wrap.querySelectorAll('.aii-bg'));
+    if(layers.length < 2) return;
+    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduceMotion) return;
+    let i = 0;
+    const intervalMs = 3000;
+    setInterval(() => {
+      layers[i].classList.remove('is-active');
+      i = (i + 1) % layers.length;
+      layers[i].classList.add('is-active');
+    }, intervalMs);
+  })();
+</script>
+
+<!-- 
+  Note: Les sections avec les IDs #single et #multi doivent exister ailleurs sur la page.
+  Ce fichier ne contient que la section hero propre.
+-->
+
+</body>
+</html>

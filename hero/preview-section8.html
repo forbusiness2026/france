@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aperçu comparatif — abonnement-iptv-stable.fr</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
+<style>body{margin:0;background:#fff}</style>
+</head>
+<body>
+<style>
+  #pourquoi-nous{
+    --blue:#0A2E66; --blue2:#113E86; --blue3:#1D7AF2;
+    --ink:#101a2b; --muted:#4b5563;
+    --ok:#0A7A3D; --mid:#B8860B; --no:#C0392B;
+    --line:#eef4ff;
+    --sh:0 2px 6px rgba(0,0,0,.14), 0 16px 36px rgba(0,0,0,.18);
+    --sh-hover:0 4px 10px rgba(0,0,0,.18), 0 24px 50px rgba(0,0,0,.26);
+  }
+  #pourquoi-nous, #pourquoi-nous *{
+    box-sizing:border-box;
+    font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+  }
+  #pourquoi-nous.rs-compare{width:100%; max-width:100%; margin:0; padding:0}
+  #pourquoi-nous .comparison-section{
+    width:100%; max-width:1040px; margin:0 auto; padding:32px 0;
+    container-type:inline-size; container-name:aiicmp;
+  }
+
+  /* ── TITRE ── */
+  #pourquoi-nous .section-header{text-align:center; margin-bottom:26px}
+  #pourquoi-nous .section-header h2{
+    font-size:clamp(1.4rem,2.6vw,2.2rem); font-weight:900;
+    color:var(--blue); margin:0; letter-spacing:-.02em;
+    line-height:1.18; text-wrap:balance;
+  }
+  /* le jaune #ffcc00 sur fond blanc donnait un contraste de 1,51:1 —
+     illisible (le minimum WCAG est 4,5:1). Passe au bleu de la marque. */
+  #pourquoi-nous .brand-highlight{color:var(--blue); font-weight:900}
+  #pourquoi-nous .section-header::after{
+    content:''; display:block; width:120px; height:5px; margin:14px auto 0;
+    border-radius:999px;
+    background:linear-gradient(90deg,#002654 0 33%,#C3D0E6 33% 66%,#EF4135 66% 100%);
+    box-shadow:0 4px 14px rgba(0,0,0,.16);
+  }
+  #pourquoi-nous .section-header p{
+    max-width:720px; margin:14px auto 0; color:var(--muted);
+    font-size:clamp(.96rem,1.3vw,1.04rem); line-height:1.6;
+  }
+  #pourquoi-nous .section-header a{
+    color:var(--blue2); font-weight:700;
+    text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:2px;
+  }
+  #pourquoi-nous .section-header a:hover{color:#EF4135}
+
+  /* ── TABLEAU ── */
+  #pourquoi-nous .comparison-container{
+    border-radius:20px; overflow:hidden; background:#fff;
+    box-shadow:var(--sh); position:relative;
+  }
+  #pourquoi-nous .comparison-container::after{
+    content:''; position:absolute; top:0; right:0; width:22px; height:100%;
+    background:linear-gradient(90deg, rgba(255,255,255,0), #fff 70%);
+    pointer-events:none; display:none;
+  }
+  @container aiicmp (max-width:700px){
+    #pourquoi-nous .comparison-container::after{display:block}
+  }
+  #pourquoi-nous .comparison-scroll{
+    overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch;
+    scrollbar-width:thin; scrollbar-color:#cfe0ff transparent;
+  }
+  #pourquoi-nous .comparison-scroll:focus-visible{outline:3px solid rgba(29,122,242,.5);outline-offset:-3px}
+  #pourquoi-nous .comparison-scroll::-webkit-scrollbar{height:8px}
+  #pourquoi-nous .comparison-scroll::-webkit-scrollbar-thumb{background:#cfe0ff;border-radius:8px}
+
+  #pourquoi-nous .comparison-table{width:100%; border-collapse:collapse; min-width:720px}
+  #pourquoi-nous .comparison-table th{
+    padding:18px 14px; font-weight:800; color:var(--ink);
+    font-size:clamp(.95rem,1.3vw,1.1rem);
+    text-align:center; border-bottom:2px solid var(--line);
+  }
+  #pourquoi-nous .comparison-table th:first-child{
+    text-align:left; padding-left:24px; width:50%; color:var(--blue);
+  }
+  #pourquoi-nous .rs-header{
+    color:var(--blue);
+    background:linear-gradient(90deg,rgba(10,46,102,.06),rgba(29,122,242,.06));
+    position:relative;
+  }
+  #pourquoi-nous .rs-header::after{
+    content:''; position:absolute; bottom:0; left:0; right:0; height:3px;
+    background:linear-gradient(90deg,var(--blue),var(--blue3));
+  }
+  #pourquoi-nous .other-header{background:rgba(120,130,145,.05); color:#6b7280}
+
+  #pourquoi-nous .comparison-table tbody tr{
+    border-bottom:1px solid #f0f8ff; transition:background-color .25s;
+  }
+  #pourquoi-nous .comparison-table tbody tr:hover{background:rgba(10,46,102,.03)}
+  #pourquoi-nous .comparison-table td{
+    padding:16px 14px; font-size:clamp(.93rem,1.2vw,1.04rem);
+    font-weight:500; color:var(--ink); vertical-align:middle;
+  }
+  /* display:flex etait pose sur le <td> lui-meme, ce qui le sort de la mise en
+     page tabulaire ; le flex est maintenant sur un <span> interieur. */
+  #pourquoi-nous .comparison-table td:first-child{padding-left:24px; min-width:270px}
+  #pourquoi-nous .crit{display:flex; align-items:center; gap:11px; font-weight:700; text-align:left}
+
+  #pourquoi-nous .feature-icon{
+    width:36px; height:36px; flex:0 0 36px; border-radius:50%;
+    background:rgba(10,46,102,.09);
+    display:flex; align-items:center; justify-content:center;
+  }
+  #pourquoi-nous .feature-icon svg{
+    width:18px; height:18px; display:block;
+    fill:none; stroke:var(--blue); stroke-width:1.9;
+    stroke-linecap:round; stroke-linejoin:round;
+  }
+
+  #pourquoi-nous .comparison-table td:nth-child(2),
+  #pourquoi-nous .comparison-table td:nth-child(3){text-align:center; white-space:nowrap}
+
+  /* les pastilles utilisaient z-index:-1 : elles passaient DERRIERE le fond de
+     la ligne au survol et disparaissaient. Remplacees par un vrai jeton. */
+  #pourquoi-nous .mark{
+    display:inline-grid; place-items:center;
+    width:38px; height:38px; border-radius:50%;
+    font-size:1.15rem; font-weight:900; line-height:1;
+  }
+  #pourquoi-nous .mark--yes{background:rgba(10,122,61,.12); color:var(--ok)}
+  #pourquoi-nous .mark--mid{background:rgba(184,134,11,.14); color:var(--mid); font-size:1.3rem}
+  #pourquoi-nous .mark--no {background:rgba(192,57,43,.11); color:var(--no)}
+  #pourquoi-nous .mark-note{
+    display:block; margin-top:5px; font-size:.76rem;
+    font-weight:600; color:var(--muted); white-space:normal;
+  }
+
+  #pourquoi-nous .legend{
+    display:flex; flex-wrap:wrap; gap:8px 20px; justify-content:center;
+    margin:16px auto 0; padding:0 6px;
+    font-size:.84rem; color:var(--muted);
+  }
+  #pourquoi-nous .legend span{display:inline-flex; align-items:center; gap:7px}
+  #pourquoi-nous .legend b{
+    display:inline-grid; place-items:center; width:22px; height:22px;
+    border-radius:50%; font-size:.8rem;
+  }
+  #pourquoi-nous .disclaimer{
+    max-width:720px; margin:12px auto 0; padding:0 6px;
+    font-size:.82rem; line-height:1.55; color:#6b7280; text-align:center;
+  }
+
+  /* ── BENEFICES ── */
+  #pourquoi-nous .user-benefits{
+    list-style:none; margin:30px 0 0; padding:0 6px;
+    display:grid; gap:20px; justify-content:center;
+    grid-template-columns:repeat(auto-fit,minmax(min(270px,100%),300px));
+  }
+  #pourquoi-nous .benefit-card{
+    background:#fff; border-radius:16px; padding:24px 22px;
+    box-shadow:var(--sh); border:1px solid rgba(10,46,102,.08);
+    transition:transform .2s ease, box-shadow .2s ease; text-align:center;
+  }
+  #pourquoi-nous .benefit-card:hover{transform:translateY(-5px); box-shadow:var(--sh-hover)}
+  #pourquoi-nous .benefit-icon{
+    width:60px; height:60px; border-radius:50%;
+    background:rgba(10,46,102,.09);
+    display:flex; align-items:center; justify-content:center; margin:0 auto 16px;
+  }
+  #pourquoi-nous .benefit-icon svg{
+    width:26px; height:26px; display:block;
+    fill:none; stroke:var(--blue); stroke-width:1.8;
+    stroke-linecap:round; stroke-linejoin:round;
+  }
+  #pourquoi-nous .benefit-card h3{
+    font-size:1.12rem; color:var(--blue); margin:0 0 8px; font-weight:800; line-height:1.3;
+  }
+  #pourquoi-nous .benefit-card p{margin:0; color:var(--muted); line-height:1.6; font-size:.97rem}
+  #pourquoi-nous .benefit-card a{
+    color:var(--blue2); font-weight:700;
+    text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:2px;
+  }
+  #pourquoi-nous .benefit-card a:hover{color:#EF4135}
+
+  @container aiicmp (max-width:900px){
+    #pourquoi-nous .comparison-section{padding:20px 0}
+    #pourquoi-nous .comparison-table th,
+    #pourquoi-nous .comparison-table td{padding:14px 12px}
+  }
+  @container aiicmp (max-width:600px){
+    #pourquoi-nous .comparison-table th:first-child,
+    #pourquoi-nous .comparison-table td:first-child{padding-left:16px}
+    #pourquoi-nous .feature-icon{width:30px;height:30px;flex:0 0 30px}
+    #pourquoi-nous .feature-icon svg{width:15px;height:15px}
+    #pourquoi-nous .user-benefits{gap:14px}
+    #pourquoi-nous .benefit-card{padding:20px 18px}
+  }
+  @media (prefers-reduced-motion: reduce){
+    #pourquoi-nous .comparison-table tbody tr,#pourquoi-nous .benefit-card{transition:none}
+    #pourquoi-nous .benefit-card:hover{transform:none}
+  }
+</style>
+
+<!-- =========================================================
+     POURQUOI NOUS CHOISIR — COMPARATIF
+========================================================= -->
+<section class="rs-compare" id="pourquoi-nous" aria-labelledby="aiicmp-title">
+  <div class="comparison-section">
+
+    <div class="section-header">
+      <h2 id="aiicmp-title">
+        <span class="brand-highlight">Abonnement IPTV</span> : ce qui change par rapport à une offre à bas prix
+      </h2>
+      <p>
+        Le prix n'est pas le seul écart entre deux abonnements IPTV. Voici les points
+        sur lesquels une offre d'entrée de gamme fait généralement l'impasse —
+        et où vous le remarquez, un soir de match ou le jour où vous avez besoin
+        d'aide. Vous pouvez vérifier notre catalogue sur la
+        <a href="https://abonnement-iptv-stable.fr/8k-abonnement-iptv/liste-des-chaines/">liste des chaînes</a>.
+      </p>
+    </div>
+
+    <!-- COMPARAISON -->
+    <div class="comparison-container">
+      <div class="comparison-scroll" tabindex="0" role="region"
+           aria-label="Tableau comparatif, défilement horizontal">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th scope="col">Critère</th>
+              <th scope="col" class="rs-header">Notre abonnement</th>
+              <th scope="col" class="other-header">Offre à bas prix</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="crit"><span class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h7l-1 8 11-14h-7l0-6z"/></svg></span> Activation en 5 à 15 minutes</span></td>
+              <td><span class="mark mark--yes" role="img" aria-label="Oui">✓</span></td>
+              <td><span class="mark mark--mid" role="img" aria-label="Variable">~</span><span class="mark-note">variable</span></td>
+            </tr>
+            <tr>
+              <td><span class="crit"><span class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg></span> Serveurs tenus aux heures de pointe</span></td>
+              <td><span class="mark mark--yes" role="img" aria-label="Oui">✓</span></td>
+              <td><span class="mark mark--mid" role="img" aria-label="Variable">~</span><span class="mark-note">c'est là que ça lâche</span></td>
+            </tr>
+            <tr>
+              <td><span class="crit"><span class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M8 2v4M16 2v4M3 10h18M8 14h3M8 17h6"/></svg></span> Guide TV (EPG) et replay 4 jours</span></td>
+              <td><span class="mark mark--yes" role="img" aria-label="Oui">✓</span></td>
+              <td><span class="mark mark--no" role="img" aria-label="Non">✕</span><span class="mark-note">souvent absent</span></td>
+            </tr>
+            <tr>
+              <td><span class="crit"><span class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M7 4v16M17 4v16M2 12h5M17 12h5"/></svg></span> Catalogue de films et séries à la demande</span></td>
+              <td><span class="mark mark--yes" role="img" aria-label="Oui">✓</span></td>
+              <td><span class="mark mark--mid" role="img" aria-label="Variable">~</span><span class="mark-note">réduit</span></td>
+            </tr>
+            <tr>
+              <td><span class="crit"><span class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9.6 9.6 0 0 1-2.8-.4L4 21l1.5-4.2A8.3 8.3 0 0 1 4 11.5 8.4 8.4 0 0 1 12.5 3 8.4 8.4 0 0 1 21 11.5z"/></svg></span> Assistance en français, 7j/7</span></td>
+              <td><span class="mark mark--yes" role="img" aria-label="Oui">✓</span></td>
+              <td><span class="mark mark--no" role="img" aria-label="Non">✕</span><span class="mark-note">formulaire sans réponse</span></td>
+            </tr>
+            <tr>
+              <td><span class="crit"><span class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v12"/><path d="M8 11l4 4 4-4"/><path d="M4 19h16"/></svg></span> Installation accompagnée jusqu'au bout</span></td>
+              <td><span class="mark mark--yes" role="img" aria-label="Oui">✓</span></td>
+              <td><span class="mark mark--no" role="img" aria-label="Non">✕</span><span class="mark-note">à vous de chercher</span></td>
+            </tr>
+            <tr>
+              <td><span class="crit"><span class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l8 4v6c0 5-3.4 9.2-8 10-4.6-.8-8-5-8-10V6l8-4z"/><path d="M9 12l2 2 4-5"/></svg></span> Paiement sécurisé</span></td>
+              <td><span class="mark mark--yes" role="img" aria-label="Oui">✓</span></td>
+              <!-- honnête : tout le monde le fait, ce n'est pas un differenciateur -->
+              <td><span class="mark mark--yes" role="img" aria-label="Oui">✓</span><span class="mark-note">la norme</span></td>
+            </tr>
+            <tr>
+              <td><span class="crit"><span class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="13" height="10" rx="1.5"/><rect x="16" y="9" width="6" height="12" rx="1.5"/><path d="M6 17h5"/></svg></span> Compatible Smart TV, Android, iOS, box et PC</span></td>
+              <td><span class="mark mark--yes" role="img" aria-label="Oui">✓</span></td>
+              <td><span class="mark mark--yes" role="img" aria-label="Oui">✓</span><span class="mark-note">la norme</span></td>
+            </tr>
+            <tr>
+              <td><span class="crit"><span class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span> Pas de frais cachés au renouvellement</span></td>
+              <td><span class="mark mark--yes" role="img" aria-label="Oui">✓</span></td>
+              <td><span class="mark mark--mid" role="img" aria-label="Variable">~</span><span class="mark-note">à vérifier</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="legend">
+      <span><b class="mark--yes">✓</b> Inclus</span>
+      <span><b class="mark--mid">~</b> Variable selon le fournisseur</span>
+      <span><b class="mark--no">✕</b> Généralement absent</span>
+    </div>
+
+    <!-- ⚠️ En France, la publicite comparative doit etre objective et
+         VERIFIABLE (art. L122-1 du Code de la consommation). Le tableau
+         d'origine mettait une croix a « Autres vendeurs » sur les 10 lignes,
+         y compris « paiement securise SSL » et « compatible Smart TV » —
+         indefendable. Il compare desormais a une categorie d'offres, pas a
+         des concurrents nommes, avec deux lignes ou les deux colonnes sont
+         cochees, et cette mention. Ne remettez pas de nom de concurrent. -->
+    <p class="disclaimer">
+      Comparaison générale avec les offres d'entrée de gamme du marché, donnée à
+      titre indicatif. Elle ne vise aucun fournisseur en particulier et les
+      prestations varient d'un service à l'autre.
+    </p>
+
+    <!-- BÉNÉFICES -->
+    <ul class="user-benefits">
+      <li class="benefit-card">
+        <div class="benefit-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M18.2 9.8a3.1 3.1 0 0 0-4.4 0L12 11.6l-1.8-1.8a3.1 3.1 0 1 0 0 4.4l1.8-1.8 1.8 1.8a3.1 3.1 0 1 0 4.4-4.4z"/></svg>
+        </div>
+        <h3>Sans engagement</h3>
+        <p>Vous renouvelez quand vous le décidez, pour la durée que vous voulez.
+           Pas de reconduction automatique.</p>
+      </li>
+
+      <li class="benefit-card">
+        <div class="benefit-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 3l2.7 5.8 6.3.8-4.6 4.3 1.2 6.3L12 17.1 6.4 20.2l1.2-6.3L3 9.6l6.3-.8z"/></svg>
+        </div>
+        <h3>Une image qui tient</h3>
+        <p>4K et Full HD selon la chaîne, avec des serveurs dimensionnés pour les
+           soirs où tout le monde regarde la même chose.</p>
+      </li>
+
+      <li class="benefit-card">
+        <div class="benefit-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M4 13a8 8 0 0 1 16 0"/><rect x="2" y="13" width="4.5" height="7" rx="1.6"/><rect x="17.5" y="13" width="4.5" height="7" rx="1.6"/><path d="M20 20v.5a2.5 2.5 0 0 1-2.5 2.5H13"/></svg>
+        </div>
+        <h3>Quelqu'un au bout du fil</h3>
+        <p>Assistance WhatsApp en français, 7j/7. Le
+           <a href="https://abonnement-iptv-stable.fr/instalation-iptv/">guide d'installation</a>
+           couvre chaque appareil pas à pas.</p>
+      </li>
+    </ul>
+
+  </div>
+</section>
+
+</body>
+</html>

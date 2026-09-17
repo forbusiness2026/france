@@ -1,0 +1,209 @@
+<style>
+  /* :root etait GLOBAL. Pire : « html,body{overflow-x:hidden} » imposait
+     overflow-x:hidden a TOUTE la page depuis un widget — ce qui casse
+     position:sticky sur l'ensemble du document. Et .btn / .flag / .aii-step /
+     .aii-num n'etaient pas prefixes : .btn entre en collision directe avec
+     les boutons du theme et d'Elementor. Tout est maintenant sous #aii-acheter-iptv. */
+  #aii-acheter-iptv{
+    --blue:#0A2E66; --blue2:#113E86; --red:#E30613; --ink:#0B1220;
+    --radius-lg:20px;
+    /* ombres noires transparentes, bien visibles des l'etat de repos */
+    --sh:0 2px 6px rgba(0,0,0,.16), 0 16px 36px rgba(0,0,0,.22);
+    --sh-hover:0 4px 10px rgba(0,0,0,.20), 0 24px 52px rgba(0,0,0,.30);
+  }
+  #aii-acheter-iptv, #aii-acheter-iptv *{
+    box-sizing:border-box;
+    font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+  }
+
+  #aii-acheter-iptv.aii-buy{
+    position:relative; width:100%; max-width:100%; margin:0;
+    background:#fff; overflow:hidden;
+    padding:clamp(28px,6svh,96px) 0;
+    -webkit-font-smoothing:antialiased;
+  }
+  #aii-acheter-iptv .wrap{
+    max-width:min(1180px,100%); margin:0 auto;
+    padding:0 clamp(16px,4vw,28px); text-align:center;
+    container-type:inline-size; container-name:aiib;
+  }
+
+  /* ── TITRE ── */
+  /* tout en bleu : l'accent rouge sur « Abonnement IPTV » a ete retire */
+  #aii-acheter-iptv .h2{
+    font-size:clamp(1.5rem,4.2vw,2.3rem); font-weight:900; color:var(--blue);
+    letter-spacing:-.02em; margin:0 0 12px; line-height:1.14; text-wrap:balance;
+  }
+  #aii-acheter-iptv .underline{
+    width:96px; height:5px; margin:12px auto 16px; border-radius:999px;
+    background:linear-gradient(90deg,var(--blue) 0 33%,#C3D0E6 33% 66%,var(--red) 66% 100%);
+    box-shadow:0 4px 14px rgba(0,0,0,.16);
+  }
+
+  /* ── CHAPEAU ── */
+  #aii-acheter-iptv .sub{
+    color:var(--ink); font-size:clamp(1rem,1.6vw,1.1rem);
+    font-weight:400; line-height:1.62; margin:0 auto 22px; max-width:820px;
+  }
+  #aii-acheter-iptv .sub strong{color:var(--blue); font-weight:700}
+  #aii-acheter-iptv .sub a{
+    color:var(--blue2); font-weight:700;
+    text-decoration:underline; text-decoration-thickness:1px;
+    text-underline-offset:2px; transition:color .15s;
+  }
+  #aii-acheter-iptv .sub a:hover{color:var(--red)}
+
+  /* ── ETAPES ── */
+  /* <ol> plutot que des <div> : « en 3 étapes » est litteralement une liste
+     ordonnee, et les moteurs comprennent la sequence. */
+  #aii-acheter-iptv .aii-steps{
+    list-style:none; margin:18px 0 0; padding:0; counter-reset:none;
+    display:grid; gap:14px;
+    grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));
+  }
+  @container aiib (min-width:1024px){ #aii-acheter-iptv .aii-steps{gap:20px} }
+
+  #aii-acheter-iptv .aii-step{
+    background:#fff; border:1px solid #e7f0ff; border-radius:var(--radius-lg);
+    text-align:center; padding:clamp(20px,3.2vw,28px);
+    box-shadow:var(--sh);
+    transition:transform .12s ease, box-shadow .15s ease, border-color .15s ease;
+  }
+  #aii-acheter-iptv .aii-step:hover{
+    transform:translateY(-3px); box-shadow:var(--sh-hover); border-color:#d9e7ff;
+  }
+  #aii-acheter-iptv .aii-num{
+    width:58px; height:58px; margin:0 auto 14px; border-radius:50%;
+    background:linear-gradient(135deg,var(--blue),var(--blue2));
+    color:#fff; font-weight:900; font-size:1.15rem;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 3px 8px rgba(0,0,0,.24), 0 10px 24px rgba(10,46,102,.28);
+  }
+  #aii-acheter-iptv .aii-step h3{
+    margin:0 0 6px; color:var(--blue);
+    font-size:clamp(1rem,1.3vw,1.08rem); font-weight:800; line-height:1.3;
+  }
+  #aii-acheter-iptv .aii-step p{
+    margin:0; color:#3c4a5e; line-height:1.58;
+    font-size:clamp(.94rem,1.2vw,1rem);
+  }
+  #aii-acheter-iptv .aii-step p strong{color:var(--blue); font-weight:700}
+  #aii-acheter-iptv .aii-step p a{
+    color:var(--blue2); font-weight:700;
+    text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:2px;
+  }
+  #aii-acheter-iptv .aii-step p a:hover{color:var(--red)}
+
+  /* ── BOUTONS ── */
+  #aii-acheter-iptv .aii-cta-row{
+    display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:26px;
+  }
+  #aii-acheter-iptv .aii-btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:10px;
+    padding:14px 24px; border-radius:14px; font-weight:800;
+    text-decoration:none; font-size:1rem; color:#fff !important;
+    transition:transform .12s ease, box-shadow .15s ease, filter .12s ease;
+    touch-action:manipulation;
+  }
+  #aii-acheter-iptv .aii-btn:hover{transform:translateY(-2px); filter:brightness(1.04)}
+  #aii-acheter-iptv .aii-btn:focus-visible{outline:3px solid rgba(29,122,242,.5);outline-offset:3px}
+  #aii-acheter-iptv .aii-btn--price{
+    background:linear-gradient(90deg,var(--blue) 0%,var(--blue2) 100%);
+    box-shadow:0 3px 8px rgba(0,0,0,.24), 0 16px 36px rgba(0,0,0,.26);
+  }
+  #aii-acheter-iptv .aii-btn--price:hover{box-shadow:0 5px 12px rgba(0,0,0,.28), 0 24px 50px rgba(0,0,0,.34)}
+  #aii-acheter-iptv .aii-btn--wa{
+    background:#25D366;
+    box-shadow:0 3px 8px rgba(0,0,0,.20), 0 16px 34px rgba(37,211,102,.34);
+  }
+  #aii-acheter-iptv .aii-btn--wa:hover{box-shadow:0 5px 12px rgba(0,0,0,.24), 0 22px 46px rgba(37,211,102,.44)}
+  #aii-acheter-iptv .flag{
+    width:18px; height:12px; border-radius:2px; flex:0 0 18px;
+    background:linear-gradient(90deg,var(--blue) 0 33%,#fff 33% 66%,var(--red) 66% 100%);
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,.12);
+    display:inline-block;
+  }
+
+  @container aiib (max-width:560px){
+    #aii-acheter-iptv .aii-btn{width:100%}
+  }
+  @media (max-width:560px){
+    #aii-acheter-iptv .aii-btn{width:100%}
+  }
+  @media (prefers-reduced-motion:reduce){
+    #aii-acheter-iptv .aii-step,#aii-acheter-iptv .aii-btn{transition:none}
+    #aii-acheter-iptv .aii-step:hover,#aii-acheter-iptv .aii-btn:hover{transform:none}
+  }
+</style>
+
+<!-- =========================================================
+     ABONNEMENT IPTV — COMMENT ÇA MARCHE
+========================================================= -->
+<section id="aii-acheter-iptv" class="aii-buy" lang="fr" aria-labelledby="aiib-title">
+  <div class="wrap">
+
+    <!-- titre raccourci et entierement en bleu -->
+    <h2 class="h2" id="aiib-title">Votre abonnement IPTV en 3 étapes</h2>
+    <div class="underline" aria-hidden="true"></div>
+
+    <p class="sub">
+      Vous choisissez la durée, vous payez, vous regardez. Comptez
+      <strong>moins de 15 minutes</strong> entre la commande et la première chaîne —
+      et le <a href="https://abonnement-iptv-stable.fr/instalation-iptv/">guide
+      d'installation</a> reprend la procédure appareil par appareil. Voir aussi
+      toutes les offres sur la
+      <a href="https://abonnement-iptv-stable.fr/" rel="noopener"><strong>page d'accueil</strong></a>.
+    </p>
+
+    <ol class="aii-steps">
+      <li class="aii-step">
+        <div class="aii-num" aria-hidden="true">1</div>
+        <h3>Choisissez la durée</h3>
+        <!-- corrige : annoncait « mensuel, trimestriel ou annuel », or vos
+             formules sont 3, 6, 12 et 24 mois — il n'y a pas d'offre mensuelle. -->
+        <p>3, 6, 12 ou 24 mois, sur un écran ou jusqu'à trois. Plus la durée est
+           longue, moins vous payez au mois.</p>
+      </li>
+
+      <li class="aii-step">
+        <div class="aii-num" aria-hidden="true">2</div>
+        <h3>Payez et recevez vos accès</h3>
+        <p>Carte bancaire, Apple Pay ou Google Pay — ou commande directement sur
+           WhatsApp. Vos identifiants arrivent dès réception du règlement.</p>
+      </li>
+
+      <li class="aii-step">
+        <div class="aii-num" aria-hidden="true">3</div>
+        <h3>Installez et regardez</h3>
+        <p>Smart TV, Android, iOS, box ou PC : suivez le
+           <a href="https://abonnement-iptv-stable.fr/instalation-iptv/">guide
+           d'installation</a> pour votre modèle, et on reste joignable jusqu'à
+           ce que ça fonctionne.</p>
+      </li>
+    </ol>
+
+    <div class="aii-cta-row">
+      <!-- lien corrige : /iptv-2026/#prix redirige (301) vers /iptv-abonnement/
+           en PERDANT l'ancre #prix. /iptv-abonnement/ repond 200 et contient
+           bien un id="prix". -->
+      <a href="https://abonnement-iptv-stable.fr/iptv-abonnement/#prix"
+         class="aii-btn aii-btn--price"
+         aria-label="Voir les tarifs de l'abonnement IPTV">
+        <span class="flag" aria-hidden="true"></span>
+        Voir les tarifs
+      </a>
+      <!-- ⚠️ NUMERO CORRIGE : ce bloc utilisait wa.me/33780818439, un numero
+           qui n'apparait NULLE PART ailleurs sur le site. Toutes les autres
+           sections et le widget flottant utilisent +33 7 48 66 23 75.
+           Si 33780818439 est le bon, changez-le partout ; sinon gardez celui-ci. -->
+      <a href="https://wa.me/33748662375?text=Bonjour%2C%20je%20souhaite%20un%20abonnement%20IPTV%20pour%20la%20France."
+         class="aii-btn aii-btn--wa" target="_blank" rel="noopener noreferrer"
+         aria-label="Commander par WhatsApp">
+        💬 Commander via WhatsApp
+      </a>
+    </div>
+
+    <!-- Les 5 pastilles de mots-cles ont ete supprimees, comme demande. -->
+
+  </div>
+</section>

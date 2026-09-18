@@ -16,13 +16,16 @@
   }
 
   #logosFR{
-    --blue:#0A2E66; --blue2:#113E86; --gold:#FFD27A;
-    --sh:0 3px 8px rgba(0,0,0,.24), 0 16px 38px rgba(0,0,0,.30);
-    --sh-hover:0 6px 14px rgba(0,0,0,.30), 0 26px 54px rgba(0,0,0,.40);
+    --blue:#0A2E66; --blue2:#113E86; --accent:#1D4ED8;
+    --ink:#0B1220; --muted:#3C4A5E; --line:#DCE7FA;
+    /* Ombres teintées de bleu : un noir pur sur fond clair fait sale.
+       Contrastes vérifiés sur les trois teintes du dégradé, tous >= 4,77:1. */
+    --sh:0 2px 5px rgba(10,46,102,.14), 0 14px 32px rgba(10,46,102,.20);
+    --sh-hover:0 5px 12px rgba(10,46,102,.20), 0 24px 48px rgba(10,46,102,.28);
     position:relative; width:100%; max-width:100%; margin:0;
     background:transparent; clip-path:inset(0 -100vmax);
     padding:clamp(34px,6svh,68px) 0;
-    color:#fff; isolation:isolate;
+    color:var(--ink); isolation:isolate;
     font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
     scroll-margin-top:calc(var(--h,78px) + 14px);
   }
@@ -34,7 +37,12 @@
     content:""; position:absolute; z-index:-1; pointer-events:none;
     top:0; bottom:0; left:50%; transform:translateX(-50%);
     width:100vw; max-width:none;
-    background:linear-gradient(180deg,var(--blue2) 0%,var(--blue) 100%);
+    /* Blanc mélangé d'un voile bleu : un dégradé en diagonale, plus deux
+       halos très doux pour que ce ne soit pas un aplat mort. */
+    background:
+      radial-gradient(900px 420px at 14% 0%,  rgba(29,78,216,.10), transparent 62%),
+      radial-gradient(760px 380px at 92% 96%, rgba(255,176,32,.10), transparent 60%),
+      linear-gradient(158deg, #FFFFFF 0%, #F4F8FF 46%, #EAF1FD 100%);
   }
 
   #logosFR .wrap{
@@ -45,24 +53,24 @@
 
   /* En-tête */
   #logosFR .title{
-    margin:0 0 4px; font-weight:900; color:#fff;
+    margin:0 0 4px; font-weight:900; color:var(--blue);
     font-size:clamp(1.35rem,3vw,1.95rem);
     line-height:1.2; letter-spacing:-.02em; text-wrap:balance;
   }
-  #logosFR .title em{font-style:normal; color:var(--gold)}
+  #logosFR .title em{font-style:normal; color:var(--accent)}
   #logosFR .underline{
     width:110px; height:4px; margin:12px auto 16px; border-radius:999px;
     background:linear-gradient(90deg,#002654 0 33.33%,#fff 33.33% 66.66%,#E30613 66.66% 100%);
-    box-shadow:0 2px 8px rgba(0,0,0,.30);
+    box-shadow:0 1px 4px rgba(10,46,102,.28), inset 0 0 0 1px rgba(10,46,102,.10);
   }
   #logosFR .sub{
-    max-width:820px; margin:0 auto; color:#D9E6F8;
+    max-width:820px; margin:0 auto; color:var(--muted);
     font-size:clamp(1rem,1.3vw,1.08rem); line-height:1.65; font-weight:400;
   }
-  #logosFR .sub b{color:#fff; font-weight:700}
-  #logosFR .sub a{color:var(--gold); font-weight:700;
+  #logosFR .sub b{color:var(--ink); font-weight:700}
+  #logosFR .sub a{color:var(--blue); font-weight:700;
     text-decoration:underline; text-underline-offset:2px}
-  #logosFR .sub a:hover{color:#fff}
+  #logosFR .sub a:hover{color:var(--accent)}
 
   /* Grille */
   #logosFR .grid{
@@ -73,27 +81,36 @@
   #logosFR .tile{
     display:flex; flex-direction:column; align-items:center; justify-content:center;
     gap:11px; min-height:132px; padding:18px 16px; min-width:0; height:100%;
-    background:#fff; border:1px solid rgba(255,255,255,.55); border-radius:16px;
+    background:#fff; border:1px solid var(--line); border-radius:16px;
     text-decoration:none; color:var(--blue);
     box-shadow:var(--sh);
     transition:transform .18s ease, box-shadow .18s ease;
     animation:logosFRFloat 5.2s ease-in-out infinite;
     will-change:transform;
   }
-  #logosFR a.tile:hover{transform:translateY(-4px); box-shadow:var(--sh-hover)}
-  #logosFR a.tile:focus-visible{outline:3px solid var(--gold); outline-offset:4px}
+  #logosFR a.tile:hover{transform:translateY(-4px); box-shadow:var(--sh-hover);
+    border-color:#B9D0F4}
+  #logosFR a.tile:focus-visible{outline:3px solid var(--accent); outline-offset:4px}
+  /* Les logos vont du carré (XP, 237x240) au bandeau très large (TiviMate,
+     500x117). Sans plafond de largeur, les bandeaux écrasent visuellement les
+     carrés. Les deux contraintes ensemble les remettent au même poids. */
   #logosFR .tile img{
-    max-height:52px; max-width:100%; width:auto; object-fit:contain; display:block;
+    max-height:52px; max-width:min(100%,168px);
+    width:auto; height:auto; object-fit:contain; display:block;
   }
   #logosFR .tile .name{font-size:.88rem; font-weight:900; line-height:1.25}
   #logosFR .tile .dev{
-    font-size:.76rem; font-weight:600; color:#5b6b83; line-height:1.35;
+    font-size:.76rem; font-weight:600; color:#5B6B83; line-height:1.35;
   }
-  /* Tuile sombre : le logo XP est blanc et rouge, illisible sur fond clair */
+  /* Tuile sombre : le logo XP est blanc et rouge, illisible sur fond clair.
+     Bleu nuit de la marque plutôt que noir : sur une section claire, un aplat
+     noir fait tache alors que le bleu reste dans la palette. */
   #logosFR .tile.is-dark{
-    background:#0b0f14; border-color:rgba(255,255,255,.16); color:#fff;
+    background:linear-gradient(180deg,#113E86 0%,#0A2E66 100%);
+    border-color:rgba(10,46,102,.55); color:#fff;
+    box-shadow:0 2px 5px rgba(10,46,102,.24), 0 14px 32px rgba(10,46,102,.30);
   }
-  #logosFR .tile.is-dark .dev{color:#a9b6c9}
+  #logosFR .tile.is-dark .dev{color:#BCCBE2}
 
   #logosFR .grid li:nth-child(2) .tile{animation-delay:.15s}
   #logosFR .grid li:nth-child(3) .tile{animation-delay:.30s}
@@ -106,12 +123,12 @@
 
   /* Bas de section */
   #logosFR .foot{
-    max-width:820px; margin:24px auto 0; color:#C6D8F2;
+    max-width:820px; margin:24px auto 0; color:var(--muted);
     font-size:.93rem; line-height:1.65;
   }
-  #logosFR .foot a{color:var(--gold); font-weight:700;
+  #logosFR .foot a{color:var(--blue); font-weight:700;
     text-decoration:underline; text-underline-offset:2px}
-  #logosFR .foot a:hover{color:#fff}
+  #logosFR .foot a:hover{color:var(--accent)}
 
   @media (prefers-reduced-motion:reduce){
     #logosFR .tile{animation:none; transition:none}

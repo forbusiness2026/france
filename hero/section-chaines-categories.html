@@ -1,0 +1,272 @@
+<!-- ========== AII — CATÉGORIES DE CHAÎNES (tableau, pleine largeur) ==========
+     Sans logos ni noms de bouquets : aucune marque tierce n'est reprise. -->
+<style>
+  /* ===== CORRECTIF ELEMENTOR ===== */
+  .elementor-widget:has(#aii-categories),
+  .elementor-widget-container:has(#aii-categories),
+  .elementor-element:has(> .elementor-widget-container > #aii-categories){
+    width:100% !important; max-width:100% !important; align-self:stretch !important;
+  }
+
+  #aii-categories{
+    --blue:#0A2E66; --blue2:#113E86; --red:#E30613;
+    --ink:#0B1220; --muted:#43536B; --line:#dbe7fb; --soft:#f4f8ff;
+    position:relative; width:100%; max-width:100%; margin:0;
+    background:transparent; clip-path:inset(0 -100vmax);
+    padding:clamp(34px,6svh,64px) 0;
+    color:var(--ink); isolation:isolate;
+    font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+    scroll-margin-top:calc(var(--h,78px) + 14px);
+  }
+  #aii-categories *{box-sizing:border-box}
+  /* Fond pleine largeur : calque absolu en 100vw. Il ne prend aucune place
+     dans le flux, donc il ne peut pas créer de barre de défilement — contrairement
+     à « width:100vw; margin-left:-50vw ». */
+  #aii-categories::before{
+    content:""; position:absolute; z-index:-1; pointer-events:none;
+    top:0; bottom:0; left:50%; transform:translateX(-50%);
+    width:100vw; max-width:none;
+    background:linear-gradient(180deg,#F7FBFF 0%,#E9F1FE 100%);
+  }
+
+  #aii-categories .wrap{
+    width:100%; max-width:1180px; margin-inline:auto;
+    padding:0 clamp(14px,3vw,28px);
+    container-type:inline-size; container-name:aiicat;
+  }
+
+  /* En-tête */
+  #aii-categories .head{text-align:center; margin-bottom:24px}
+  #aii-categories h2{
+    margin:0 0 12px; font-weight:900; color:var(--blue);
+    font-size:clamp(1.3rem,2.6vw,1.85rem);
+    line-height:1.22; letter-spacing:-.02em; text-wrap:balance;
+  }
+  #aii-categories h2 em{font-style:normal; color:var(--blue2)}
+  #aii-categories .lead{
+    max-width:800px; margin:0 auto; color:var(--muted);
+    font-size:clamp(.98rem,1.3vw,1.06rem); line-height:1.65;
+  }
+  #aii-categories .lead b{color:var(--ink); font-weight:700}
+  #aii-categories .lead a{color:var(--blue); font-weight:700;
+    text-decoration:underline; text-underline-offset:2px}
+  #aii-categories .lead a:hover{color:var(--red)}
+
+  /* Tableau */
+  #aii-categories .card{
+    background:#fff; border:1px solid var(--line); border-radius:18px;
+    box-shadow:0 3px 10px rgba(10,46,102,.08), 0 18px 40px rgba(10,46,102,.12);
+    overflow:hidden;
+  }
+  #aii-categories table{width:100%; border-collapse:collapse; text-align:left}
+  #aii-categories caption{
+    caption-side:top; padding:14px 18px 0; text-align:left;
+    font-size:.86rem; color:var(--muted); line-height:1.5;
+  }
+  #aii-categories thead th{
+    padding:14px 16px; background:var(--soft);
+    font-size:.82rem; font-weight:900; color:var(--blue);
+    text-transform:uppercase; letter-spacing:.04em;
+    border-bottom:2px solid #e2ecfb; white-space:nowrap;
+  }
+  #aii-categories tbody td{
+    padding:14px 16px; border-bottom:1px solid #eef3fc;
+    font-size:.96rem; line-height:1.55; color:var(--ink); vertical-align:top;
+  }
+  #aii-categories tbody tr:last-child td{border-bottom:0}
+  #aii-categories tbody tr{transition:background .15s ease}
+  #aii-categories tbody tr:hover{background:#f9fbff}
+  #aii-categories .cat{font-weight:800; color:var(--blue)}
+  #aii-categories .desc{color:var(--muted); font-size:.93rem}
+
+  /* Pastille Type */
+  #aii-categories .tag{
+    display:inline-block; padding:4px 10px; border-radius:999px;
+    font-size:.74rem; font-weight:900; letter-spacing:.03em;
+    background:var(--blue); color:#fff; white-space:nowrap;
+  }
+  #aii-categories .tag.vod{background:var(--blue2)}
+
+  /* Zone */
+  #aii-categories .zone{
+    display:inline-flex; align-items:center; gap:7px;
+    font-size:.88rem; font-weight:700; color:var(--muted); white-space:nowrap;
+  }
+  #aii-categories .flag{
+    width:19px; height:13px; border-radius:2px; flex:0 0 19px; display:inline-block;
+    box-shadow:inset 0 0 0 1px rgba(10,46,102,.20);
+  }
+  #aii-categories .flag.fr{
+    background:linear-gradient(90deg,#002654 0 33.33%,#fff 33.33% 66.66%,#E30613 66.66% 100%);
+  }
+  #aii-categories .zone svg{width:16px;height:16px;flex:0 0 16px;display:block;fill:var(--blue2)}
+
+  /* Passage en cartes sous 760 px : pas de défilement horizontal */
+  @container aiicat (max-width:760px){
+    #aii-categories thead{
+      position:absolute; width:1px; height:1px; overflow:hidden;
+      clip:rect(0 0 0 0); clip-path:inset(50%); white-space:nowrap;
+    }
+    #aii-categories tbody tr{
+      display:block; padding:14px 16px; border-bottom:1px solid #eef3fc;
+    }
+    #aii-categories tbody tr:last-child{border-bottom:0}
+    #aii-categories tbody td{
+      display:flex; gap:10px; align-items:baseline;
+      padding:5px 0; border:0;
+    }
+    #aii-categories tbody td::before{
+      content:attr(data-label); flex:0 0 96px;
+      font-size:.74rem; font-weight:900; color:var(--blue);
+      text-transform:uppercase; letter-spacing:.03em; line-height:1.6;
+    }
+    #aii-categories caption{padding:14px 16px 0}
+  }
+
+  /* Bas de section */
+  #aii-categories .after{
+    display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:24px;
+  }
+  #aii-categories .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:9px;
+    padding:14px 28px; border-radius:999px;
+    font-weight:900; font-size:1rem; text-decoration:none;
+    border:2px solid var(--blue);
+    transition:transform .15s ease, box-shadow .15s ease, filter .15s ease;
+  }
+  #aii-categories .btn svg{width:17px;height:17px;flex:0 0 17px;display:block}
+  #aii-categories .btn-primary{
+    background:linear-gradient(90deg,var(--blue) 0%,var(--blue2) 100%);
+    color:#fff !important;
+    box-shadow:0 4px 10px rgba(0,0,0,.18), 0 14px 32px rgba(10,46,102,.28);
+  }
+  #aii-categories .btn-primary svg{fill:#fff}
+  #aii-categories .btn-ghost{
+    background:#fff; color:var(--blue) !important;
+    box-shadow:0 2px 6px rgba(10,46,102,.10), 0 10px 24px rgba(10,46,102,.12);
+  }
+  #aii-categories .btn-ghost svg{fill:var(--blue)}
+  #aii-categories .btn:hover{transform:translateY(-2px); filter:brightness(1.03);
+    box-shadow:0 6px 14px rgba(0,0,0,.22), 0 20px 40px rgba(10,46,102,.32)}
+  #aii-categories .btn:active{transform:translateY(0)}
+  #aii-categories .btn:focus-visible{outline:3px solid var(--red); outline-offset:3px}
+
+  #aii-categories .note{
+    max-width:800px; margin:18px auto 0; text-align:center;
+    color:var(--muted); font-size:.85rem; line-height:1.6;
+  }
+
+  @media(max-width:560px){
+    #aii-categories .btn{width:100%}
+  }
+  @media (prefers-reduced-motion:reduce){
+    #aii-categories .btn,#aii-categories tbody tr{transition:none}
+    #aii-categories .btn:hover{transform:none}
+  }
+</style>
+
+<section id="aii-categories" aria-labelledby="aii-cat-title">
+  <div class="wrap">
+
+    <div class="head">
+      <h2 id="aii-cat-title">Ce que contient l'abonnement, <em>catégorie par catégorie</em></h2>
+      <p class="lead">
+        Le détail complet est envoyé après commande&nbsp;: il change trop souvent
+        pour tenir dans une page figée. Voici en revanche les <b>huit familles de
+        contenus</b> présentes dans chaque abonnement, et ce que vous y trouvez
+        concrètement. Besoin de vérifier que votre matériel suit&nbsp;? Le
+        <a href="https://abonnement-iptv-stable.fr/iptv-abonnement/instalation-iptv/">guide d'installation</a>
+        liste les appareils compatibles.
+      </p>
+    </div>
+
+    <div class="card">
+      <table>
+        <caption>
+          Familles de contenus incluses dans un abonnement IPTV, avec leur zone
+          de diffusion principale.
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col">Catégorie</th>
+            <th scope="col">Ce que vous y trouvez</th>
+            <th scope="col">Type</th>
+            <th scope="col">Zone</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-label="Catégorie"><span class="cat">Généralistes</span></td>
+            <td data-label="Contenu"><span class="desc">Les grandes chaînes nationales et la TNT, celles que vous regardez déjà, avec leurs décrochages régionaux.</span></td>
+            <td data-label="Type"><span class="tag">TV</span></td>
+            <td data-label="Zone"><span class="zone"><span class="flag fr" aria-hidden="true"></span> France</span></td>
+          </tr>
+          <tr>
+            <td data-label="Catégorie"><span class="cat">Sport</span></td>
+            <td data-label="Contenu"><span class="desc">Football des grands championnats européens, rugby, tennis, Formule&nbsp;1, cyclisme, sports de combat — en direct et en rediffusion.</span></td>
+            <td data-label="Type"><span class="tag">TV</span></td>
+            <td data-label="Zone"><span class="zone"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 2c1.9 0 3.6.7 5 1.8l-2.2 2.2-2.8-1-2.8 1L7 5.8A7.9 7.9 0 0112 4zM4.6 9.4l2.2 2.2-1 2.8 1 2.8-2.2 2.2A7.9 7.9 0 014 12c0-.9.2-1.8.6-2.6zm14.8 0c.4.8.6 1.7.6 2.6s-.2 1.8-.6 2.6l-2.2-2.2 1-2.8-1-2.8zM12 20a7.9 7.9 0 01-5-1.8l2.2-2.2 2.8 1 2.8-1 2.2 2.2A7.9 7.9 0 0112 20z"/></svg> France et Europe</span></td>
+          </tr>
+          <tr>
+            <td data-label="Catégorie"><span class="cat">Cinéma et séries</span></td>
+            <td data-label="Contenu"><span class="desc">Chaînes de films et de séries en continu, sorties récentes comme grands classiques, en version française et en version originale.</span></td>
+            <td data-label="Type"><span class="tag">TV</span></td>
+            <td data-label="Zone"><span class="zone"><span class="flag fr" aria-hidden="true"></span> France</span></td>
+          </tr>
+          <tr>
+            <td data-label="Catégorie"><span class="cat">Films et séries à la demande</span></td>
+            <td data-label="Contenu"><span class="desc">Un catalogue que vous lancez quand vous voulez, avec reprise de lecture et saisons complètes. C'est la partie VOD, séparée des chaînes en direct.</span></td>
+            <td data-label="Type"><span class="tag vod">VOD</span></td>
+            <td data-label="Zone"><span class="zone"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm6.9 6h-2.6a15 15 0 00-1.3-3.2A8 8 0 0118.9 8zM12 4c.7 1 1.3 2.3 1.7 4h-3.4C10.7 6.3 11.3 5 12 4zM4.3 14A8 8 0 014 12c0-.7.1-1.4.3-2h3a17 17 0 000 4zm.8 2h2.6c.3 1.2.8 2.3 1.3 3.2A8 8 0 015.1 16zm2.6-8H5.1a8 8 0 013.9-3.2C8.5 5.7 8 6.8 7.7 8zM12 20c-.7-1-1.3-2.3-1.7-4h3.4c-.4 1.7-1 3-1.7 4zm2.1-6H9.9a15 15 0 010-4h4.2a15 15 0 010 4zm.9 5.2c.5-.9 1-2 1.3-3.2h2.6a8 8 0 01-3.9 3.2zm1.7-5.2a17 17 0 000-4h3a8 8 0 010 4z"/></svg> International</span></td>
+          </tr>
+          <tr>
+            <td data-label="Catégorie"><span class="cat">Jeunesse</span></td>
+            <td data-label="Contenu"><span class="desc">Dessins animés et programmes pour enfants, regroupés à part pour être faciles à retrouver — et à mettre en favoris sur la télécommande.</span></td>
+            <td data-label="Type"><span class="tag">TV</span></td>
+            <td data-label="Zone"><span class="zone"><span class="flag fr" aria-hidden="true"></span> France</span></td>
+          </tr>
+          <tr>
+            <td data-label="Catégorie"><span class="cat">Documentaires et découverte</span></td>
+            <td data-label="Contenu"><span class="desc">Nature, histoire, sciences, voyage, enquêtes. La famille la plus fournie après le sport, et celle qui tourne le mieux en fond de soirée.</span></td>
+            <td data-label="Type"><span class="tag">TV</span></td>
+            <td data-label="Zone"><span class="zone"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 2c1.9 0 3.6.7 5 1.8l-2.2 2.2-2.8-1-2.8 1L7 5.8A7.9 7.9 0 0112 4zM4.6 9.4l2.2 2.2-1 2.8 1 2.8-2.2 2.2A7.9 7.9 0 014 12c0-.9.2-1.8.6-2.6zm14.8 0c.4.8.6 1.7.6 2.6s-.2 1.8-.6 2.6l-2.2-2.2 1-2.8-1-2.8zM12 20a7.9 7.9 0 01-5-1.8l2.2-2.2 2.8 1 2.8-1 2.2 2.2A7.9 7.9 0 0112 20z"/></svg> Europe</span></td>
+          </tr>
+          <tr>
+            <td data-label="Catégorie"><span class="cat">Actualités et information</span></td>
+            <td data-label="Contenu"><span class="desc">Chaînes d'info en continu françaises et internationales, plus les chaînes économiques et parlementaires.</span></td>
+            <td data-label="Type"><span class="tag">TV</span></td>
+            <td data-label="Zone"><span class="zone"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 2c1.9 0 3.6.7 5 1.8l-2.2 2.2-2.8-1-2.8 1L7 5.8A7.9 7.9 0 0112 4zM4.6 9.4l2.2 2.2-1 2.8 1 2.8-2.2 2.2A7.9 7.9 0 014 12c0-.9.2-1.8.6-2.6zm14.8 0c.4.8.6 1.7.6 2.6s-.2 1.8-.6 2.6l-2.2-2.2 1-2.8-1-2.8zM12 20a7.9 7.9 0 01-5-1.8l2.2-2.2 2.8 1 2.8-1 2.2 2.2A7.9 7.9 0 0112 20z"/></svg> France et monde</span></td>
+          </tr>
+          <tr>
+            <td data-label="Catégorie"><span class="cat">Culture et francophonie</span></td>
+            <td data-label="Contenu"><span class="desc">Chaînes culturelles, musicales et francophones, dont les chaînes du Maghreb, d'Afrique de l'Ouest et du Québec.</span></td>
+            <td data-label="Type"><span class="tag">TV</span></td>
+            <td data-label="Zone"><span class="zone"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm6.9 6h-2.6a15 15 0 00-1.3-3.2A8 8 0 0118.9 8zM12 4c.7 1 1.3 2.3 1.7 4h-3.4C10.7 6.3 11.3 5 12 4zM4.3 14A8 8 0 014 12c0-.7.1-1.4.3-2h3a17 17 0 000 4zm.8 2h2.6c.3 1.2.8 2.3 1.3 3.2A8 8 0 015.1 16zm2.6-8H5.1a8 8 0 013.9-3.2C8.5 5.7 8 6.8 7.7 8zM12 20c-.7-1-1.3-2.3-1.7-4h3.4c-.4 1.7-1 3-1.7 4zm2.1-6H9.9a15 15 0 010-4h4.2a15 15 0 010 4zm.9 5.2c.5-.9 1-2 1.3-3.2h2.6a8 8 0 01-3.9 3.2zm1.7-5.2a17 17 0 000-4h3a8 8 0 010 4z"/></svg> International</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="after">
+      <!-- URL corrigée : /abonnement-iptv-fr/#prix redirige vers l'accueil
+           EN PERDANT l'ancre #prix. -->
+      <a class="btn btn-primary" href="https://abonnement-iptv-stable.fr/iptv-abonnement/#prix">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1v2.2c-2.6.3-4.4 1.8-4.4 4 0 2.6 2.1 3.5 4.6 4.1 2 .5 2.8.9 2.8 1.9 0 .9-.9 1.6-2.5 1.6-1.8 0-2.8-.8-2.9-2.1H7.2c.1 2.3 1.8 3.8 4.4 4.1V19h2.1v-2.2c2.7-.3 4.5-1.9 4.5-4.1 0-2.7-2.2-3.6-4.8-4.2-1.9-.4-2.6-.9-2.6-1.8 0-.9.8-1.5 2.3-1.5 1.6 0 2.5.7 2.6 1.9h2.3c-.1-2.1-1.6-3.6-4.1-3.9V1z"/></svg>
+        Voir les tarifs
+      </a>
+      <a class="btn btn-ghost" target="_blank" rel="noopener noreferrer"
+         href="https://wa.me/33748662375?text=Bonjour%2C%20je%20cherche%20une%20cha%C3%AEne%20pr%C3%A9cise.%20Est-elle%20incluse%20%3F">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.14 6.44 2.14 11.9c0 1.75.46 3.45 1.32 4.95L2 22l5.3-1.39c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.9-4.44 9.9-9.9S17.5 2 12.04 2zm5.52 13.98c-.25.58-1.23 1.1-1.7 1.17-.43.06-.96.09-1.55-.1-.36-.11-.81-.26-1.4-.51-2.46-1.06-4.06-3.54-4.19-3.7-.12-.17-1-1.35-1-2.56s.63-1.81.86-2.06c.22-.25.49-.31.65-.31h.47c.15 0 .35-.06.55.42.2.49.69 1.7.75 1.82.06.12.1.26.02.43-.08.17-.12.27-.25.42-.12.14-.26.32-.37.43-.12.12-.25.26-.11.51.15.25.65 1.07 1.4 1.73.96.86 1.77 1.13 2.02 1.25.25.13.39.11.53-.6.14-.16.61-.71.77-.96.17-.25.33-.21.55-.12.23.08 1.45.68 1.7.8.25.12.41.18.47.28.06.1.06.59-.14 1.16z"/></svg>
+        Demander une chaîne précise
+      </a>
+    </div>
+
+    <p class="note">
+      Aperçu des familles de contenus. Le détail exact évolue avec les mises à
+      jour et peut varier selon la zone de diffusion&nbsp;: si une chaîne compte
+      vraiment pour vous, demandez-la-nous <b>avant</b> de commander — on vous
+      répond franchement.
+    </p>
+
+  </div>
+</section>

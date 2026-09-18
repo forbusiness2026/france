@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aperçu confiance — abonnement-iptv-stable.fr</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
+<style>body{margin:0}</style>
+</head>
+<body>
+<style>
+  #rs-proof-fr{
+    --blue:#0A2E66; --blue2:#113E86; --blue3:#1D7AF2;
+    --gold:#FFD27A; --gold-2:#FFB020; --wa:#25D366;
+    --sh:0 3px 8px rgba(0,0,0,.26), 0 18px 44px rgba(0,0,0,.34);
+    --sh-hover:0 6px 14px rgba(0,0,0,.32), 0 30px 62px rgba(0,0,0,.46);
+  }
+  #rs-proof-fr, #rs-proof-fr *{
+    box-sizing:border-box;
+    font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+  }
+  /* « .rs-proof-fr * { color:#fff !important } » supprime : le !important sur
+     tous les descendants empechait toute exception (bouton clair, lien, etc.).
+     Les couleurs sont posees element par element. */
+
+  /* ===== CORRECTIF ELEMENTOR =====
+     Les conteneurs Elementor sont en flex avec align-items:center : le widget
+     est ajuste a son contenu (mesure : 48 px, soit le padding seul). Ces regles
+     remettent en pleine largeur l'enveloppe qui contient ce bloc, et elle seule. */
+  .elementor-widget:has(#rs-proof-fr),
+  .elementor-widget-container:has(#rs-proof-fr),
+  .elementor-element:has(> .elementor-widget-container > #rs-proof-fr){
+    width:100% !important; max-width:100% !important; align-self:stretch !important;
+  }
+
+  /* ===== PLEINE LARGEUR SANS DEBORDEMENT =====
+     Pas de width:100vw ni de marge negative : seul le FOND s'etend jusqu'aux
+     bords (ombre de 100vmax bornee par clip-path). Aucune incidence sur la
+     mise en page, donc aucune barre de defilement horizontale. */
+  #rs-proof-fr{
+    position:relative; width:100%; max-width:100%; margin:0;
+    background:transparent;
+    /* clip-path autorise le debordement lateral du fond et le borne en hauteur */
+    clip-path:inset(0 -100vmax);
+    padding:clamp(40px,8svh,84px) 0;
+    color:#fff; isolation:isolate;
+  }
+  /* Le fond est un calque a part, en position absolue : une ombre
+     « box-shadow 100vmax » ne peut etre que d'UNE couleur, elle laissait donc
+     une demarcation nette la ou elle rejoignait le degrade. Ce calque porte le
+     degrade complet sur toute la largeur. Etant en position absolue, il
+     n'occupe aucune place et ne peut pas creer de barre de defilement. */
+  #rs-proof-fr::before{
+    content:""; position:absolute; z-index:-1; pointer-events:none;
+    top:0; bottom:0; left:50%; transform:translateX(-50%);
+    width:100vw; max-width:none;
+    background:linear-gradient(180deg, var(--blue2) 0%, var(--blue) 100%);
+  }
+  #rs-proof-fr .inner{
+    width:100%; max-width:1140px; margin-inline:auto;
+    padding:0 clamp(16px,3vw,24px); text-align:center;
+    container-type:inline-size; container-name:aiiproof;
+  }
+
+  /* ===== EN-TETE ===== */
+  #rs-proof-fr .kicker{
+    display:inline-flex; align-items:center; gap:9px;
+    padding:7px 15px; border-radius:999px;
+    background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.26);
+    font-size:.8rem; font-weight:800; letter-spacing:.03em;
+    text-transform:uppercase; color:#fff; margin-bottom:15px;
+    box-shadow:0 2px 8px rgba(0,0,0,.24);
+  }
+  #rs-proof-fr .flag{
+    width:19px; height:12px; border-radius:2px; flex:0 0 19px; display:inline-block;
+    background:linear-gradient(90deg,#002654 0 33.33%,#fff 33.33% 66.66%,#E30613 66.66% 100%);
+    box-shadow:0 0 0 1px rgba(255,255,255,.3) inset;
+  }
+  #rs-proof-fr .title{
+    margin:0 0 12px; font-weight:900; color:#fff;
+    font-size:clamp(1.45rem,3.2vw,2.25rem);
+    line-height:1.17; letter-spacing:-.02em; text-wrap:balance;
+  }
+  #rs-proof-fr .title em{font-style:normal; color:var(--gold)}
+  #rs-proof-fr .sub{
+    max-width:780px; margin:0 auto 26px; color:#D9E6F8;
+    font-size:clamp(1rem,1.3vw,1.08rem); line-height:1.65; font-weight:400;
+  }
+  #rs-proof-fr .sub strong{color:#fff; font-weight:700}
+  #rs-proof-fr .sub a{
+    color:#fff; font-weight:700;
+    text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:2px;
+  }
+  #rs-proof-fr .sub a:hover{color:var(--gold)}
+
+  /* ===== CARTES FLOTTANTES ===== */
+  #rs-proof-fr .grid{
+    list-style:none; margin:26px 0 0; padding:0;
+    display:grid; gap:16px;
+    grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));
+    text-align:left;
+  }
+  #rs-proof-fr .card{
+    position:relative; overflow:hidden; min-width:0;
+    background:linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
+    border:1px solid rgba(255,255,255,.18);
+    border-radius:18px; padding:20px 18px;
+    box-shadow:var(--sh);
+    -webkit-backdrop-filter:saturate(140%) blur(6px);
+            backdrop-filter:saturate(140%) blur(6px);
+    transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    animation:aiiProofFloat 6s ease-in-out infinite;
+    will-change:transform;
+  }
+  #rs-proof-fr .card::before{
+    content:""; position:absolute; inset:-40% -30%;
+    background:radial-gradient(circle at 30% 20%, rgba(255,176,32,.16), transparent 46%);
+    transform:rotate(10deg); pointer-events:none;
+  }
+  #rs-proof-fr .card:hover{
+    transform:translateY(-5px);
+    box-shadow:var(--sh-hover);
+    border-color:rgba(255,255,255,.3);
+  }
+  #rs-proof-fr .grid li:nth-child(2) .card{animation-delay:.4s}
+  #rs-proof-fr .grid li:nth-child(3) .card{animation-delay:.8s}
+  #rs-proof-fr .grid li:nth-child(4) .card{animation-delay:1.2s}
+  #rs-proof-fr .grid li:nth-child(5) .card{animation-delay:.2s}
+  #rs-proof-fr .grid li:nth-child(6) .card{animation-delay:.6s}
+  #rs-proof-fr .grid li:nth-child(7) .card{animation-delay:1s}
+  #rs-proof-fr .grid li:nth-child(8) .card{animation-delay:1.4s}
+  @keyframes aiiProofFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+
+  #rs-proof-fr .ico{
+    position:relative; z-index:1;
+    width:44px; height:44px; flex:0 0 44px; border-radius:13px;
+    display:grid; place-items:center; margin-bottom:13px;
+    background:linear-gradient(145deg, var(--gold-2), var(--gold));
+    box-shadow:0 3px 10px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.4);
+  }
+  #rs-proof-fr .ico svg{
+    width:21px; height:21px; display:block; fill:none; stroke:#3A2400;
+    stroke-width:2; stroke-linecap:round; stroke-linejoin:round;
+  }
+  #rs-proof-fr .card h3{
+    position:relative; z-index:1;
+    margin:0 0 7px; color:#fff; font-size:1.02rem;
+    font-weight:800; line-height:1.3; letter-spacing:-.01em;
+  }
+  #rs-proof-fr .card p{
+    position:relative; z-index:1;
+    margin:0; color:#D2E1F5; font-size:.92rem; line-height:1.58;
+  }
+  #rs-proof-fr .card p strong{color:#fff; font-weight:700}
+
+  /* ===== BOUTONS ===== */
+  #rs-proof-fr .cta{
+    display:flex; flex-wrap:wrap; gap:14px; justify-content:center; margin-top:30px;
+  }
+  #rs-proof-fr .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:10px;
+    padding:15px 26px; border-radius:15px;
+    font-weight:800; font-size:1rem; text-decoration:none;
+    transition:transform .16s ease, box-shadow .16s ease, filter .16s ease;
+  }
+  #rs-proof-fr .btn svg{
+    width:19px; height:19px; flex:0 0 19px; display:block;
+    fill:currentColor;
+  }
+  #rs-proof-fr .btn:focus-visible{outline:3px solid rgba(255,255,255,.7); outline-offset:3px}
+  #rs-proof-fr .btn--wa{
+    background:var(--wa); color:#fff !important;
+    box-shadow:0 4px 10px rgba(0,0,0,.26), 0 16px 38px rgba(37,211,102,.34);
+  }
+  #rs-proof-fr .btn--wa:hover{transform:translateY(-3px); filter:brightness(1.04)}
+  #rs-proof-fr .btn--ghost{
+    background:rgba(255,255,255,.10); color:#fff !important;
+    border:2px solid rgba(255,255,255,.8);
+    box-shadow:0 4px 10px rgba(0,0,0,.24), 0 16px 34px rgba(0,0,0,.3);
+  }
+  #rs-proof-fr .btn--ghost:hover{transform:translateY(-3px); background:rgba(255,255,255,.18)}
+
+  #rs-proof-fr .foot{
+    max-width:760px; margin:22px auto 0;
+    color:#AFC5E4; font-size:.86rem; line-height:1.6;
+  }
+
+  @container aiiproof (max-width:560px){
+    #rs-proof-fr .btn{width:100%}
+  }
+  @media (max-width:560px){
+    #rs-proof-fr .btn{width:100%}
+  }
+  @media (prefers-reduced-motion:reduce){
+    #rs-proof-fr .card,#rs-proof-fr .btn{animation:none; transition:none}
+    #rs-proof-fr .card:hover,#rs-proof-fr .btn:hover{transform:none}
+  }
+</style>
+
+<!-- =========================================================
+     POURQUOI NOUS FAIRE CONFIANCE
+========================================================= -->
+<section id="rs-proof-fr" aria-labelledby="aiiproof-title">
+  <div class="inner">
+
+    <span class="kicker"><span class="flag" aria-hidden="true"></span> Service français</span>
+
+    <h2 class="title" id="aiiproof-title">
+      Abonnement IPTV Stable : <em>ce que vous pouvez vérifier</em> avant de payer
+    </h2>
+
+    <p class="sub">
+      Plutôt que des étoiles, voici des engagements que vous pouvez contrôler
+      vous-même — avant de commander votre <strong>abonnement IPTV</strong>, et
+      le jour où quelque chose cloche.
+      Posez-nous n'importe quelle question sur WhatsApp&nbsp;: vous aurez une
+      vraie réponse, pas un formulaire.
+    </p>
+
+    <ul class="grid">
+      <li>
+        <div class="card">
+          <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h7l-1 8 11-14h-7l0-6z"/></svg></span>
+          <h3>Activation en 5 à 15 minutes</h3>
+          <p>Vos identifiants arrivent dès réception du paiement. Si ce n'est pas
+             le cas, vous nous avez déjà sur WhatsApp.</p>
+        </div>
+      </li>
+      <li>
+        <div class="card">
+          <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9.6 9.6 0 0 1-2.8-.4L4 21l1.5-4.2A8.3 8.3 0 0 1 4 11.5 8.4 8.4 0 0 1 12.5 3 8.4 8.4 0 0 1 21 11.5z"/></svg></span>
+          <h3>Une personne, pas un ticket</h3>
+          <p>Assistance WhatsApp <strong>en français, 7j/7</strong>, de la
+             première installation au dépannage un soir de match.</p>
+        </div>
+      </li>
+      <li>
+        <div class="card">
+          <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="13" height="10" rx="1.5"/><rect x="16" y="9" width="6" height="12" rx="1.5"/><path d="M6 17h5"/></svg></span>
+          <h3>Vos appareils, vos applis</h3>
+          <p>Formats <strong>Xtream Codes, M3U et MAG</strong> : Smart TV, Fire
+             TV, Apple TV, Android, iOS, box et PC.</p>
+        </div>
+      </li>
+      <li>
+        <div class="card">
+          <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0"/><path d="M12 14v2"/></svg></span>
+          <h3>Sans reconduction automatique</h3>
+          <p>Rien ne se relance tout seul. Vous renouvelez quand vous le
+             décidez, pour la durée que vous voulez.</p>
+        </div>
+      </li>
+      <li>
+        <div class="card">
+          <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg></span>
+          <h3>Dimensionné pour les pics</h3>
+          <p>Les serveurs européens tiennent les soirs où tout le monde regarde
+             la même chose — c'est là que les offres bon marché lâchent.</p>
+        </div>
+      </li>
+      <li>
+        <div class="card">
+          <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l8 4v6c0 5-3.4 9.2-8 10-4.6-.8-8-5-8-10V6l8-4z"/><path d="M9 12l2 2 4-5"/></svg></span>
+          <h3>Paiement sécurisé</h3>
+          <p>Carte bancaire, Apple Pay ou Google Pay, et vos coordonnées ne sont
+             jamais revendues.</p>
+        </div>
+      </li>
+      <li>
+        <div class="card">
+          <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M7 4v16M17 4v16M2 9h5M2 15h5M17 9h5M17 15h5"/></svg></span>
+          <h3>Le catalogue, avant d'acheter</h3>
+          <p>La <a href="https://abonnement-iptv-stable.fr/8k-abonnement-iptv/liste-des-chaines/" style="color:#fff;font-weight:700">liste des chaînes</a>
+             est publique : vous voyez ce que vous recevez avant de commander.</p>
+        </div>
+      </li>
+      <li>
+        <div class="card">
+          <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v12"/><path d="M8 11l4 4 4-4"/><path d="M4 19h16"/></svg></span>
+          <h3>Installation accompagnée</h3>
+          <p>Le <a href="https://abonnement-iptv-stable.fr/instalation-iptv/" style="color:#fff;font-weight:700">guide d'installation</a>
+             couvre chaque appareil, et on reste en ligne jusqu'à la première chaîne.</p>
+        </div>
+      </li>
+    </ul>
+
+    <div class="cta">
+      <!-- ⚠️ NUMERO CORRIGE : ce bloc pointait vers wa.me/447782260559, un
+           numero BRITANNIQUE. Le widget flottant et toutes les autres sections
+           utilisent +33 7 48 66 23 75. -->
+      <a class="btn btn--wa" target="_blank" rel="noopener noreferrer"
+         href="https://wa.me/33748662375?text=Bonjour%2C%20j%27ai%20une%20question%20avant%20de%20commander%20mon%20abonnement%20IPTV.">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.14 6.44 2.14 11.9c0 1.75.46 3.45 1.32 4.95L2 22l5.3-1.39c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.9-4.44 9.9-9.9S17.5 2 12.04 2zm5.52 13.98c-.25.58-1.23 1.1-1.7 1.17-.43.06-.96.09-1.55-.1-.36-.11-.81-.26-1.4-.51-2.46-1.06-4.06-3.54-4.19-3.7-.12-.17-1-1.35-1-2.56s.63-1.81.86-2.06c.22-.25.49-.31.65-.31h.47c.15 0 .35-.06.55.42.2.49.69 1.7.75 1.82.06.12.1.26.02.43-.08.17-.12.27-.25.42-.12.14-.26.32-.37.43-.12.12-.25.26-.11.51.15.25.65 1.07 1.4 1.73.96.86 1.77 1.13 2.02 1.25.25.13.39.11.53-.6.14-.16.61-.71.77-.96.17-.25.33-.21.55-.12.23.08 1.45.68 1.7.8.25.12.41.18.47.28.06.1.06.59-.14 1.16z"/></svg>
+        Poser une question sur WhatsApp
+      </a>
+      <a class="btn btn--ghost" href="https://abonnement-iptv-stable.fr/iptv-abonnement/#prix">
+        Voir les tarifs
+      </a>
+    </div>
+
+    <p class="foot">
+      Une question sur une chaîne précise, un appareil ou un mode de paiement&nbsp;?
+      Écrivez-nous&nbsp;: on répond avant l'achat aussi volontiers qu'après.
+    </p>
+
+  </div>
+</section>
+
+<!--
+  ============================================================================
+  EMPLACEMENT POUR DE VRAIS AVIS CLIENTS
+  ----------------------------------------------------------------------------
+  Le bloc d'origine affichait huit avis 5 étoiles signés Lucas M., Camille B.,
+  Antoine D., Sarah L., Nicolas R., Inès K., Mehdi A. et Julie P., chacun avec
+  une ville et un badge « Vérifié », plus un JSON-LD AggregateRating annonçant
+  5/5 sur 8 avis. Aucun de ces avis ne provient d'un client : ils font partie
+  du template d'origine, et les mêmes prénoms apparaissent aussi sur
+  /abonnement-iptv-12-mois-smart-tv/.
+
+  Pourquoi ce n'est pas remplacé par une autre série inventée :
+    • votre guide « Google Spam Policies and SEO Recovery », §9, liste
+      « inventing verified reviews or customer numbers » parmi les fausses
+      preuves, et §7 vise les avis sans évaluation réelle ;
+    • le badge « Vérifié » est une affirmation de fait : sans procédure de
+      vérification, il est faux ;
+    • en France, l'article L111-7-2 du Code de la consommation impose
+      d'indiquer si les avis sont vérifiés et selon quelle méthode ; un avis
+      fabriqué relève de l'article L121-2 (pratique commerciale trompeuse) ;
+    • c'est exactement le point que l'audit d'iiptv.se avait classé numéro un
+      en risque d'action manuelle.
+
+  COMMENT REMETTRE DES AVIS, PROPREMENT
+  1. Vos clients vous écrivent déjà sur WhatsApp. Demandez-leur simplement
+     l'autorisation de publier leur message.
+  2. Publiez le texte tel quel, avec prénom + initiale. N'inventez ni ville,
+     ni note, ni badge.
+  3. N'ajoutez « Vérifié » que si vous pouvez expliquer comment vous vérifiez
+     (par exemple : « avis reçus de clients dont la commande est confirmée »),
+     et écrivez cette méthode quelque part sur la page.
+  4. Ne remettez pas de JSON-LD AggregateRating tant que les avis ne sont pas
+     réels et collectés sur le site. Une fois qu'ils le seront, une solution
+     plus solide est un profil Google Business ou Trustpilot, dont les avis
+     sont vérifiés par un tiers.
+
+  GABARIT À COPIER pour chaque avis réel, à placer dans la <ul class="grid"> :
+
+  <li>
+    <div class="card">
+      <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l2.7 5.8 6.3.8-4.6 4.3 1.2 6.3L12 17.1 6.4 20.2l1.2-6.3L3 9.6l6.3-.8z"/></svg></span>
+      <h3>Prénom P.</h3>
+      <p>« Le message du client, recopié tel quel, sans retouche. »</p>
+    </div>
+  </li>
+  ============================================================================
+-->
+
+</body>
+</html>

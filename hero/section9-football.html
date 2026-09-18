@@ -1,0 +1,287 @@
+<style>
+  #footFR{
+    --blue:#0A2E66; --blue2:#113E86; --blue3:#1D7AF2;
+    --red:#E30613; --gold:#FFD27A;
+    --sh:0 3px 8px rgba(0,0,0,.26), 0 18px 42px rgba(0,0,0,.34);
+  }
+  #footFR, #footFR *{
+    box-sizing:border-box;
+    font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+  }
+  /* « #footFR * { color:#fff !important } » supprime : le !important sur tous
+     les descendants ecrasait aussi les liens, les boutons et tout ce qu'on
+     ajouterait plus tard. Les couleurs sont posees element par element. */
+
+  /* Plus de width:100vw / left:50% / margin-left:-50vw : 100vw = la fenetre
+     alors que 50% = le conteneur. width:100% suit le conteneur ; pour du bord
+     a bord, reglez la section Elementor sur « Pleine largeur ». */
+  #footFR{
+    position:relative; width:100%; max-width:100%; margin:0;
+    /* meme bleu que les cartes de la section tarifs */
+    background:linear-gradient(180deg, var(--blue2) 0%, var(--blue) 100%);
+    padding:clamp(34px,8svh,88px) 0;
+    color:#fff;
+    overflow:hidden;
+    isolation:isolate;
+  }
+
+  /* ===== FOND « STADE », entierement en CSS =====
+     Projecteurs + rayures de pelouse + ballon. Aucune image a telecharger,
+     aucun logo, aucune marque. */
+  #footFR .bg{position:absolute; inset:0; z-index:0; pointer-events:none}
+  #footFR .bg::before{
+    content:""; position:absolute; inset:0;
+    background:
+      radial-gradient(60% 46% at 12% -8%, rgba(255,255,255,.20) 0%, rgba(255,255,255,0) 62%),
+      radial-gradient(60% 46% at 88% -8%, rgba(29,122,242,.30) 0%, rgba(29,122,242,0) 62%),
+      radial-gradient(90% 70% at 50% 118%, rgba(0,0,0,.42) 0%, rgba(0,0,0,0) 60%);
+  }
+  /* rayures de pelouse */
+  #footFR .bg::after{
+    content:""; position:absolute; inset:0;
+    background:repeating-linear-gradient(104deg,
+      rgba(255,255,255,.045) 0 44px, rgba(255,255,255,0) 44px 88px);
+    -webkit-mask-image:linear-gradient(180deg, transparent 0%, #000 42%, #000 100%);
+            mask-image:linear-gradient(180deg, transparent 0%, #000 42%, #000 100%);
+  }
+  /* ballon generique, trace en SVG */
+  #footFR .bg svg{
+    position:absolute; right:-70px; bottom:-90px;
+    width:clamp(260px,34vw,440px); height:auto;
+    opacity:.13; color:#fff;
+  }
+
+  /* ⚠️ EMPLACEMENT IMAGE — voir la note en bas du bloc.
+     Decommentez le <img> et cette regle si vous avez une image dont vous
+     detenez les droits. Le degrade garde le texte lisible par-dessus. */
+  #footFR .bg img{
+    position:absolute; inset:0; width:100%; height:100%;
+    object-fit:cover; object-position:72% center;
+    opacity:.55;
+  }
+  #footFR .bg .veil{
+    position:absolute; inset:0;
+    background:linear-gradient(100deg,
+      rgba(10,46,102,.96) 0%, rgba(10,46,102,.88) 34%,
+      rgba(10,46,102,.55) 66%, rgba(17,62,134,.30) 100%);
+  }
+
+  /* ===== CONTENU ===== */
+  #footFR .wrap{
+    position:relative; z-index:1;
+    max-width:min(1100px,100%); margin:0 auto;
+    padding:0 clamp(16px,3vw,24px); text-align:center;
+    container-type:inline-size; container-name:aiifoot;
+  }
+
+  #footFR .kicker{
+    display:inline-flex; align-items:center; gap:9px;
+    padding:7px 15px; border-radius:999px;
+    background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.26);
+    font-size:.82rem; font-weight:800; letter-spacing:.03em;
+    text-transform:uppercase; color:#fff;
+    box-shadow:0 2px 8px rgba(0,0,0,.24);
+    margin-bottom:16px;
+  }
+  #footFR .kicker svg{width:15px;height:15px;fill:none;stroke:var(--gold);stroke-width:2}
+
+  #footFR .title{
+    font-weight:900; letter-spacing:-.02em; line-height:1.16;
+    font-size:clamp(1.5rem,3.4vw,2.35rem);
+    margin:0 0 10px; color:#fff; text-wrap:balance;
+  }
+  #footFR .underline{
+    width:110px; height:5px; margin:14px auto 18px; border-radius:999px;
+    background:linear-gradient(90deg,#7FA8E8 0 33%,#fff 33% 66%,var(--red) 66% 100%);
+    box-shadow:0 4px 14px rgba(0,0,0,.34);
+  }
+
+  #footFR .sub{
+    max-width:760px; margin:0 auto;
+    font-size:clamp(1rem,1.2vw,1.08rem); line-height:1.68;
+    font-weight:400; color:#DCE8F8;
+  }
+  #footFR .sub strong{color:#fff; font-weight:700}
+  #footFR .sub a{
+    color:#fff; font-weight:700;
+    text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:2px;
+  }
+  #footFR .sub a:hover{color:var(--gold)}
+
+  /* puces */
+  #footFR .chips{
+    list-style:none; margin:24px 0 0; padding:0;
+    display:flex; flex-wrap:wrap; gap:12px; justify-content:center;
+  }
+  #footFR .chips li{
+    display:inline-flex; align-items:center; gap:10px;
+    padding:12px 16px; border-radius:14px;
+    background:rgba(255,255,255,.09); border:1px solid rgba(255,255,255,.16);
+    box-shadow:var(--sh);
+    font-size:.94rem; font-weight:700; color:#fff;
+  }
+  #footFR .chips svg{
+    width:18px; height:18px; flex:0 0 18px; display:block;
+    fill:none; stroke:var(--gold); stroke-width:1.9;
+    stroke-linecap:round; stroke-linejoin:round;
+  }
+
+  /* boutons */
+  #footFR .cta{
+    display:flex; flex-wrap:wrap; gap:14px; justify-content:center; margin-top:28px;
+  }
+  #footFR .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:10px;
+    padding:15px 26px; border-radius:15px;
+    font-weight:800; font-size:1rem; text-decoration:none;
+    transition:transform .14s ease, box-shadow .14s ease, background .14s ease;
+  }
+  #footFR .btn svg{
+    width:19px;height:19px;flex:0 0 19px;display:block;
+    fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;
+  }
+  #footFR .btn:focus-visible{outline:3px solid rgba(255,255,255,.7);outline-offset:3px}
+  #footFR .btn--primary{
+    background:#fff; color:var(--blue) !important;
+    box-shadow:0 4px 10px rgba(0,0,0,.28), 0 18px 40px rgba(0,0,0,.36);
+  }
+  #footFR .btn--primary:hover{
+    transform:translateY(-3px);
+    box-shadow:0 6px 14px rgba(0,0,0,.32), 0 26px 54px rgba(0,0,0,.46);
+  }
+  #footFR .btn--ghost{
+    background:rgba(255,255,255,.10); color:#fff !important;
+    border:2px solid rgba(255,255,255,.8);
+    box-shadow:0 4px 10px rgba(0,0,0,.24), 0 16px 34px rgba(0,0,0,.3);
+  }
+  #footFR .btn--ghost:hover{transform:translateY(-3px); background:rgba(255,255,255,.18)}
+
+  #footFR .note{
+    margin:20px auto 0; max-width:660px;
+    font-size:.86rem; font-weight:400; line-height:1.55; color:#AFC5E4;
+  }
+
+  @container aiifoot (max-width:560px){
+    #footFR .btn{width:100%}
+    #footFR .chips li{width:100%; justify-content:center}
+  }
+  @media (max-width:560px){
+    #footFR .btn{width:100%}
+  }
+  @media (prefers-reduced-motion:reduce){
+    #footFR .btn{transition:none}
+    #footFR .btn:hover{transform:none}
+  }
+</style>
+
+<!-- =========================================================
+     FOOTBALL — ABONNEMENT IPTV
+========================================================= -->
+<section id="footFR" aria-labelledby="aiifoot-title">
+
+  <div class="bg" aria-hidden="true">
+    <!-- ⚠️ EMPLACEMENT IMAGE — lisez la note tout en bas avant de decommenter.
+    <img src="VOTRE-IMAGE.jpg" alt="" loading="lazy" decoding="async">
+    <span class="veil"></span>
+    -->
+    <!-- ballon generique, sans marque ni logo -->
+    <svg viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="3">
+      <circle cx="100" cy="100" r="88"/>
+      <path d="M100 42l31 22-12 37h-38l-12-37z" fill="currentColor" fill-opacity=".35"/>
+      <path d="M100 42V12M131 64l28-10M119 101l23 30M81 101l-23 30M69 64L41 54"/>
+      <path d="M142 131l16 26M58 131l-16 26M81 138h38"/>
+    </svg>
+  </div>
+
+  <div class="wrap">
+
+    <span class="kicker">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7l4 3-1.5 4.5h-5L8 10z"/></svg>
+      Sport en direct
+    </span>
+
+    <h2 class="title" id="aiifoot-title">Le football en direct avec votre abonnement IPTV</h2>
+    <div class="underline" aria-hidden="true"></div>
+
+    <p class="sub">
+      Les grands championnats européens et les compétitions internationales, en
+      <strong>4K et Full HD</strong>, sur la télévision du salon comme sur le
+      téléphone. Les serveurs sont dimensionnés pour les soirs où tout le monde
+      regarde le même match — c'est exactement là que les offres bon marché
+      lâchent. Vérifiez ce qui est disponible sur la
+      <a href="https://abonnement-iptv-stable.fr/8k-abonnement-iptv/liste-des-chaines/">liste des chaînes</a>.
+    </p>
+
+    <ul class="chips">
+      <li>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7l4 3-1.5 4.5h-5L8 10z"/></svg>
+        Championnats européens
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 5H4v2a3 3 0 0 0 3 3M17 5h3v2a3 3 0 0 1-3 3"/><path d="M12 14v4M9 20h6"/></svg>
+        Coupes internationales
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg>
+        4K et Full HD
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="13" height="10" rx="1.5"/><rect x="16" y="9" width="6" height="12" rx="1.5"/><path d="M6 17h5"/></svg>
+        Jusqu'à 3 écrans
+      </li>
+    </ul>
+
+    <div class="cta">
+      <a class="btn btn--primary" href="https://abonnement-iptv-stable.fr/iptv-abonnement/#prix">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12V8H6a2 2 0 0 1 0-4h12v4"/><path d="M4 6v12a2 2 0 0 0 2 2h14v-4"/><path d="M18 12a2 2 0 0 0 0 4h4v-4z"/></svg>
+        Voir les tarifs
+      </a>
+      <a class="btn btn--ghost" href="https://abonnement-iptv-stable.fr/instalation-iptv/">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12"/><path d="M8 11l4 4 4-4"/><path d="M4 19h16"/></svg>
+        Guide d'installation
+      </a>
+    </div>
+
+    <p class="note">
+      La disponibilité des chaînes et des compétitions dépend de votre offre et
+      des droits de diffusion en vigueur.
+    </p>
+  </div>
+</section>
+
+<!--
+  ============================================================================
+  ⚠️ POURQUOI L'IMAGE FOURNIE N'EST PAS UTILISEE ICI
+  ----------------------------------------------------------------------------
+  ChatGPT-Image-Oct-16-2025-01_14_23-PM.png contient :
+    • neuf marques deposees : Ligue 1, Premier League, LaLiga, Serie A,
+      Bundesliga, UEFA Champions League (deux fois), UEFA Nations League,
+      FIFA World Cup 2026 ;
+    • le logo Nike et l'ecusson de la Federation francaise de football ;
+    • le portrait, genere par IA, d'un joueur reel et identifiable en maillot
+      de l'equipe de France.
+  Placee dans une section commerciale, elle laisse entendre que ces
+  competitions et ce joueur cautionnent votre service.
+
+  Votre guide « Google Spam Policies and SEO Recovery » le dit deux fois :
+    §9  « Using copyrighted logos or content without permission » et
+        « Claiming to be an official brand without authorization »
+    §11 « Use only images and logos you have permission to publish » —
+        et rappelle que des plaintes valides font retirer des URL et peuvent
+        peser sur tout le domaine.
+  En France s'ajoute le droit a l'image du joueur (art. 9 du Code civil).
+
+  Autre point, independant du droit : le fichier pese 2 221 273 octets
+  (2,12 Mo) en 1536 x 1024, sans aucune taille intermediaire generee par
+  WordPress (les variantes -1024x1024 et -768x768 renvoient 404).
+
+  A LA PLACE : le fond est dessine en CSS (projecteurs, rayures de pelouse,
+  ballon generique). Zero octet telecharge, zero marque.
+
+  SI VOUS AVEZ UNE IMAGE DONT VOUS DETENEZ LES DROITS :
+    1. decommentez le <img> et le <span class="veil"> dans <div class="bg"> ;
+    2. remplacez VOTRE-IMAGE.jpg par son URL ;
+    3. exportez-la en JPEG ou WebP, largeur 1600 px, sous 300 Ko.
+  Le voile degrade est deja regle pour que le texte reste lisible par-dessus.
+  ============================================================================
+-->

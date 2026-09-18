@@ -1,0 +1,535 @@
+<style>
+  #faq-iptv-fr{
+    /* Pour passer la section en bleu comme les autres : remplacez la valeur de
+       --bg par  linear-gradient(180deg,#113E86 0%,#0A2E66 100%)  et --ink par #fff. */
+    --bg:linear-gradient(180deg,#F7FBFF 0%,#E9F1FE 100%);
+    --blue:#0A2E66; --blue2:#113E86; --accent:#1D4ED8;
+    --ink:#0B1220; --muted:#43536B; --line:#D8E5F9; --wa:#25D366;
+    --sh:0 2px 6px rgba(10,46,102,.10), 0 14px 34px rgba(10,46,102,.14);
+    --sh-hover:0 4px 10px rgba(10,46,102,.14), 0 24px 52px rgba(10,46,102,.20);
+  }
+  #faq-iptv-fr, #faq-iptv-fr *{
+    box-sizing:border-box;
+    font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+  }
+  /* « .cta-box * { color:#fff !important } » supprime : ce !important sur tous
+     les descendants rendait impossible toute exception (lien, puce, bouton). */
+
+  /* ===== CORRECTIF ELEMENTOR =====
+     Les conteneurs Elementor sont en flex avec align-items:center : le widget
+     est ajuste a son contenu (mesure : 48 px, soit le padding seul). */
+  .elementor-widget:has(#faq-iptv-fr),
+  .elementor-widget-container:has(#faq-iptv-fr),
+  .elementor-element:has(> .elementor-widget-container > #faq-iptv-fr){
+    width:100% !important; max-width:100% !important; align-self:stretch !important;
+  }
+
+  /* ===== PLEINE LARGEUR SANS DEBORDEMENT =====
+     « width:100vw; left:50%; margin-left:-50vw » (code d'origine) provoque une
+     barre de defilement horizontale des qu'une barre verticale est presente :
+     100vw compte la largeur de la barre, pas 100%. Ici le fond est un calque
+     absolu : il ne prend aucune place dans le flux. */
+  #faq-iptv-fr{
+    position:relative; width:100%; max-width:100%; margin:0;
+    background:transparent; clip-path:inset(0 -100vmax);
+    padding:clamp(40px,7svh,76px) 0; color:var(--ink); isolation:isolate;
+  }
+  #faq-iptv-fr::before{
+    content:""; position:absolute; z-index:-1; pointer-events:none;
+    top:0; bottom:0; left:50%; transform:translateX(-50%);
+    width:100vw; max-width:none; background:var(--bg);
+  }
+  #faq-iptv-fr .wrap{
+    width:100%; max-width:1180px; margin-inline:auto;
+    padding:0 clamp(16px,3vw,24px);
+    container-type:inline-size; container-name:faqiptv;
+  }
+
+  /* ===== EN-TETE ===== */
+  #faq-iptv-fr .head{text-align:center; margin-bottom:26px}
+  #faq-iptv-fr .kicker{
+    display:inline-flex; align-items:center; gap:9px;
+    padding:7px 15px; border-radius:999px; background:#fff;
+    border:1px solid var(--line); box-shadow:0 2px 8px rgba(10,46,102,.10);
+    font-size:.79rem; font-weight:800; letter-spacing:.03em;
+    text-transform:uppercase; color:var(--blue); margin-bottom:14px;
+  }
+  #faq-iptv-fr .flag{
+    width:19px; height:12px; border-radius:2px; flex:0 0 19px; display:inline-block;
+    background:linear-gradient(90deg,#002654 0 33.33%,#fff 33.33% 66.66%,#E30613 66.66% 100%);
+    box-shadow:0 0 0 1px rgba(10,46,102,.18) inset;
+  }
+  #faq-iptv-fr .head h2{
+    margin:0 0 10px; font-weight:900; color:var(--blue);
+    font-size:clamp(1.4rem,3vw,2.1rem);
+    line-height:1.18; letter-spacing:-.02em; text-wrap:balance;
+  }
+  #faq-iptv-fr .head h2 em{font-style:normal; color:var(--accent)}
+  #faq-iptv-fr .head p{
+    max-width:800px; margin:0 auto; color:var(--muted);
+    font-size:clamp(1rem,1.3vw,1.06rem); line-height:1.65;
+  }
+
+  /* ===== GRILLE ===== */
+  #faq-iptv-fr .grid{display:grid; gap:20px; grid-template-columns:1fr; align-items:start}
+  @container faqiptv (min-width:900px){
+    #faq-iptv-fr .grid{grid-template-columns:minmax(0,1.32fr) minmax(0,.68fr)}
+  }
+  @supports not (container-type:inline-size){
+    @media (min-width:900px){
+      #faq-iptv-fr .grid{grid-template-columns:minmax(0,1.32fr) minmax(0,.68fr)}
+    }
+  }
+
+  /* ===== QUESTIONS ===== */
+  #faq-iptv-fr .list{display:flex; flex-direction:column; gap:11px; min-width:0}
+  #faq-iptv-fr .q{
+    background:#fff; border:1px solid var(--line); border-radius:15px;
+    box-shadow:var(--sh); overflow:hidden;
+    transition:box-shadow .2s ease, border-color .2s ease, transform .2s ease;
+  }
+  #faq-iptv-fr .q:hover{box-shadow:var(--sh-hover); border-color:#BCD3F5; transform:translateY(-2px)}
+  #faq-iptv-fr .q[open]{box-shadow:var(--sh-hover); border-color:#A9C7F2}
+  #faq-iptv-fr .q > summary{
+    list-style:none; cursor:pointer; outline:none;
+    display:flex; align-items:flex-start; gap:12px;
+    padding:15px 16px; font-weight:800; color:var(--blue);
+    font-size:clamp(.98rem,1.5vw,1.06rem); line-height:1.4;
+  }
+  #faq-iptv-fr .q > summary::-webkit-details-marker{display:none}
+  #faq-iptv-fr .q > summary::marker{content:""}
+  #faq-iptv-fr .q > summary:focus-visible{outline:3px solid var(--accent); outline-offset:-3px}
+  #faq-iptv-fr .num{
+    flex:0 0 26px; width:26px; height:26px; border-radius:8px; margin-top:1px;
+    display:grid; place-items:center; font-size:.78rem; font-weight:900;
+    background:linear-gradient(180deg,var(--blue2),var(--blue)); color:#fff;
+    box-shadow:0 2px 6px rgba(10,46,102,.28);
+  }
+  #faq-iptv-fr .qtxt{flex:1 1 auto; min-width:0}
+  #faq-iptv-fr .chev{
+    flex:0 0 18px; width:18px; height:18px; margin-top:4px; display:block;
+    fill:none; stroke:var(--accent); stroke-width:2.4;
+    stroke-linecap:round; stroke-linejoin:round;
+    transition:transform .22s ease;
+  }
+  #faq-iptv-fr .q[open] .chev{transform:rotate(180deg)}
+  #faq-iptv-fr .a{
+    padding:0 16px 16px 54px; color:var(--ink);
+    font-size:.95rem; line-height:1.68;
+  }
+  #faq-iptv-fr .a p{margin:0 0 9px}
+  #faq-iptv-fr .a p:last-child{margin-bottom:0}
+  #faq-iptv-fr .a ul{margin:0 0 9px; padding-left:18px}
+  #faq-iptv-fr .a li{margin:4px 0}
+  #faq-iptv-fr .a b{color:var(--blue); font-weight:700}
+  #faq-iptv-fr .a a{
+    color:var(--accent); font-weight:700;
+    text-decoration:underline; text-underline-offset:2px;
+  }
+  #faq-iptv-fr .a a:hover{color:var(--blue)}
+  #faq-iptv-fr .a a[target="_blank"]::after{content:" \2197"; font-weight:400}
+
+  /* ===== ENCADRE SUPPORT ===== */
+  #faq-iptv-fr .aside{min-width:0}
+  @container faqiptv (min-width:900px){
+    #faq-iptv-fr .aside{position:sticky; top:18px}
+  }
+  @supports not (container-type:inline-size){
+    @media (min-width:900px){
+      #faq-iptv-fr .aside{position:sticky; top:18px}
+    }
+  }
+  #faq-iptv-fr .box{
+    position:relative; overflow:hidden;
+    background:linear-gradient(180deg,var(--blue2) 0%,var(--blue) 100%);
+    color:#fff; border-radius:18px; padding:22px 20px;
+    box-shadow:0 3px 8px rgba(0,0,0,.22), 0 20px 46px rgba(10,46,102,.30);
+    animation:faqFloat 6s ease-in-out infinite; will-change:transform;
+  }
+  #faq-iptv-fr .box::before{
+    content:""; position:absolute; inset:-40% -30%; pointer-events:none;
+    background:radial-gradient(circle at 28% 18%, rgba(255,176,32,.20), transparent 48%);
+    transform:rotate(10deg);
+  }
+  @keyframes faqFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+  #faq-iptv-fr .box > *{position:relative; z-index:1}
+  #faq-iptv-fr .box h3{
+    margin:0 0 8px; font-size:1.12rem; font-weight:900; color:#fff; line-height:1.3;
+  }
+  #faq-iptv-fr .box p{margin:0 0 15px; color:#D9E6F8; font-size:.93rem; line-height:1.6}
+  #faq-iptv-fr .wa{
+    display:flex; align-items:center; justify-content:center; gap:9px;
+    padding:13px 16px; border-radius:12px; background:var(--wa);
+    color:#fff !important; font-weight:800; font-size:.97rem; text-decoration:none;
+    box-shadow:0 4px 10px rgba(0,0,0,.24), 0 12px 28px rgba(37,211,102,.34);
+    transition:transform .16s ease, filter .16s ease;
+  }
+  #faq-iptv-fr .wa:hover{transform:translateY(-2px); filter:brightness(1.05)}
+  #faq-iptv-fr .wa:focus-visible{outline:3px solid rgba(255,255,255,.75); outline-offset:3px}
+  #faq-iptv-fr .wa svg{width:18px;height:18px;flex:0 0 18px;display:block;fill:currentColor}
+  #faq-iptv-fr .pts{list-style:none; padding:0; margin:15px 0 0; display:grid; gap:9px}
+  #faq-iptv-fr .pts li{
+    display:flex; align-items:flex-start; gap:9px;
+    font-size:.89rem; font-weight:600; color:#EAF2FD; line-height:1.45;
+  }
+  #faq-iptv-fr .pts svg{
+    width:16px;height:16px;flex:0 0 16px;margin-top:2px;display:block;fill:#7FE7A6;
+  }
+  #faq-iptv-fr .boxlink{
+    display:block; margin-top:14px; font-size:.86rem; font-weight:700;
+    color:#CFE0F9; text-decoration:underline; text-underline-offset:2px;
+  }
+  #faq-iptv-fr .boxlink:hover{color:#fff}
+
+  #faq-iptv-fr .foot{
+    max-width:900px; margin:24px auto 0; text-align:center;
+    color:var(--muted); font-size:.83rem; line-height:1.6;
+  }
+  #faq-iptv-fr .foot a{color:var(--accent); text-decoration:underline; text-underline-offset:2px}
+
+  @media (prefers-reduced-motion:reduce){
+    #faq-iptv-fr .box,#faq-iptv-fr .q,#faq-iptv-fr .wa,#faq-iptv-fr .chev{
+      animation:none; transition:none;
+    }
+    #faq-iptv-fr .q:hover,#faq-iptv-fr .wa:hover{transform:none}
+  }
+</style>
+
+<!-- ==========================================================
+     FAQ — ABONNEMENT IPTV STABLE
+     Aucun schema / JSON-LD (le bloc FAQPage d'origine a ete retire).
+     Les 10 questions reprennent les recherches reelles des
+     internautes francais sur « iptv » (AnswerThePublic, FR).
+========================================================== -->
+<section id="faq-iptv-fr" aria-labelledby="faq-iptv-title">
+  <div class="wrap">
+
+    <div class="head">
+      <span class="kicker"><span class="flag" aria-hidden="true"></span> Questions fréquentes</span>
+      <h2 id="faq-iptv-title">
+        Tout ce qu'il faut savoir avant de choisir un <em>abonnement IPTV</em>
+      </h2>
+      <p>
+        Les dix questions que les Français posent le plus souvent avant de
+        souscrire un abonnement IPTV&nbsp;: comment fonctionne la technologie, ce
+        que dit la loi, quelle application installer et comment démarrer.
+        Réponses directes, sans jargon.
+      </p>
+    </div>
+
+    <div class="grid">
+
+      <div class="list">
+
+        <!-- 1 -->
+        <details class="q" open>
+          <summary>
+            <span class="num">1</span>
+            <span class="qtxt">Qu'est-ce que l'IPTV et comment ça marche&nbsp;?</span>
+            <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="a">
+            <p>
+              IPTV veut dire <i>Internet Protocol Television</i>&nbsp;: une
+              <a href="https://fr.wikipedia.org/wiki/T%C3%A9l%C3%A9vision_par_protocole_Internet" target="_blank" rel="noopener noreferrer">forme
+              de télévision diffusée sur un réseau utilisant le protocole internet</a>.
+              Les chaînes n'arrivent plus par une antenne, un câble ou une parabole,
+              mais par votre connexion.
+            </p>
+            <p>
+              C'est exactement la technologie de votre box&nbsp;: Free l'a lancée en
+              France dès 2002, Orange, SFR et Bouygues l'ont suivie. Côté
+              utilisateur il faut trois choses&nbsp;: une application ou un boîtier,
+              une liste de chaînes (format <b>M3U</b> ou <b>Xtream Codes</b>), et
+              un débit d'environ 10&nbsp;Mb/s en HD, 25&nbsp;Mb/s en 4K.
+            </p>
+          </div>
+        </details>
+
+        <!-- 2 -->
+        <details class="q">
+          <summary>
+            <span class="num">2</span>
+            <span class="qtxt">Est-ce que l'IPTV est légale en France&nbsp;?</span>
+            <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="a">
+            <p>
+              La technologie, oui, sans la moindre ambiguïté&nbsp;: c'est celle
+              qu'utilisent les opérateurs français depuis plus de vingt ans.
+              Ce qui change tout, c'est <b>l'origine des flux</b>.
+            </p>
+            <p>
+              Un service est en règle lorsqu'il diffuse des chaînes dont il détient
+              les droits, ou qu'il les distribue sous licence de l'ayant droit.
+              Un service qui redistribue des bouquets payants sans accord relève de
+              la contrefaçon — quel que soit son prix, son pays d'hébergement ou la
+              façon dont il se présente.
+            </p>
+            <p>
+              La bonne question n'est donc pas «&nbsp;l'IPTV est-elle légale&nbsp;?&nbsp;»
+              mais «&nbsp;<b>ce fournisseur-là détient-il les droits sur ce qu'il
+              diffuse&nbsp;?</b>&nbsp;». La question&nbsp;4 explique comment le vérifier.
+            </p>
+          </div>
+        </details>
+
+        <!-- 3 -->
+        <details class="q">
+          <summary>
+            <span class="num">3</span>
+            <span class="qtxt">Qu'est-ce qu'on risque&nbsp;? Quelle amende pour l'IPTV en France&nbsp;?</span>
+            <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="a">
+            <p>
+              Le texte de référence est l'<a href="https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000032655082" target="_blank" rel="noopener noreferrer">article
+              L335-2 du Code de la propriété intellectuelle</a>&nbsp;: la contrefaçon
+              est punie de <b>trois ans d'emprisonnement et de 300&nbsp;000&nbsp;€
+              d'amende</b>, portés à sept ans et 750&nbsp;000&nbsp;€ en bande
+              organisée. En pratique, ces poursuites visent les exploitants des
+              services, pas les foyers.
+            </p>
+            <p>
+              Pour un spectateur, le risque courant est ailleurs. Depuis la loi du
+              25&nbsp;octobre 2021 (article L333-10 du code du sport),
+              <a href="https://www.arcom.fr/nous-connaitre-nos-missions/promouvoir-et-proteger-la-creation/lutte-contre-le-piratage-des-retransmissions-sportives" target="_blank" rel="noopener noreferrer">l'Arcom
+              fait bloquer les services sportifs illicites</a> — près de
+              6&nbsp;500&nbsp;noms de domaine sur sa demande en 2025, contre 772 en
+              2022. Un service bloqué s'éteint du jour au lendemain, sans préavis ni
+              remboursement&nbsp;: c'est le scénario qui coûte le plus cher aux
+              abonnés.
+            </p>
+          </div>
+        </details>
+
+        <!-- 4 -->
+        <details class="q">
+          <summary>
+            <span class="num">4</span>
+            <span class="qtxt">Quel fournisseur IPTV prendre&nbsp;? Comment savoir s'il est sérieux&nbsp;?</span>
+            <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="a">
+            <p>
+              Six vérifications, dans l'ordre, avant de payer un abonnement IPTV à
+              qui que ce soit&nbsp;:
+            </p>
+            <ul>
+              <li><b>Des mentions légales identifiables</b> — une raison sociale, une adresse, un numéro d'entreprise que vous pouvez recouper.</li>
+              <li><b>Un prix cohérent</b> avec le coût réel des droits sportifs et cinéma.</li>
+              <li><b>Pas de promesse absolue</b> du type «&nbsp;à vie&nbsp;», «&nbsp;100&nbsp;% sans coupure&nbsp;» ou «&nbsp;garanti&nbsp;»&nbsp;: personne ne maîtrise votre box, votre Wi-Fi et votre opérateur.</li>
+              <li><b>Un support joignable avant l'achat</b>, pas seulement après.</li>
+              <li><b>Une politique de remboursement écrite</b>, avec un délai chiffré.</li>
+              <li><b>Un paiement traçable</b> (carte, virement) plutôt qu'un transfert impossible à contester.</li>
+            </ul>
+            <p>
+              Et une question toute simple, par écrit&nbsp;: <b>d'où viennent les
+              chaînes&nbsp;?</b> Un fournisseur qui détient des droits répond sans
+              détour.
+            </p>
+          </div>
+        </details>
+
+        <!-- 5 -->
+        <details class="q">
+          <summary>
+            <span class="num">5</span>
+            <span class="qtxt">Quel est le meilleur IPTV gratuit&nbsp;? Comment avoir toutes les chaînes&nbsp;?</span>
+            <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="a">
+            <p>
+              Les listes M3U gratuites existent vraiment&nbsp;: chaînes en clair,
+              télévisions publiques, webradios, chaînes qui diffusent volontairement
+              en libre accès. Elles sont en revanche <b>instables par nature</b> —
+              personne n'est payé pour les maintenir, les liens meurent, les
+              coupures sont fréquentes aux heures de pointe.
+            </p>
+            <p>
+              Pour les chaînes françaises en clair, les plateformes officielles des
+              chaînes restent plus fiables et plus rapides qu'une liste M3U
+              récupérée sur un forum.
+            </p>
+            <p>
+              Une règle utile&nbsp;: une liste gratuite qui annonce les grands
+              bouquets sport et cinéma ne les a pas achetés. La question&nbsp;2
+              s'applique telle quelle. Vous pouvez comparer avec notre
+              <a href="https://abonnement-iptv-stable.fr/8k-abonnement-iptv/liste-des-chaines/">liste des chaînes disponibles</a>.
+            </p>
+          </div>
+        </details>
+
+        <!-- 6 -->
+        <details class="q">
+          <summary>
+            <span class="num">6</span>
+            <span class="qtxt">Quelle application IPTV choisir&nbsp;: Smarters, TiviMate ou GSE&nbsp;?</span>
+            <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="a">
+            <ul>
+              <li><b><a href="https://play.google.com/store/apps/details?id=ar.tvplayer.tv" target="_blank" rel="noopener noreferrer">TiviMate</a></b> — la référence sur Android TV, Google TV et Fire TV Stick&nbsp;: guide des programmes lisible, groupes de chaînes, multi-listes.</li>
+              <li><b><a href="https://apps.apple.com/fr/app/iptv-smarters-player-lite/id1628995509" target="_blank" rel="noopener noreferrer">Smarters Player Lite</a></b> — sur iPhone, iPad et Apple TV, depuis l'App Store.</li>
+              <li><b>GSE Smart IPTV</b> — polyvalente, pratique pour tester une liste M3U rapidement.</li>
+              <li><b>Smart IPTV</b> et <b>IBO Player</b> — les plus utilisées sur les Smart TV Samsung et LG.</li>
+              <li><b>VLC</b> — pas une application de télévision, mais imbattable pour vérifier qu'un flux fonctionne.</li>
+            </ul>
+            <p>
+              Attention&nbsp;: «&nbsp;IPTV Smarters Pro&nbsp;» n'est plus distribuée
+              sur le Google Play Store. Sur Android, passez par TiviMate ou par le
+              fichier officiel de l'éditeur — jamais par un lien de téléchargement
+              trouvé au hasard.
+            </p>
+          </div>
+        </details>
+
+        <!-- 7 -->
+        <details class="q">
+          <summary>
+            <span class="num">7</span>
+            <span class="qtxt">Est-ce qu'un boîtier IPTV est légal&nbsp;? Lequel acheter&nbsp;?</span>
+            <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="a">
+            <p>
+              Un boîtier est un appareil&nbsp;: le posséder, l'acheter et le revendre
+              est parfaitement légal, au même titre qu'un ordinateur. Ce qui a
+              parfois posé problème en justice, ce sont les boîtiers vendus
+              <b>préchargés</b> avec des chaînes déjà installées&nbsp;: là, ce n'est
+              plus le matériel qui est en cause, mais le contenu livré avec.
+            </p>
+            <p>Les appareils qui donnent les meilleurs résultats&nbsp;:</p>
+            <ul>
+              <li><b>Fire TV Stick 4K</b> — le meilleur rapport prix/simplicité, se branche en HDMI.</li>
+              <li><b>Nvidia Shield TV</b> — la plus puissante, idéale si vous tenez au 4K sans ralentissement.</li>
+              <li><b>Box Android TV ou Google TV récente</b> — polyvalente.</li>
+              <li><b>Décodeurs Formuler ou MAG</b> — conçus pour ce type d'usage, avec télécommande dédiée.</li>
+            </ul>
+            <p>
+              Si votre télévision est une Samsung ou une LG récente, vous n'avez
+              probablement besoin d'aucun boîtier.
+            </p>
+          </div>
+        </details>
+
+        <!-- 8 -->
+        <details class="q">
+          <summary>
+            <span class="num">8</span>
+            <span class="qtxt">Quels appareils sont compatibles&nbsp;?</span>
+            <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="a">
+            <p>
+              Smart TV <b>Samsung</b> et <b>LG</b>, <b>Android TV</b> et
+              <b>Google TV</b>, <b>Fire TV Stick</b>, <b>Apple TV</b>, smartphones
+              et tablettes <b>Android</b> et <b>iOS</b>, <b>PC et Mac</b>, ainsi que
+              les décodeurs <b>MAG</b> et <b>Formuler</b>.
+            </p>
+            <p>
+              Si un appareil accepte l'une des applications de la question&nbsp;6, il
+              fonctionne. En cas de doute sur un modèle précis, demandez-nous avant
+              de commander.
+            </p>
+          </div>
+        </details>
+
+        <!-- 9 -->
+        <details class="q">
+          <summary>
+            <span class="num">9</span>
+            <span class="qtxt">Comment installer l'IPTV sur ma TV ou mon mobile&nbsp;?</span>
+            <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="a">
+            <p>Trois étapes, une dizaine de minutes&nbsp;:</p>
+            <ul>
+              <li>Installez l'application adaptée à votre appareil (question&nbsp;6).</li>
+              <li>Saisissez vos identifiants <b>Xtream Codes</b>, ou collez l'URL <b>M3U</b> qui vous a été envoyée.</li>
+              <li>Laissez le guide des programmes se charger&nbsp;: comptez une à deux minutes la première fois.</li>
+            </ul>
+            <p>
+              Le détail, appareil par appareil, est sur notre
+              <a href="https://abonnement-iptv-stable.fr/instalation-iptv/">page d'installation IPTV</a>.
+              Si vous bloquez, écrivez-nous sur WhatsApp&nbsp;: on fait l'installation
+              avec vous.
+            </p>
+          </div>
+        </details>
+
+        <!-- 10 -->
+        <details class="q">
+          <summary>
+            <span class="num">10</span>
+            <span class="qtxt">Combien de temps pour l'activation, et quelles durées proposez-vous&nbsp;?</span>
+            <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="a">
+            <p>
+              Votre abonnement IPTV est activé en <b>5 à 15 minutes</b> après
+              confirmation de la commande. Vous recevez vos identifiants et le guide
+              d'installation par e-mail et sur WhatsApp. En dehors des heures de
+              forte affluence, c'est souvent plus rapide.
+            </p>
+            <p>
+              Quatre durées sont proposées&nbsp;: <b>3, 6, 12 et 24 mois</b>. Le tarif
+              mensuel baisse avec la durée&nbsp;; le détail est sur la
+              <a href="https://abonnement-iptv-stable.fr/iptv-abonnement/#prix">page des tarifs</a>.
+              Le renouvellement se fait par un simple message, sans refaire
+              l'installation.
+            </p>
+          </div>
+        </details>
+
+      </div>
+
+      <aside class="aside">
+        <div class="box">
+          <h3>Une question avant de commander&nbsp;?</h3>
+          <p>
+            Écrivez-nous&nbsp;: on répond aussi volontiers avant l'achat qu'après,
+            et on vous dit franchement si votre appareil convient.
+          </p>
+
+          <!-- NUMEROS CORRIGES : le code d'origine utilisait wa.me/447877418908 et
+               wa.me/447782260559, deux numeros BRITANNIQUES differents. Toutes les
+               autres sections du site utilisent +33 7 48 66 23 75. -->
+          <a class="wa" target="_blank" rel="noopener noreferrer"
+             href="https://wa.me/33748662375?text=Bonjour%2C%20j%27ai%20une%20question%20sur%20l%27abonnement%20IPTV%20avant%20de%20commander.">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.14 6.44 2.14 11.9c0 1.75.46 3.45 1.32 4.95L2 22l5.3-1.39c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.9-4.44 9.9-9.9S17.5 2 12.04 2zm5.52 13.98c-.25.58-1.23 1.1-1.7 1.17-.43.06-.96.09-1.55-.1-.36-.11-.81-.26-1.4-.51-2.46-1.06-4.06-3.54-4.19-3.7-.12-.17-1-1.35-1-2.56s.63-1.81.86-2.06c.22-.25.49-.31.65-.31h.47c.15 0 .35-.06.55.42.2.49.69 1.7.75 1.82.06.12.1.26.02.43-.08.17-.12.27-.25.42-.12.14-.26.32-.37.43-.12.12-.25.26-.11.51.15.25.65 1.07 1.4 1.73.96.86 1.77 1.13 2.02 1.25.25.13.39.11.53-.6.14-.16.61-.71.77-.96.17-.25.33-.21.55-.12.23.08 1.45.68 1.7.8.25.12.41.18.47.28.06.1.06.59-.14 1.16z"/></svg>
+            Poser ma question sur WhatsApp
+          </a>
+
+          <ul class="pts">
+            <li>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.6 16.6 5 12l1.4-1.4 3.2 3.2 8-8L19 7.2z"/></svg>
+              Activation en 5 à 15 minutes
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.6 16.6 5 12l1.4-1.4 3.2 3.2 8-8L19 7.2z"/></svg>
+              Installation guidée pas à pas
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.6 16.6 5 12l1.4-1.4 3.2 3.2 8-8L19 7.2z"/></svg>
+              Formules 3, 6, 12 et 24 mois
+            </li>
+          </ul>
+
+          <a class="boxlink" href="https://abonnement-iptv-stable.fr/instalation-iptv/">
+            Voir le guide d'installation complet
+          </a>
+        </div>
+      </aside>
+
+    </div>
+
+    <p class="foot">
+      Informations juridiques données à titre indicatif, à jour de septembre&nbsp;2026&nbsp;:
+      <a href="https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000032655082" target="_blank" rel="noopener noreferrer">article L335-2 du Code de la propriété intellectuelle</a>
+      et <a href="https://www.arcom.fr/nous-connaitre-nos-missions/promouvoir-et-proteger-la-creation/lutte-contre-le-piratage-des-retransmissions-sportives" target="_blank" rel="noopener noreferrer">données de blocage publiées par l'Arcom</a>.
+      Elles ne remplacent pas l'avis d'un professionnel du droit.
+    </p>
+
+  </div>
+</section>

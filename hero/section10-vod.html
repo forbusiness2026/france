@@ -1,0 +1,227 @@
+<style>
+  #vod-rails{
+    --blue:#0A2E66; --blue2:#113E86; --blue3:#1D7AF2; --red:#E30613;
+    --ink:#0b1525; --muted:#42506a;
+    --line:rgba(10,46,102,.10);
+    --bg:#F6F8FC;
+    /* ombres noires transparentes, bien visibles des l'etat de repos
+       (l'ancienne valeur, rgba(0,0,0,.02), etait invisible) */
+    --sh:0 2px 6px rgba(0,0,0,.16), 0 16px 36px rgba(0,0,0,.22);
+    --sh-hover:0 4px 10px rgba(0,0,0,.20), 0 24px 52px rgba(0,0,0,.30);
+  }
+  #vod-rails, #vod-rails *{
+    box-sizing:border-box;
+    font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+  }
+
+  /* ===== PLEINE LARGEUR, SANS DEBORDEMENT =====
+     Pas de width:100vw ni de margin negatif : ces techniques comparent la
+     fenetre (vw) au conteneur (%), et decalent le bloc des que les deux
+     different — c'est ce qui cassait l'affichage dans l'editeur Elementor.
+     Ici l'element garde width:100% et c'est son FOND qui s'etend jusqu'aux
+     bords, via une ombre laterale de 100vmax que le clip-path borne en
+     hauteur. Aucune incidence sur la mise en page, donc aucune barre de
+     defilement horizontale possible. */
+  #vod-rails{
+    position:relative;
+    width:100%; max-width:100%; margin:0;
+    background:var(--bg);
+    box-shadow:0 0 0 100vmax var(--bg);
+    clip-path:inset(0 -100vmax);
+    padding:clamp(34px,7svh,72px) 0;
+    border-top:1px solid var(--line);
+    display:flex; justify-content:center;
+  }
+
+  #vod-rails .wrap{
+    width:100%; max-width:1200px; margin:0 auto;
+    padding:0 clamp(16px,4vw,24px);
+    display:flex; flex-direction:column; align-items:center;
+    container-type:inline-size; container-name:aiivod;
+  }
+
+  /* ===== EN-TETE ===== */
+  #vod-rails .kicker{
+    display:inline-flex; align-items:center; gap:9px;
+    padding:7px 14px; border-radius:999px;
+    background:#fff; border:1px solid var(--line);
+    box-shadow:0 2px 6px rgba(0,0,0,.12);
+    font-size:.82rem; font-weight:800; color:var(--blue);
+    letter-spacing:.02em; margin-bottom:14px;
+  }
+  /* drapeau francais, dessine en CSS */
+  #vod-rails .flag{
+    width:20px; height:13px; border-radius:2px; flex:0 0 20px; display:inline-block;
+    background:linear-gradient(90deg,#002654 0 33.33%,#fff 33.33% 66.66%,var(--red) 66.66% 100%);
+    box-shadow:0 0 0 1px rgba(10,46,102,.2) inset;
+  }
+
+  #vod-rails h2{
+    margin:0 0 8px; text-align:center; color:var(--blue);
+    font-weight:900; letter-spacing:-.02em; line-height:1.18;
+    font-size:clamp(1.4rem,3.5vw,2.1rem); width:100%; text-wrap:balance;
+  }
+  #vod-rails .underline{
+    width:104px; height:5px; margin:14px auto 22px; border-radius:999px;
+    background:linear-gradient(90deg,#002654 0 33%,#C3D0E6 33% 66%,var(--red) 66% 100%);
+    box-shadow:0 4px 14px rgba(0,0,0,.18);
+  }
+  #vod-rails .seo{
+    max-width:860px; margin:0 auto 30px; text-align:center;
+    color:var(--muted); font-weight:400; line-height:1.68;
+    font-size:clamp(1rem,1.3vw,1.08rem);
+  }
+  #vod-rails .seo strong{color:var(--blue); font-weight:700}
+  #vod-rails .seo a{
+    color:var(--blue2); font-weight:700;
+    text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:2px;
+  }
+  #vod-rails .seo a:hover{color:var(--red)}
+
+  /* ===== PANNEAU ===== */
+  #vod-rails .panel{
+    width:100%; max-width:1080px; margin:0 auto;
+    background:#fff; border:1px solid var(--line); border-radius:24px;
+    box-shadow:var(--sh); overflow:hidden;
+  }
+
+  #vod-rails .cards{
+    list-style:none; margin:0; padding:24px;
+    display:grid; gap:18px;
+    grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));
+  }
+  #vod-rails .card{
+    background:#fff; border:1px solid rgba(10,46,102,.09); border-radius:20px;
+    padding:24px 22px; box-shadow:var(--sh);
+    transition:transform .2s ease, box-shadow .2s ease;
+    text-align:left; display:flex; flex-direction:column; min-width:0;
+  }
+  #vod-rails .card:hover{transform:translateY(-5px); box-shadow:var(--sh-hover)}
+
+  /* icones : vrais traces SVG, plus d'emoji */
+  #vod-rails .icon{
+    width:50px; height:50px; border-radius:15px; flex:0 0 50px;
+    display:inline-grid; place-items:center; margin-bottom:16px;
+    background:linear-gradient(145deg,var(--blue2),var(--blue));
+    box-shadow:0 3px 8px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.2);
+  }
+  #vod-rails .icon svg{
+    width:23px; height:23px; display:block;
+    fill:none; stroke:#fff; stroke-width:1.8;
+    stroke-linecap:round; stroke-linejoin:round;
+  }
+
+  #vod-rails .card h3{
+    margin:0 0 9px; color:var(--blue); font-weight:800;
+    font-size:1.08rem; line-height:1.3; letter-spacing:-.01em;
+  }
+  #vod-rails .card p{
+    margin:0; color:var(--muted); font-weight:400;
+    line-height:1.6; font-size:.94rem;
+  }
+  #vod-rails .card p strong{color:var(--blue); font-weight:700}
+
+  /* ===== BANDEAU BAS ===== */
+  #vod-rails .strip{
+    list-style:none; margin:0; padding:20px;
+    display:flex; flex-wrap:wrap; justify-content:center; gap:14px;
+    border-top:1px solid var(--line); background:#FBFCFE;
+  }
+  #vod-rails .strip li{
+    display:inline-flex; align-items:center; gap:9px;
+    padding:10px 18px; border-radius:999px;
+    background:#fff; border:1px solid rgba(10,46,102,.08);
+    box-shadow:0 2px 6px rgba(0,0,0,.12), 0 8px 20px rgba(0,0,0,.10);
+    color:#142033; font-weight:700; font-size:.88rem;
+  }
+  #vod-rails .dot{
+    width:8px; height:8px; border-radius:50%; background:var(--red);
+    box-shadow:0 0 0 4px rgba(227,6,19,.12); flex:0 0 8px;
+  }
+
+  @container aiivod (max-width:980px){
+    #vod-rails .cards{padding:20px; gap:14px}
+    #vod-rails .card{padding:20px 18px}
+    #vod-rails .strip{gap:10px; padding:16px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    #vod-rails .card{transition:none}
+    #vod-rails .card:hover{transform:none}
+  }
+</style>
+
+<!-- =========================================================
+     VOD — FILMS ET SÉRIES
+========================================================= -->
+<section id="vod-rails" aria-labelledby="aiivod-title">
+  <div class="wrap">
+
+    <span class="kicker">
+      <span class="flag" aria-hidden="true"></span>
+      Catalogue pensé pour la France
+    </span>
+
+    <h2 id="aiivod-title">Films et séries à la demande, en 4K et Full HD</h2>
+    <div class="underline" aria-hidden="true"></div>
+
+    <p class="seo">
+      Votre <strong>abonnement IPTV</strong> ne s'arrête pas au direct : il ouvre
+      un catalogue de <strong>plus de 177 000 films et séries</strong> que vous
+      lancez quand vous voulez, classés par genre, par année et par langue.
+      Sur la télévision du salon, sur le téléphone, sur l'ordinateur — et sur
+      les mêmes serveurs que
+      <a href="https://abonnement-iptv-stable.fr/8k-abonnement-iptv/liste-des-chaines/">les chaînes en direct</a>.
+    </p>
+
+    <div class="panel">
+      <ul class="cards">
+
+        <li class="card">
+          <span class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M7 4v16M17 4v16M2 9h5M2 15h5M17 9h5M17 15h5"/></svg>
+          </span>
+          <h3>177 000 titres</h3>
+          <p>Films et séries complètes, des classiques aux sorties récentes,
+             rangés par <strong>genre, année et langue</strong>.</p>
+        </li>
+
+        <li class="card">
+          <span class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M10 9.5l4.5 2.5L10 14.5z"/><path d="M8 21h8M12 18v3"/></svg>
+          </span>
+          <h3>Lecture en 4K et Full HD</h3>
+          <p>Le film démarre sans attendre et ne se met pas en pause au milieu,
+             y compris <strong>aux heures de pointe</strong>.</p>
+        </li>
+
+        <li class="card">
+          <span class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><rect x="2" y="3" width="13" height="10" rx="1.5"/><rect x="16" y="9" width="6" height="12" rx="1.5"/><path d="M6 17h5M18 19h2"/></svg>
+          </span>
+          <h3>Sur tous vos écrans</h3>
+          <p>Smart TV, Android, iOS, box et PC — et <strong>jusqu'à 3 écrans</strong>
+             en même temps selon la formule.</p>
+        </li>
+
+        <li class="card">
+          <span class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M6 14h5M13 14h5M6 11h12"/></svg>
+          </span>
+          <h3>Sous-titres et VO</h3>
+          <p>Versions originales sous-titrées ou doublées en français, au choix
+             selon le titre.</p>
+        </li>
+      </ul>
+
+      <ul class="strip">
+        <!-- « Abonnement IPTV certifié » retire : certifie par qui ? Aucune
+             certification n'existe pour ce type de service. -->
+        <li><span class="dot" aria-hidden="true"></span>Catalogue mis à jour régulièrement</li>
+        <!-- « Support IPTV France 24/7 » : le reste du site dit WhatsApp 7j/7 -->
+        <li><span class="dot" aria-hidden="true"></span>Assistance WhatsApp 7j/7</li>
+        <li><span class="flag" aria-hidden="true"></span>Activation immédiate</li>
+      </ul>
+    </div>
+
+  </div>
+</section>

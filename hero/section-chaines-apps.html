@@ -1,0 +1,229 @@
+<!-- =========================================================
+     APPLICATIONS COMPATIBLES — page Liste des chaînes
+     Deux étiquettes corrigées après vérification des images :
+       • « Untitled-design…png » n'est pas IPTV Smarters : c'est le logo
+         TIVIMATE. L'alt annonçait donc la mauvaise application, et faisait
+         doublon avec la tuile 1.
+       • « xp…png » n'est pas XCIPTV : c'est XP IPTV/OTT PLAYER, une autre
+         application. Les deux étaient confondues dans le même alt.
+========================================================= -->
+<style>
+  /* ===== CORRECTIF ELEMENTOR ===== */
+  .elementor-widget:has(#logosFR),
+  .elementor-widget-container:has(#logosFR),
+  .elementor-element:has(> .elementor-widget-container > #logosFR){
+    width:100% !important; max-width:100% !important; align-self:stretch !important;
+  }
+
+  #logosFR{
+    --blue:#0A2E66; --blue2:#113E86; --gold:#FFD27A;
+    --sh:0 3px 8px rgba(0,0,0,.24), 0 16px 38px rgba(0,0,0,.30);
+    --sh-hover:0 6px 14px rgba(0,0,0,.30), 0 26px 54px rgba(0,0,0,.40);
+    position:relative; width:100%; max-width:100%; margin:0;
+    background:transparent; clip-path:inset(0 -100vmax);
+    padding:clamp(34px,6svh,68px) 0;
+    color:#fff; isolation:isolate;
+    font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+    scroll-margin-top:calc(var(--h,78px) + 14px);
+  }
+  #logosFR *{box-sizing:border-box}
+  /* Pleine largeur : calque absolu en 100vw. « width:100vw; margin-left:-50vw »
+     (code d'origine) crée une barre de défilement horizontale dès qu'une barre
+     verticale est présente, parce que 100vw compte la largeur de la barre. */
+  #logosFR::before{
+    content:""; position:absolute; z-index:-1; pointer-events:none;
+    top:0; bottom:0; left:50%; transform:translateX(-50%);
+    width:100vw; max-width:none;
+    background:linear-gradient(180deg,var(--blue2) 0%,var(--blue) 100%);
+  }
+
+  #logosFR .wrap{
+    width:100%; max-width:1180px; margin-inline:auto;
+    padding:0 clamp(14px,3vw,28px); text-align:center;
+    container-type:inline-size; container-name:aiiapps;
+  }
+
+  /* En-tête */
+  #logosFR .title{
+    margin:0 0 4px; font-weight:900; color:#fff;
+    font-size:clamp(1.35rem,3vw,1.95rem);
+    line-height:1.2; letter-spacing:-.02em; text-wrap:balance;
+  }
+  #logosFR .title em{font-style:normal; color:var(--gold)}
+  #logosFR .underline{
+    width:110px; height:4px; margin:12px auto 16px; border-radius:999px;
+    background:linear-gradient(90deg,#002654 0 33.33%,#fff 33.33% 66.66%,#E30613 66.66% 100%);
+    box-shadow:0 2px 8px rgba(0,0,0,.30);
+  }
+  #logosFR .sub{
+    max-width:820px; margin:0 auto; color:#D9E6F8;
+    font-size:clamp(1rem,1.3vw,1.08rem); line-height:1.65; font-weight:400;
+  }
+  #logosFR .sub b{color:#fff; font-weight:700}
+  #logosFR .sub a{color:var(--gold); font-weight:700;
+    text-decoration:underline; text-underline-offset:2px}
+  #logosFR .sub a:hover{color:#fff}
+
+  /* Grille */
+  #logosFR .grid{
+    list-style:none; margin:24px 0 0; padding:0;
+    display:grid; gap:16px;
+    grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));
+  }
+  #logosFR .tile{
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:11px; min-height:132px; padding:18px 16px; min-width:0; height:100%;
+    background:#fff; border:1px solid rgba(255,255,255,.55); border-radius:16px;
+    text-decoration:none; color:var(--blue);
+    box-shadow:var(--sh);
+    transition:transform .18s ease, box-shadow .18s ease;
+    animation:logosFRFloat 5.2s ease-in-out infinite;
+    will-change:transform;
+  }
+  #logosFR a.tile:hover{transform:translateY(-4px); box-shadow:var(--sh-hover)}
+  #logosFR a.tile:focus-visible{outline:3px solid var(--gold); outline-offset:4px}
+  #logosFR .tile img{
+    max-height:52px; max-width:100%; width:auto; object-fit:contain; display:block;
+  }
+  #logosFR .tile .name{font-size:.88rem; font-weight:900; line-height:1.25}
+  #logosFR .tile .dev{
+    font-size:.76rem; font-weight:600; color:#5b6b83; line-height:1.35;
+  }
+  /* Tuile sombre : le logo XP est blanc et rouge, illisible sur fond clair */
+  #logosFR .tile.is-dark{
+    background:#0b0f14; border-color:rgba(255,255,255,.16); color:#fff;
+  }
+  #logosFR .tile.is-dark .dev{color:#a9b6c9}
+
+  #logosFR .grid li:nth-child(2) .tile{animation-delay:.15s}
+  #logosFR .grid li:nth-child(3) .tile{animation-delay:.30s}
+  #logosFR .grid li:nth-child(4) .tile{animation-delay:.45s}
+  #logosFR .grid li:nth-child(5) .tile{animation-delay:.10s}
+  #logosFR .grid li:nth-child(6) .tile{animation-delay:.25s}
+  #logosFR .grid li:nth-child(7) .tile{animation-delay:.40s}
+  #logosFR .grid li:nth-child(8) .tile{animation-delay:.55s}
+  @keyframes logosFRFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+
+  /* Bas de section */
+  #logosFR .foot{
+    max-width:820px; margin:24px auto 0; color:#C6D8F2;
+    font-size:.93rem; line-height:1.65;
+  }
+  #logosFR .foot a{color:var(--gold); font-weight:700;
+    text-decoration:underline; text-underline-offset:2px}
+  #logosFR .foot a:hover{color:#fff}
+
+  @media (prefers-reduced-motion:reduce){
+    #logosFR .tile{animation:none; transition:none}
+    #logosFR a.tile:hover{transform:none}
+  }
+</style>
+
+<section id="logosFR" aria-labelledby="aii-apps-title">
+  <div class="wrap">
+
+    <h2 class="title" id="aii-apps-title">
+      Les applications qui <em>lisent votre abonnement</em>
+    </h2>
+    <div class="underline" aria-hidden="true"></div>
+
+    <p class="sub">
+      Vous n'avez rien à acheter en plus&nbsp;: ces huit applications sont
+      gratuites ou très peu chères, et l'une d'elles tourne déjà sur votre
+      appareil. Chaque tuile mène au site officiel de l'éditeur. Pas sûr de
+      laquelle choisir&nbsp;? Le
+      <a href="https://abonnement-iptv-stable.fr/iptv-abonnement/instalation-iptv/">guide d'installation</a>
+      vous dit laquelle prendre selon votre télévision.
+    </p>
+
+    <ul class="grid">
+
+      <li>
+        <a class="tile" href="https://www.smarterspro.tv/" target="_blank" rel="noopener noreferrer">
+          <img src="https://abonnement-iptv-stable.fr/wp-content/uploads/2026/01/iptvsmarterpro--e1767805816590.png"
+               alt="IPTV Smarters Pro" width="500" height="117" loading="lazy" decoding="async">
+          <span class="name">IPTV Smarters Pro</span>
+          <span class="dev">Android, iOS, Smart TV</span>
+        </a>
+      </li>
+
+      <li>
+        <a class="tile" href="https://iboplayer.com/" target="_blank" rel="noopener noreferrer">
+          <img src="https://abonnement-iptv-stable.fr/wp-content/uploads/2026/01/iboplayer--e1767805885678.png"
+               alt="IBO Player" width="500" height="117" loading="lazy" decoding="async">
+          <span class="name">IBO Player</span>
+          <span class="dev">Samsung, LG</span>
+        </a>
+      </li>
+
+      <li>
+        <a class="tile" href="https://iboproplayer.com/" target="_blank" rel="noopener noreferrer">
+          <img src="https://abonnement-iptv-stable.fr/wp-content/uploads/2026/01/iboproplayer-e1767805838724.png"
+               alt="IBO Pro Player" width="500" height="117" loading="lazy" decoding="async">
+          <span class="name">IBO Pro Player</span>
+          <span class="dev">Samsung, LG</span>
+        </a>
+      </li>
+
+      <li>
+        <a class="tile" href="https://www.smart-stb.net/" target="_blank" rel="noopener noreferrer">
+          <img src="https://abonnement-iptv-stable.fr/wp-content/uploads/2026/01/smartstb-e1767805751437.png"
+               alt="Smart STB" width="500" height="117" loading="lazy" decoding="async">
+          <span class="name">Smart STB</span>
+          <span class="dev">Samsung, LG, boîtiers MAG</span>
+        </a>
+      </li>
+
+      <li>
+        <a class="tile" href="https://siptv.app/" target="_blank" rel="noopener noreferrer">
+          <img src="https://abonnement-iptv-stable.fr/wp-content/uploads/2026/01/smartiptv-e1767805786241.png"
+               alt="Smart IPTV" width="500" height="117" loading="lazy" decoding="async">
+          <span class="name">Smart IPTV</span>
+          <span class="dev">Samsung, LG</span>
+        </a>
+      </li>
+
+      <li>
+        <a class="tile" href="https://www.hotplayer.app/" target="_blank" rel="noopener noreferrer">
+          <img src="https://abonnement-iptv-stable.fr/wp-content/uploads/2026/01/hotplayer-removebg-preview-e1767805653785.png"
+               alt="HOT Player" width="500" height="117" loading="lazy" decoding="async">
+          <span class="name">HOT Player</span>
+          <span class="dev">Samsung, LG</span>
+        </a>
+      </li>
+
+      <!-- Pas de lien : aucune page officielle fiable trouvée pour XP Player
+           (xpiptv.com renvoie vers un site sans rapport). -->
+      <li>
+        <span class="tile is-dark">
+          <img src="https://abonnement-iptv-stable.fr/wp-content/uploads/2026/01/xp-e1767805678653.png"
+               alt="XP IPTV/OTT Player" width="237" height="240" loading="lazy" decoding="async">
+          <span class="name">XP IPTV/OTT Player</span>
+          <span class="dev">Android, Fire TV</span>
+        </span>
+      </li>
+
+      <li>
+        <a class="tile" href="https://play.google.com/store/apps/details?id=ar.tvplayer.tv" target="_blank" rel="noopener noreferrer">
+          <img src="https://abonnement-iptv-stable.fr/wp-content/uploads/2026/01/Untitled-design-e1767805720744.png"
+               alt="TiviMate" width="500" height="117" loading="lazy" decoding="async">
+          <span class="name">TiviMate</span>
+          <span class="dev">Android TV, Google TV, Fire TV</span>
+        </a>
+      </li>
+
+    </ul>
+
+    <p class="foot">
+      Votre appareil n'est pas dans la liste&nbsp;? Il fonctionne probablement
+      quand même&nbsp;: iPhone, iPad, Apple&nbsp;TV, PC, Mac et boîtiers Formuler
+      sont pris en charge par d'autres applications. Le
+      <a href="https://abonnement-iptv-stable.fr/iptv-abonnement/instalation-iptv/">guide d'installation</a>
+      détaille chaque cas, et vous pouvez comparer avec la
+      <a href="https://abonnement-iptv-stable.fr/iptv-abonnement/liste-des-chaines/">liste des chaînes</a>
+      ou passer directement aux
+      <a href="https://abonnement-iptv-stable.fr/iptv-abonnement/#prix">tarifs</a>.
+    </p>
+
+  </div>
+</section>

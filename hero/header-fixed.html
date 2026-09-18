@@ -1,0 +1,282 @@
+<!-- ✅ AII HEADER — VERSION CORRIGÉE
+     Correction principale : toutes les règles CSS de l'en-tête étaient écrites
+     sur la CLASSE « .aii-head ». Or la section « Tutoriels d'installation par
+     appareil » utilise exactement le même nom de classe pour son propre titre :
+
+         <header class="aii-head"><h2>Tutoriels d'installation…</h2></header>
+
+     Ce titre héritait donc de position:fixed / top:0 / height:78px / z-index:999999
+     et venait se coller par-dessus le vrai en-tête (mesuré : les deux occupaient
+     exactement le rectangle 0,0,1440,78). Les règles sont maintenant portées par
+     l'IDENTIFIANT #aiiHead, unique sur la page : plus aucune collision possible,
+     aujourd'hui ou avec un futur widget.
+-->
+<style>
+:root{
+  --blue:#0A2E66;
+  --blue-hover:#08224d;
+  --ink:#0B1220;
+  --h:78px;
+}
+
+html,body{margin:0;padding:0;overflow-x:hidden}
+
+#aiiHead, #aiiHead *{
+  box-sizing:border-box;
+  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+}
+
+/* HEADER */
+#aiiHead{
+  position:fixed;
+  top:0; left:0; right:0;
+  height:var(--h);
+  z-index:999999;
+  background:#fff;
+  border-bottom:1px solid rgba(2,6,23,.08);
+  box-shadow:0 8px 18px rgba(2,6,23,.04);
+  display:flex;
+  align-items:center;
+  /* neutralise « .aii-head{text-align:center;margin-bottom:22px} » déclaré par
+     la section tutoriels : l'ID l'emporte sur la classe. */
+  margin:0;
+  text-align:left;
+}
+
+/* INNER */
+#aiiHead .inner{
+  width:100%;
+  max-width:1200px;
+  margin:0 auto;
+  padding:0 18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+/* LOGO */
+#aiiHead .aii-logo{display:flex;align-items:center}
+#aiiHead .aii-logo img{height:50px;width:auto;display:block}
+
+/* DESKTOP NAV */
+#aiiHead .aii-nav-left{
+  display:flex;
+  align-items:center;
+  gap:22px;
+  min-width:0;
+}
+#aiiHead .aii-link{
+  color:var(--ink);
+  text-decoration:none;
+  font-weight:900;
+  font-size:.98rem;
+  padding:10px 6px;
+  border-radius:10px;
+  line-height:1;
+  white-space:nowrap;
+}
+#aiiHead .aii-link:hover{
+  background:rgba(10,46,102,.06);
+  color:var(--blue);
+}
+#aiiHead .aii-link:focus-visible{
+  outline:3px solid var(--blue); outline-offset:2px;
+}
+
+/* RIGHT CTA */
+#aiiHead .aii-nav-right{display:flex;align-items:center;gap:10px;white-space:nowrap}
+
+/* ACHETER */
+#aiiHead .aii-btn.aii-buy{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  height:42px;
+  padding:0 18px;
+  border-radius:999px;
+
+  background:var(--blue) !important;
+  color:#fff !important;
+  text-decoration:none !important;
+
+  font-weight:900;
+  box-shadow:0 6px 16px rgba(10,46,102,.25);
+  transition:background .15s ease, transform .12s ease, box-shadow .15s ease;
+}
+#aiiHead .aii-btn.aii-buy:hover{
+  background:var(--blue-hover) !important;
+  color:#fff !important;
+  transform:translateY(-1px);
+  box-shadow:0 10px 22px rgba(10,46,102,.32);
+}
+#aiiHead .aii-btn.aii-buy:active{transform:translateY(0)}
+#aiiHead .aii-btn.aii-buy:focus-visible{outline:3px solid var(--blue); outline-offset:3px}
+
+/* Drapeau */
+#aiiHead .aii-buy .flag{
+  width:18px;height:12px;border-radius:2px;display:inline-block !important;
+  background:linear-gradient(90deg,#0A2E66 0 33%,#fff 33% 66%,#E30613 66% 100%);
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.12);
+}
+
+/* BURGER */
+#aiiHead .aii-burger{
+  display:none;
+  width:40px;
+  height:40px;
+  background:transparent;
+  border:none;
+  padding:0;
+  margin:0;
+  position:relative;
+  cursor:pointer;
+  align-items:center;
+  justify-content:center;
+}
+#aiiHead .aii-burger span,
+#aiiHead .aii-burger::before,
+#aiiHead .aii-burger::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  width:22px;
+  height:2px;
+  background:#0b1220;
+  border-radius:2px;
+  transform:translateX(-50%);
+  transition:transform .2s ease, opacity .2s ease;
+}
+#aiiHead .aii-burger span{top:50%}
+#aiiHead .aii-burger::before{top:50%; transform:translateX(-50%) translateY(-6px)}
+#aiiHead .aii-burger::after{ top:50%; transform:translateX(-50%) translateY(6px)}
+#aiiHead .aii-burger[aria-expanded="true"]::before{transform:translateX(-50%) rotate(45deg)}
+#aiiHead .aii-burger[aria-expanded="true"]::after{transform:translateX(-50%) rotate(-45deg)}
+#aiiHead .aii-burger[aria-expanded="true"] span{opacity:0}
+#aiiHead .aii-burger:focus-visible{outline:3px solid var(--blue); outline-offset:2px; border-radius:8px}
+
+/* PANNEAU MOBILE */
+#aiiHead .aii-panel{
+  display:none;
+  position:fixed;
+  top:var(--h);
+  left:0; right:0;
+  background:#fff;
+  padding:16px 18px 22px;
+  box-shadow:0 16px 30px rgba(2,6,23,.12);
+  z-index:999998;
+  max-height:calc(100svh - var(--h));
+  overflow-y:auto;
+}
+#aiiHead .aii-panel.open{display:block}
+#aiiHead .aii-panel a{
+  display:block;
+  padding:14px 10px;
+  font-weight:900;
+  color:var(--blue);
+  text-decoration:none;
+  border-radius:10px;
+}
+#aiiHead .aii-panel a:hover{background:rgba(10,46,102,.06)}
+#aiiHead .aii-panel .aii-btn.aii-buy{
+  width:100%;
+  margin-top:10px;
+}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  #aiiHead .aii-nav-left,
+  #aiiHead .aii-nav-right{display:none}
+  #aiiHead .aii-burger{display:flex}
+}
+
+@media (prefers-reduced-motion:reduce){
+  #aiiHead .aii-btn.aii-buy,
+  #aiiHead .aii-burger span,
+  #aiiHead .aii-burger::before,
+  #aiiHead .aii-burger::after{transition:none}
+  #aiiHead .aii-btn.aii-buy:hover{transform:none}
+}
+</style>
+
+<header class="aii-head" id="aiiHead" role="banner" aria-label="En-tête — Abonnement IPTV Illimité">
+  <div class="inner">
+
+    <a class="aii-logo" href="https://abonnement-iptv-stable.fr/iptv-abonnement/" aria-label="Abonnement IPTV Illimité — Accueil">
+      <img src="https://abonnement-iptv-stable.fr/wp-content/uploads/2025/10/iptv-300-x-120-px.png"
+           alt="Abonnement IPTV Illimité" width="300" height="120">
+    </a>
+
+    <!-- URL corrigées : /8k-abonnement-iptv/#prix renvoyait un 404 (Prix + les
+         deux boutons Acheter). Les autres passaient par une redirection 301 ;
+         elles pointent maintenant directement sur la page qui répond. -->
+    <nav class="aii-nav-left" aria-label="Navigation principale">
+      <a class="aii-link" href="https://abonnement-iptv-stable.fr/">Abonnement IPTV</a>
+      <a class="aii-link" href="https://abonnement-iptv-stable.fr/iptv-abonnement/instalation-iptv/">Installation IPTV</a>
+      <a class="aii-link" href="https://abonnement-iptv-stable.fr/iptv-abonnement/liste-des-chaines/">Liste des chaînes</a>
+      <a class="aii-link" href="https://abonnement-iptv-stable.fr/iptv-abonnement/#prix">Prix</a>
+      <a class="aii-link" href="https://abonnement-iptv-stable.fr/iptv-abonnement/blog/">Blog</a>
+      <a class="aii-link" href="https://abonnement-iptv-stable.fr/iptv-abonnement/contact/">Contact</a>
+    </nav>
+
+    <div class="aii-nav-right">
+      <a class="aii-btn aii-buy" href="https://abonnement-iptv-stable.fr/iptv-abonnement/#prix" title="Voir les tarifs">
+        Acheter <span class="flag" aria-hidden="true"></span>
+      </a>
+    </div>
+
+    <button class="aii-burger" id="aiiBurger" type="button"
+            aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="aiiPanel">
+      <span aria-hidden="true"></span>
+    </button>
+  </div>
+
+  <!-- Menu mobile — mêmes URL que le menu principal (elles différaient avant :
+       /8k-abonnement-iptv/ était un 404). -->
+  <nav class="aii-panel" id="aiiPanel" aria-label="Menu mobile">
+    <a href="https://abonnement-iptv-stable.fr/">Abonnement IPTV</a>
+    <a href="https://abonnement-iptv-stable.fr/iptv-abonnement/instalation-iptv/">Installation IPTV</a>
+    <a href="https://abonnement-iptv-stable.fr/iptv-abonnement/liste-des-chaines/">Liste des chaînes</a>
+    <a href="https://abonnement-iptv-stable.fr/iptv-abonnement/#prix">Prix</a>
+    <a href="https://abonnement-iptv-stable.fr/iptv-abonnement/blog/">Blog</a>
+    <a href="https://abonnement-iptv-stable.fr/iptv-abonnement/contact/">Contact</a>
+
+    <a class="aii-btn aii-buy" href="https://abonnement-iptv-stable.fr/iptv-abonnement/#prix">
+      Acheter <span class="flag" aria-hidden="true"></span>
+    </a>
+  </nav>
+</header>
+
+<script>
+(function(){
+  var burger = document.getElementById('aiiBurger');
+  var panel  = document.getElementById('aiiPanel');
+  if(!burger || !panel) return;
+
+  function closeMenu(){
+    burger.setAttribute('aria-expanded','false');
+    burger.setAttribute('aria-label','Ouvrir le menu');
+    panel.classList.remove('open');
+  }
+  function toggleMenu(){
+    var open = burger.getAttribute('aria-expanded') === 'true';
+    burger.setAttribute('aria-expanded', open ? 'false' : 'true');
+    burger.setAttribute('aria-label', open ? 'Ouvrir le menu' : 'Fermer le menu');
+    panel.classList.toggle('open');
+  }
+
+  burger.addEventListener('click', toggleMenu);
+
+  panel.addEventListener('click', function(e){
+    if(e.target && e.target.tagName === 'A') closeMenu();
+  });
+
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') closeMenu();
+  });
+
+  window.addEventListener('resize', function(){
+    if(window.innerWidth > 1024) closeMenu();
+  });
+})();
+</script>

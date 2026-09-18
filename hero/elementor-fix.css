@@ -1,0 +1,49 @@
+/* ============================================================================
+   CORRECTIF ELEMENTOR — pleine largeur des sections
+   À coller UNE SEULE FOIS dans :
+     Elementor → Réglages du site (Site Settings) → CSS personnalisé
+   (ou dans Apparence → Personnaliser → CSS additionnel)
+   ----------------------------------------------------------------------------
+   POURQUOI
+   Les conteneurs Elementor sont en flex avec align-items:center. Le widget est
+   donc ajusté à son contenu au lieu d'occuper la largeur disponible. Mesuré sur
+   la structure Elementor réelle : .elementor-widget tombait à 48 px de large
+   (juste le padding). Le width:100% de nos sections valait alors 100 % de 48 px
+   — d'où le texte à un mot par ligne.
+
+   Ces règles remettent l'enveloppe du widget en pleine largeur, et UNIQUEMENT
+   celle qui contient l'une de nos sections (grâce à :has()). Rien d'autre sur
+   la page n'est touché.
+
+   ALTERNATIVE SANS CODE (à faire sur chaque section) :
+     sélectionnez le Conteneur → Disposition → Aligner les éléments → Étirer
+     ou sélectionnez le widget HTML → Avancé → Largeur → Pleine largeur (100 %)
+   ============================================================================ */
+
+.elementor-widget:has(> .elementor-widget-container > .aii-hero),
+.elementor-widget:has(> .elementor-widget-container > .aiiv2),
+.elementor-widget:has(> .elementor-widget-container > .aii2),
+.elementor-widget:has(> .elementor-widget-container > #aii-pricing),
+.elementor-widget:has(> .elementor-widget-container > #multi-ecran),
+.elementor-widget:has(> .elementor-widget-container > #aii-section-3),
+.elementor-widget:has(> .elementor-widget-container > #aii-acheter-iptv),
+.elementor-widget:has(> .elementor-widget-container > #aii-avantages),
+.elementor-widget:has(> .elementor-widget-container > #pourquoi-nous),
+.elementor-widget:has(> .elementor-widget-container > #footFR),
+.elementor-widget:has(> .elementor-widget-container > #vod-rails),
+
+.elementor-widget-container:has(> .aii-hero),
+.elementor-widget-container:has(> .aiiv2),
+.elementor-widget-container:has(> .aii2),
+.elementor-widget-container:has(> #aii-pricing),
+.elementor-widget-container:has(> #multi-ecran),
+.elementor-widget-container:has(> #aii-section-3),
+.elementor-widget-container:has(> #aii-acheter-iptv),
+.elementor-widget-container:has(> #aii-avantages),
+.elementor-widget-container:has(> #pourquoi-nous),
+.elementor-widget-container:has(> #footFR),
+.elementor-widget-container:has(> #vod-rails){
+  width: 100% !important;
+  max-width: 100% !important;
+  align-self: stretch !important;
+}

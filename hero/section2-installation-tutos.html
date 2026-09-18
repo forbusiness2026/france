@@ -1,0 +1,404 @@
+<!-- SECTION 2 — GUIDES PAR APPAREIL (onglets)
+     ⚠️ TOUT le CSS est maintenant scopé sous #installation-iptv. L'ancienne
+     version déclarait .aii-head, .panel, .tab, .num, .step, .aii-wrap en
+     sélecteurs globaux — c'est .aii-head qui masquait l'en-tête du site
+     (même nom de classe que <header class="aii-head" id="aiiHead">). -->
+<style>
+  /* ===== CORRECTIF ELEMENTOR ===== */
+  .elementor-widget:has(#installation-iptv),
+  .elementor-widget-container:has(#installation-iptv),
+  .elementor-element:has(> .elementor-widget-container > #installation-iptv){
+    width:100% !important; max-width:100% !important; align-self:stretch !important;
+  }
+
+  #installation-iptv{
+    --blue:#0A2E66; --blue2:#113E86; --red:#E30613;
+    --ink:#0B1220; --muted:#43536B; --line:#eef2ff;
+    background:#fff; padding:34px 0;
+    font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    /* l'en-tête du site est en position:fixed : sans ça, l'ancre
+       #installation-iptv amène la section sous la barre. */
+    scroll-margin-top:calc(var(--h,78px) + 14px);
+  }
+  #installation-iptv *{box-sizing:border-box}
+
+  #installation-iptv .aii-wrap{
+    max-width:1180px; margin:0 auto; padding:0 clamp(14px,3vw,28px);
+  }
+
+  #installation-iptv .sec-head{text-align:center; margin-bottom:8px}
+  #installation-iptv .sec-head h2{
+    margin:0; font-size:clamp(1.28rem,2.3vw,1.75rem);
+    font-weight:900; color:var(--blue); line-height:1.2; text-wrap:balance;
+  }
+  #installation-iptv .sec-head .u{
+    width:90px; height:4px; border-radius:999px; margin:10px auto 0;
+    background:linear-gradient(90deg,var(--blue),var(--red));
+  }
+  #installation-iptv .sec-head p{
+    max-width:760px; margin:12px auto 0; color:var(--muted);
+    font-size:1rem; line-height:1.65;
+  }
+  #installation-iptv .sec-head a{color:var(--blue); font-weight:700;
+    text-decoration:underline; text-underline-offset:2px}
+  #installation-iptv .sec-head a:hover{color:var(--red)}
+
+  /* ONGLETS */
+  #installation-iptv .tabbar{
+    display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin:22px 0 24px;
+  }
+  #installation-iptv .tab{
+    padding:12px 16px; border-radius:12px;
+    border:2px solid var(--blue); background:#fff; color:var(--blue);
+    font-weight:900; font-size:.98rem; font-family:inherit; cursor:pointer;
+    transition:background .18s ease, color .18s ease, border-color .18s ease, box-shadow .18s ease;
+    box-shadow:0 2px 10px rgba(11,18,32,.07);
+  }
+  #installation-iptv .tab:hover{
+    background:var(--blue); color:#fff; border-color:var(--red);
+    box-shadow:0 6px 18px rgba(10,46,102,.14);
+  }
+  #installation-iptv .tab[aria-selected="true"]{
+    background:var(--blue); color:#fff; border-color:var(--red);
+    box-shadow:0 6px 18px rgba(10,46,102,.20);
+  }
+  #installation-iptv .tab:focus-visible{outline:3px solid var(--red); outline-offset:2px}
+
+  /* PANNEAUX */
+  #installation-iptv .panel{
+    max-width:780px; margin:0 auto 22px;
+    background:#fff; border:1px solid var(--line); border-radius:20px;
+    box-shadow:0 3px 10px rgba(11,18,32,.07), 0 16px 36px rgba(11,18,32,.09);
+    padding:22px;
+  }
+  #installation-iptv .panel[hidden]{display:none}
+  #installation-iptv .panel:focus-visible{outline:3px solid var(--blue); outline-offset:3px}
+  #installation-iptv .panel h3{
+    margin:0 0 4px; color:var(--blue); font-weight:900; font-size:1.06rem; line-height:1.35;
+  }
+
+  /* Ce qu'il vous faut */
+  #installation-iptv .need{
+    display:flex; flex-wrap:wrap; align-items:center; gap:8px;
+    margin:0 0 16px; padding:10px 12px;
+    background:#f7fbff; border:1px solid #e7eefb; border-radius:12px;
+    color:var(--muted); font-size:.9rem; line-height:1.5;
+  }
+  #installation-iptv .need b{color:var(--blue)}
+  #installation-iptv .need .sep{color:#c3ccda}
+  #installation-iptv .need svg{width:15px;height:15px;flex:0 0 15px;display:block;fill:var(--blue)}
+
+  #installation-iptv .steps{list-style:none; margin:0; padding:0}
+  #installation-iptv .step{
+    display:flex; gap:12px; align-items:flex-start;
+    margin:0 0 14px; padding:12px;
+    border-left:4px solid var(--red); border-radius:12px;
+    box-shadow:0 2px 8px rgba(227,6,19,.06);
+    font-size:1.01rem; line-height:1.7; color:var(--ink);
+  }
+  #installation-iptv .step:last-child{margin-bottom:0}
+  #installation-iptv .num{
+    min-width:30px; min-height:30px; width:30px; height:30px; margin-top:2px;
+    border-radius:50%; background:var(--blue); color:#fff;
+    font-weight:900; font-size:.9rem;
+    display:flex; align-items:center; justify-content:center; flex:0 0 30px;
+  }
+  #installation-iptv .step b{color:var(--blue)}
+  #installation-iptv .step a{color:var(--blue); text-decoration:underline; text-underline-offset:2px}
+  #installation-iptv .step a:hover{color:var(--red)}
+  #installation-iptv .step a[target="_blank"]::after{content:" \2197"; font-weight:400}
+  #installation-iptv code{
+    background:#f2f6fd; border:1px solid #e2eafa; border-radius:6px;
+    padding:1px 6px; font-size:.92em;
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+
+  /* Bon à savoir */
+  #installation-iptv .tip{
+    display:flex; gap:10px; align-items:flex-start;
+    margin:16px 0 0; padding:12px 13px;
+    background:#fffaf0; border:1px solid #f6e3bd; border-radius:12px;
+    color:#5b4a2a; font-size:.92rem; line-height:1.6;
+  }
+  #installation-iptv .tip svg{width:16px;height:16px;flex:0 0 16px;margin-top:2px;display:block;fill:#C8860D}
+  #installation-iptv .tip b{color:#3d3116}
+  #installation-iptv .tip a{color:#8a5b00; text-decoration:underline; text-underline-offset:2px}
+
+  /* Barre de liens sous les panneaux */
+  #installation-iptv .after{
+    max-width:780px; margin:0 auto;
+    display:flex; flex-wrap:wrap; gap:10px; justify-content:center;
+  }
+  #installation-iptv .pill{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:11px 16px; border-radius:999px;
+    border:1px solid #dce7fa; background:#f7fbff; color:var(--blue);
+    font-weight:800; font-size:.93rem; text-decoration:none;
+    box-shadow:0 1px 3px rgba(10,46,102,.10), 0 8px 20px rgba(10,46,102,.10);
+    transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+  }
+  #installation-iptv .pill:hover{
+    transform:translateY(-2px); background:#fff;
+    box-shadow:0 3px 8px rgba(10,46,102,.14), 0 14px 30px rgba(10,46,102,.18);
+  }
+  #installation-iptv .pill:focus-visible{outline:3px solid var(--blue); outline-offset:3px}
+  #installation-iptv .pill svg{width:16px;height:16px;flex:0 0 16px;display:block;fill:var(--blue)}
+  #installation-iptv .pill.wa{
+    background:#25D366; border-color:#1fb356; color:#fff;
+    box-shadow:0 3px 8px rgba(0,0,0,.18), 0 12px 26px rgba(37,211,102,.32);
+  }
+  #installation-iptv .pill.wa svg{fill:#fff}
+
+  @media(max-width:560px){
+    #installation-iptv .tab{padding:9px 10px; font-size:.9rem}
+    #installation-iptv .panel{padding:18px}
+    #installation-iptv .pill{width:100%; justify-content:center}
+  }
+  @media (prefers-reduced-motion:reduce){
+    #installation-iptv .tab,#installation-iptv .pill{transition:none}
+    #installation-iptv .pill:hover{transform:none}
+  }
+</style>
+
+<section class="aii-install-tabs" id="installation-iptv" aria-labelledby="aii-tabs-title">
+  <div class="aii-wrap">
+
+    <div class="sec-head">
+      <h2 id="aii-tabs-title">Tutoriels d'installation par appareil</h2>
+      <div class="u"></div>
+      <p>
+        Choisissez votre appareil&nbsp;: chaque tutoriel tient en quelques étapes.
+        Vous avez besoin de l'<b>URL M3U</b> ou des <b>identifiants Xtream</b>
+        reçus après commande. Pour savoir ce que vous allez recevoir, consultez la
+        <a href="https://abonnement-iptv-stable.fr/iptv-abonnement/liste-des-chaines/">liste des chaînes</a>
+        ou revenez à la
+        <a href="https://abonnement-iptv-stable.fr/">page d'accueil</a>.
+      </p>
+    </div>
+
+    <!-- ONGLETS -->
+    <div class="tabbar" role="tablist" aria-label="Choisir un appareil">
+      <button class="tab" id="tb-samsung-lg" type="button" role="tab" data-tab="samsung-lg" aria-controls="tab-samsung-lg" aria-selected="true"  tabindex="0">Samsung/LG Smart TV</button>
+      <button class="tab" id="tb-firestick"  type="button" role="tab" data-tab="firestick"  aria-controls="tab-firestick"  aria-selected="false" tabindex="-1">Fire TV Stick / Android TV</button>
+      <button class="tab" id="tb-formuler"   type="button" role="tab" data-tab="formuler"   aria-controls="tab-formuler"   aria-selected="false" tabindex="-1">Formuler Z Box</button>
+      <button class="tab" id="tb-mag"        type="button" role="tab" data-tab="mag"        aria-controls="tab-mag"        aria-selected="false" tabindex="-1">MAG Box</button>
+      <button class="tab" id="tb-iphone"     type="button" role="tab" data-tab="iphone"     aria-controls="tab-iphone"     aria-selected="false" tabindex="-1">iPhone / iPad</button>
+      <button class="tab" id="tb-windows"    type="button" role="tab" data-tab="windows"    aria-controls="tab-windows"    aria-selected="false" tabindex="-1">Windows / Mac</button>
+      <button class="tab" id="tb-android"    type="button" role="tab" data-tab="android"    aria-controls="tab-android"    aria-selected="false" tabindex="-1">Android / Tablette</button>
+    </div>
+
+    <!-- SAMSUNG / LG -->
+    <div class="panel" id="tab-samsung-lg" role="tabpanel" aria-labelledby="tb-samsung-lg" tabindex="0">
+      <h3>Samsung / LG — Smart IPTV ou Flix IPTV</h3>
+      <p class="need">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 10.6V6h-2v7.4l5.2 3.1 1-1.7z"/></svg>
+        <b>Environ 6 minutes</b> <span class="sep">•</span>
+        il vous faut votre <b>URL M3U</b> et l'<b>adresse MAC</b> affichée par l'application
+      </p>
+      <ol class="steps">
+        <li class="step"><span class="num">1</span><span>Ouvrez <b>Samsung Smart Hub</b> ou le <b>LG Content Store</b>, puis cherchez l'application.</span></li>
+        <li class="step"><span class="num">2</span><span>Installez <b>Smart IPTV</b> ou <b>Flix IPTV</b>, au choix&nbsp;: les deux fonctionnent de la même façon.</span></li>
+        <li class="step"><span class="num">3</span><span>Lancez l'application. Une <b>adresse MAC</b> s'affiche en bas de l'écran, au format <code>00:1A:79:XX:XX:XX</code>. Notez-la.</span></li>
+        <li class="step"><span class="num">4</span><span>Depuis un téléphone ou un ordinateur, ouvrez <a href="https://siptv.app/mylist/" target="_blank" rel="noopener noreferrer">siptv.app/mylist</a>.</span></li>
+        <li class="step"><span class="num">5</span><span>Collez votre <b>adresse MAC</b> et votre <b>URL M3U</b>, cochez «&nbsp;Keep on my list&nbsp;», puis validez.</span></li>
+        <li class="step"><span class="num">6</span><span>Revenez sur la TV et <b>redémarrez l'application</b>&nbsp;: chaînes et VOD apparaissent.</span></li>
+      </ol>
+      <p class="tip">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 00-4 12.7V17a1 1 0 001 1h6a1 1 0 001-1v-2.3A7 7 0 0012 2zm-3 18h6v1a1 1 0 01-1 1h-4a1 1 0 01-1-1z"/></svg>
+        <span><b>Bon à savoir</b>&nbsp;: Smart IPTV est gratuit pendant 7&nbsp;jours, puis demande une activation unique de quelques euros. Ce paiement va à l'éditeur de l'application, il est indépendant de votre abonnement chez nous.</span>
+      </p>
+    </div>
+
+    <!-- FIRE TV / ANDROID TV -->
+    <div class="panel" id="tab-firestick" role="tabpanel" aria-labelledby="tb-firestick" tabindex="0" hidden>
+      <h3>Fire TV Stick / Android TV — TiviMate</h3>
+      <p class="need">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 10.6V6h-2v7.4l5.2 3.1 1-1.7z"/></svg>
+        <b>Environ 4 minutes</b> <span class="sep">•</span>
+        il vous faut vos <b>identifiants Xtream</b> ou votre <b>URL M3U</b>
+      </p>
+      <ol class="steps">
+        <li class="step"><span class="num">1</span><span>Ouvrez le <b>Google Play Store</b> (Android TV, Google TV) ou l'<b>Amazon Appstore</b> (Fire TV Stick) et installez <a href="https://play.google.com/store/apps/details?id=ar.tvplayer.tv" target="_blank" rel="noopener noreferrer">TiviMate</a>.</span></li>
+        <li class="step"><span class="num">2</span><span>À la première ouverture, choisissez <b>Ajouter une playlist</b>.</span></li>
+        <li class="step"><span class="num">3</span><span>Prenez <b>Xtream Codes</b> plutôt que M3U si vous avez le choix&nbsp;: c'est ce qui apporte le <b>guide des programmes</b> et les affiches de films.</span></li>
+        <li class="step"><span class="num">4</span><span>Saisissez l'adresse du serveur, votre identifiant et votre mot de passe, puis laissez le guide se charger — comptez une à deux minutes la première fois.</span></li>
+        <li class="step"><span class="num">5</span><span>Rangez vos chaînes dans <b>Réglages → Playlists → Groupes</b> pour mettre vos favorites en tête.</span></li>
+      </ol>
+      <p class="tip">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 00-4 12.7V17a1 1 0 001 1h6a1 1 0 001-1v-2.3A7 7 0 0012 2zm-3 18h6v1a1 1 0 01-1 1h-4a1 1 0 01-1-1z"/></svg>
+        <span><b>Bon à savoir</b>&nbsp;: si une application est introuvable sur votre Fire TV Stick, installez d'abord <a href="https://play.google.com/store/apps/details?id=com.esaba.downloader" target="_blank" rel="noopener noreferrer">Downloader</a>. Sur un Stick d'ancienne génération, réduisez la qualité à 1080p si l'image saccade.</span>
+      </p>
+    </div>
+
+    <!-- FORMULER -->
+    <div class="panel" id="tab-formuler" role="tabpanel" aria-labelledby="tb-formuler" tabindex="0" hidden>
+      <h3>Formuler Z — MYTVOnline (portail)</h3>
+      <p class="need">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 10.6V6h-2v7.4l5.2 3.1 1-1.7z"/></svg>
+        <b>Environ 3 minutes</b> <span class="sep">•</span>
+        il vous faut l'<b>URL du portail</b> qui vous a été envoyée
+      </p>
+      <ol class="steps">
+        <li class="step"><span class="num">1</span><span>Ouvrez <b>MYTVOnline 2</b> ou <b>MYTVOnline 3</b> selon votre modèle, puis <b>+ Portail</b>.</span></li>
+        <li class="step"><span class="num">2</span><span>Donnez-lui le nom que vous voulez, puis collez l'<b>URL du portail</b> à l'identique — un espace en trop suffit à la faire échouer.</span></li>
+        <li class="step"><span class="num">3</span><span>Enregistrez, puis <b>redémarrez le boîtier</b>.</span></li>
+        <li class="step"><span class="num">4</span><span>Le bouquet se charge tout seul&nbsp;; le guide des programmes arrive dans la minute qui suit.</span></li>
+      </ol>
+      <p class="tip">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 00-4 12.7V17a1 1 0 001 1h6a1 1 0 001-1v-2.3A7 7 0 0012 2zm-3 18h6v1a1 1 0 01-1 1h-4a1 1 0 01-1-1z"/></svg>
+        <span><b>Bon à savoir</b>&nbsp;: si le portail est refusé, MYTVOnline accepte aussi les <b>identifiants Xtream</b> (Playlists → Ajouter). Demandez-les-nous, on vous les envoie.</span>
+      </p>
+    </div>
+
+    <!-- MAG -->
+    <div class="panel" id="tab-mag" role="tabpanel" aria-labelledby="tb-mag" tabindex="0" hidden>
+      <h3>MAG Box — Portails</h3>
+      <p class="need">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 10.6V6h-2v7.4l5.2 3.1 1-1.7z"/></svg>
+        <b>Environ 4 minutes</b> <span class="sep">•</span>
+        il vous faut l'<b>URL du portail</b> et l'<b>adresse MAC</b> du boîtier
+      </p>
+      <ol class="steps">
+        <li class="step"><span class="num">1</span><span>Retournez le boîtier&nbsp;: l'<b>adresse MAC</b> est imprimée sur l'étiquette, au format <code>00:1A:79:XX:XX:XX</code>. <b>Envoyez-la-nous avant de commencer</b> — sans elle, le portail refusera la connexion.</span></li>
+        <li class="step"><span class="num">2</span><span>Sur le boîtier&nbsp;: <b>Paramètres → Système → Serveurs → Portails</b>.</span></li>
+        <li class="step"><span class="num">3</span><span>Dans <b>Portal 1</b>, mettez un nom, puis collez l'<b>URL du portail</b> dans le champ du dessous.</span></li>
+        <li class="step"><span class="num">4</span><span>Validez avec <b>OK</b>, puis redémarrez&nbsp;: bouton d'alimentation, ou débranchez dix secondes.</span></li>
+      </ol>
+      <p class="tip">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 00-4 12.7V17a1 1 0 001 1h6a1 1 0 001-1v-2.3A7 7 0 0012 2zm-3 18h6v1a1 1 0 01-1 1h-4a1 1 0 01-1-1z"/></svg>
+        <span><b>Bon à savoir</b>&nbsp;: la marche à suivre est identique sur les MAG 250, 254, 322, 324, 420 et 524. Les manuels officiels sont chez <a href="https://www.infomir.eu/" target="_blank" rel="noopener noreferrer">Infomir</a>, le fabricant.</span>
+      </p>
+    </div>
+
+    <!-- IPHONE / IPAD -->
+    <div class="panel" id="tab-iphone" role="tabpanel" aria-labelledby="tb-iphone" tabindex="0" hidden>
+      <h3>iPhone / iPad — Smarters Player Lite</h3>
+      <p class="need">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 10.6V6h-2v7.4l5.2 3.1 1-1.7z"/></svg>
+        <b>Environ 3 minutes</b> <span class="sep">•</span>
+        il vous faut vos <b>identifiants Xtream</b> ou votre <b>URL M3U</b>
+      </p>
+      <ol class="steps">
+        <li class="step"><span class="num">1</span><span>Installez <a href="https://apps.apple.com/fr/app/smarters-player-lite/id1628995509" target="_blank" rel="noopener noreferrer">Smarters Player Lite</a> depuis l'App Store. La même application existe sur <b>Apple TV</b>.</span></li>
+        <li class="step"><span class="num">2</span><span>Choisissez <b>Login with Xtream Codes API</b>, puis renseignez un nom, votre identifiant, votre mot de passe et l'adresse du serveur.</span></li>
+        <li class="step"><span class="num">3</span><span>Si vous n'avez qu'un lien, prenez plutôt <b>Load Your Playlist or File/URL</b> et collez l'<b>URL M3U</b>.</span></li>
+        <li class="step"><span class="num">4</span><span>Les onglets <b>Live</b>, <b>Films</b> et <b>Séries</b> se remplissent dès la fin du chargement.</span></li>
+      </ol>
+      <p class="tip">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 00-4 12.7V17a1 1 0 001 1h6a1 1 0 001-1v-2.3A7 7 0 0012 2zm-3 18h6v1a1 1 0 01-1 1h-4a1 1 0 01-1-1z"/></svg>
+        <span><b>Bon à savoir</b>&nbsp;: <b>GSE Smart IPTV</b> n'est plus disponible sur l'App Store ni sur le Play Store — inutile de la chercher. Depuis un iPhone, vous pouvez envoyer l'image sur une Apple&nbsp;TV via AirPlay.</span>
+      </p>
+    </div>
+
+    <!-- WINDOWS / MAC -->
+    <div class="panel" id="tab-windows" role="tabpanel" aria-labelledby="tb-windows" tabindex="0" hidden>
+      <h3>Windows / Mac — VLC</h3>
+      <p class="need">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 10.6V6h-2v7.4l5.2 3.1 1-1.7z"/></svg>
+        <b>Environ 2 minutes</b> <span class="sep">•</span>
+        il vous faut votre <b>URL M3U</b>
+      </p>
+      <ol class="steps">
+        <li class="step"><span class="num">1</span><span>Installez <a href="https://www.videolan.org/vlc/" target="_blank" rel="noopener noreferrer">VLC</a> depuis le site officiel de VideoLAN — jamais depuis un lien de téléchargement trouvé au hasard.</span></li>
+        <li class="step"><span class="num">2</span><span>Menu <b>Média → Ouvrir un flux réseau</b> (<code>Ctrl</code>+<code>N</code> sur Windows, <code>⌘</code>+<code>N</code> sur Mac).</span></li>
+        <li class="step"><span class="num">3</span><span>Collez votre <b>URL M3U</b>, puis lancez la lecture.</span></li>
+        <li class="step"><span class="num">4</span><span>Ouvrez la liste de lecture (<code>Ctrl</code>+<code>L</code>) pour naviguer entre les chaînes.</span></li>
+      </ol>
+      <p class="tip">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 00-4 12.7V17a1 1 0 001 1h6a1 1 0 001-1v-2.3A7 7 0 0012 2zm-3 18h6v1a1 1 0 01-1 1h-4a1 1 0 01-1-1z"/></svg>
+        <span><b>Bon à savoir</b>&nbsp;: VLC lit les flux mais n'affiche pas le guide des programmes. C'est donc l'outil idéal pour <b>vérifier en trente secondes</b> qu'un accès fonctionne, avant de l'installer sur la télévision.</span>
+      </p>
+    </div>
+
+    <!-- ANDROID / TABLETTE -->
+    <div class="panel" id="tab-android" role="tabpanel" aria-labelledby="tb-android" tabindex="0" hidden>
+      <h3>Android / Tablette — TiviMate</h3>
+      <p class="need">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 10.6V6h-2v7.4l5.2 3.1 1-1.7z"/></svg>
+        <b>Environ 3 minutes</b> <span class="sep">•</span>
+        il vous faut vos <b>identifiants Xtream</b> ou votre <b>URL M3U</b>
+      </p>
+      <ol class="steps">
+        <li class="step"><span class="num">1</span><span>Depuis le Play Store, installez <a href="https://play.google.com/store/apps/details?id=ar.tvplayer.tv" target="_blank" rel="noopener noreferrer">TiviMate</a>.</span></li>
+        <li class="step"><span class="num">2</span><span>Ajoutez votre playlist&nbsp;: <b>Xtream Codes</b> de préférence, sinon l'<b>URL M3U</b>.</span></li>
+        <li class="step"><span class="num">3</span><span>Laissez le guide des programmes se charger, puis mettez vos chaînes en favoris d'un appui long.</span></li>
+      </ol>
+      <p class="tip">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 00-4 12.7V17a1 1 0 001 1h6a1 1 0 001-1v-2.3A7 7 0 0012 2zm-3 18h6v1a1 1 0 01-1 1h-4a1 1 0 01-1-1z"/></svg>
+        <span><b>Bon à savoir</b>&nbsp;: sur téléphone, préférez le Wi-Fi. Une heure de direct en HD consomme environ 2&nbsp;Go de données mobiles.</span>
+      </p>
+    </div>
+
+    <!-- LIENS UTILES -->
+    <div class="after">
+      <a class="pill" href="https://abonnement-iptv-stable.fr/iptv-abonnement/liste-des-chaines/">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h10v2H4z"/></svg>
+        Voir la liste des chaînes
+      </a>
+      <a class="pill" href="https://abonnement-iptv-stable.fr/iptv-abonnement/#prix">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1v2.2c-2.6.3-4.4 1.8-4.4 4 0 2.6 2.1 3.5 4.6 4.1 2 .5 2.8.9 2.8 1.9 0 .9-.9 1.6-2.5 1.6-1.8 0-2.8-.8-2.9-2.1H7.2c.1 2.3 1.8 3.8 4.4 4.1V19h2.1v-2.2c2.7-.3 4.5-1.9 4.5-4.1 0-2.7-2.2-3.6-4.8-4.2-1.9-.4-2.6-.9-2.6-1.8 0-.9.8-1.5 2.3-1.5 1.6 0 2.5.7 2.6 1.9h2.3c-.1-2.1-1.6-3.6-4.1-3.9V1z"/></svg>
+        Voir les tarifs
+      </a>
+      <a class="pill" href="https://abonnement-iptv-stable.fr/">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 2 12h3v9h6v-6h2v6h6v-9h3z"/></svg>
+        Page d'accueil
+      </a>
+      <a class="pill wa" target="_blank" rel="noopener noreferrer"
+         href="https://wa.me/33748662375?text=Bonjour%2C%20j%27ai%20besoin%20d%27aide%20pour%20installer%20mon%20abonnement%20IPTV.">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.14 6.44 2.14 11.9c0 1.75.46 3.45 1.32 4.95L2 22l5.3-1.39c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.9-4.44 9.9-9.9S17.5 2 12.04 2zm5.52 13.98c-.25.58-1.23 1.1-1.7 1.17-.43.06-.96.09-1.55-.1-.36-.11-.81-.26-1.4-.51-2.46-1.06-4.06-3.54-4.19-3.7-.12-.17-1-1.35-1-2.56s.63-1.81.86-2.06c.22-.25.49-.31.65-.31h.47c.15 0 .35-.06.55.42.2.49.69 1.7.75 1.82.06.12.1.26.02.43-.08.17-.12.27-.25.42-.12.14-.26.32-.37.43-.12.12-.25.26-.11.51.15.25.65 1.07 1.4 1.73.96.86 1.77 1.13 2.02 1.25.25.13.39.11.53-.6.14-.16.61-.71.77-.96.17-.25.33-.21.55-.12.23.08 1.45.68 1.7.8.25.12.41.18.47.28.06.1.06.59-.14 1.16z"/></svg>
+        Bloqué ? Écrivez-nous
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<script>
+(function(){
+  var racine = document.getElementById('installation-iptv');
+  if(!racine) return;
+  var onglets = Array.prototype.slice.call(racine.querySelectorAll('.tab'));
+  if(!onglets.length) return;
+
+  function afficher(onglet, donnerLeFocus){
+    onglets.forEach(function(o){
+      var actif = (o === onglet);
+      o.setAttribute('aria-selected', actif ? 'true' : 'false');
+      o.tabIndex = actif ? 0 : -1;
+      var p = document.getElementById(o.getAttribute('aria-controls'));
+      if(p) p.hidden = !actif;
+    });
+    if(donnerLeFocus) onglet.focus();
+  }
+
+  onglets.forEach(function(o){
+    o.addEventListener('click', function(){
+      afficher(o, false);
+      // met l'adresse a jour sans faire sauter la page : le lien est partageable
+      if(window.history && history.replaceState){
+        history.replaceState(null, '', '#' + o.getAttribute('aria-controls'));
+      }
+    });
+  });
+
+  // Navigation au clavier : fleches, Debut, Fin — attendu pour role="tablist"
+  racine.querySelector('.tabbar').addEventListener('keydown', function(e){
+    var i = onglets.indexOf(document.activeElement);
+    if(i < 0) return;
+    var j = null;
+    if(e.key === 'ArrowRight' || e.key === 'ArrowDown') j = (i + 1) % onglets.length;
+    else if(e.key === 'ArrowLeft' || e.key === 'ArrowUp') j = (i - 1 + onglets.length) % onglets.length;
+    else if(e.key === 'Home') j = 0;
+    else if(e.key === 'End')  j = onglets.length - 1;
+    if(j === null) return;
+    e.preventDefault();
+    afficher(onglets[j], true);
+  });
+
+  // Ouverture directe depuis l'adresse : .../instalation-iptv/#tab-firestick
+  var depuisURL = onglets.filter(function(o){
+    return '#' + o.getAttribute('aria-controls') === window.location.hash;
+  })[0];
+  if(depuisURL) afficher(depuisURL, false);
+})();
+</script>

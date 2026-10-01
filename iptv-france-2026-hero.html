@@ -1,0 +1,170 @@
+<!--
+  HERO — page "IPTV France 2026" (abonnement-iptv-stable.fr/iptv-france-2026/)
+  À coller dans un widget Elementor « HTML » (pleine largeur, section sans padding).
+  Mot-clé principal : iptv france — secondaires : iptv, abonnement iptv
+  Liens à vérifier : /prix/ et /installation-iptv/ (adaptez si vos slugs diffèrent)
+-->
+<section class="ipf-hero" aria-labelledby="ipf-hero-title">
+  <div class="ipf-flagbar" aria-hidden="true"><span></span><span></span><span></span></div>
+
+  <div class="ipf-wrap">
+    <p class="ipf-eyebrow">
+      <span class="ipf-mini-flag" aria-hidden="true"><i></i><i></i><i></i></span>
+      Nouveauté 2026 · Serveurs optimisés pour la France
+    </p>
+
+    <h1 id="ipf-hero-title" class="ipf-title">
+      <span class="ipf-title-accent">IPTV France</span> 2026 :
+      toutes vos chaînes françaises en HD &amp; 4K, sans coupure
+    </h1>
+
+    <p class="ipf-lead">
+      <strong>IPTV France</strong> est la solution la plus simple pour regarder la TV française en direct,
+      le sport, les films et les séries sur Smart TV, Fire TV Stick, Android, iPhone ou PC.
+      Profitez d’un <a href="https://abonnement-iptv-stable.fr/" title="Abonnement IPTV France stable et illimité">abonnement IPTV</a>
+      stable, illimité et activé en quelques minutes, avec un support francophone disponible 24h/24.
+    </p>
+
+    <div class="ipf-ctas">
+      <a class="ipf-btn ipf-btn-primary" href="https://abonnement-iptv-stable.fr/prix/">
+        Voir les offres IPTV France
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M13.2 5.3 19.9 12l-6.7 6.7-1.4-1.4 4.3-4.3H4v-2h12.1l-4.3-4.3z"/></svg>
+      </a>
+      <a class="ipf-btn ipf-btn-ghost" href="https://abonnement-iptv-stable.fr/installation-iptv/">
+        Guide d’installation
+      </a>
+    </div>
+
+    <ul class="ipf-trust" aria-label="Les avantages de notre IPTV France">
+      <li>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21 5H3a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h7v2H8v2h8v-2h-2v-2h7a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2m0 11H3V7h18z"/></svg>
+        <span><strong>HD, Full HD &amp; 4K</strong>Image fluide</span>
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13 2 3 14h7l-1 8 10-12h-7z"/></svg>
+        <span><strong>Activation 5–15 min</strong>Après paiement</span>
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 1 3 5v6c0 5.6 3.8 10.7 9 12 5.2-1.3 9-6.4 9-12V5zm-1.4 15.4-4-4L8 11l2.6 2.6L16 8.2l1.4 1.4z"/></svg>
+        <span><strong>Serveurs stables</strong>Anti-freeze</span>
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-10 10v6a3 3 0 0 0 3 3h2v-8H4v-1a8 8 0 0 1 16 0v1h-3v8h3v1h-6v2h6a2 2 0 0 0 2-2v-9A10 10 0 0 0 12 2"/></svg>
+        <span><strong>Support 24/7</strong>En français</span>
+      </li>
+    </ul>
+
+    <p class="ipf-devices">
+      Compatible : Smart TV Samsung &amp; LG · Fire TV Stick · Android TV · Apple TV · iPhone · PC &amp; Mac · MAG
+    </p>
+  </div>
+
+  <div class="ipf-flagbar ipf-flagbar-bottom" aria-hidden="true"><span></span><span></span><span></span></div>
+</section>
+
+<style>
+.ipf-hero{
+  --ipf-blue:#002395;      /* bleu drapeau */
+  --ipf-navy:#0b1f4d;      /* bleu nuit (bouton Acheter) */
+  --ipf-red:#ed2939;       /* rouge drapeau */
+  --ipf-white:#ffffff;
+  --ipf-ink:#0f172a;
+  --ipf-muted:#475569;
+  position:relative;
+  overflow:hidden;
+  padding:clamp(56px,9vw,110px) 20px clamp(48px,7vw,90px);
+  text-align:center;
+  font-family:inherit;
+  color:var(--ipf-ink);
+  background:
+    radial-gradient(900px 420px at 0% 0%, rgba(0,35,149,.10), transparent 60%),
+    radial-gradient(900px 420px at 100% 0%, rgba(237,41,57,.10), transparent 60%),
+    linear-gradient(180deg,#f7f9ff 0%,#ffffff 70%);
+}
+.ipf-hero *,.ipf-hero *::before,.ipf-hero *::after{box-sizing:border-box}
+
+/* bandes tricolores haut / bas */
+.ipf-flagbar{position:absolute;left:0;right:0;top:0;height:6px;display:flex}
+.ipf-flagbar-bottom{top:auto;bottom:0}
+.ipf-flagbar span{flex:1}
+.ipf-flagbar span:nth-child(1){background:var(--ipf-blue)}
+.ipf-flagbar span:nth-child(2){background:var(--ipf-white)}
+.ipf-flagbar span:nth-child(3){background:var(--ipf-red)}
+
+/* drapeaux flottants décoratifs */
+.ipf-hero::before,.ipf-hero::after{
+  content:"";position:absolute;width:180px;height:120px;border-radius:14px;opacity:.09;
+  background:linear-gradient(90deg,var(--ipf-blue) 0 33.33%,#fff 33.33% 66.66%,var(--ipf-red) 66.66%);
+  box-shadow:0 0 0 1px rgba(15,23,42,.2);pointer-events:none;
+}
+.ipf-hero::before{left:-40px;top:70px;transform:rotate(-12deg)}
+.ipf-hero::after{right:-40px;bottom:60px;transform:rotate(10deg)}
+
+.ipf-wrap{position:relative;z-index:1;max-width:920px;margin:0 auto;display:flex;flex-direction:column;align-items:center}
+
+.ipf-eyebrow{
+  display:inline-flex;align-items:center;gap:10px;margin:0 0 22px;
+  padding:8px 16px;border-radius:999px;background:#fff;
+  border:1px solid rgba(0,35,149,.15);box-shadow:0 6px 20px rgba(11,31,77,.08);
+  font-size:14px;font-weight:600;color:var(--ipf-navy);letter-spacing:.2px;
+}
+.ipf-mini-flag{display:inline-flex;width:24px;height:16px;border-radius:3px;overflow:hidden;box-shadow:0 0 0 1px rgba(15,23,42,.15)}
+.ipf-mini-flag i{flex:1}
+.ipf-mini-flag i:nth-child(1){background:var(--ipf-blue)}
+.ipf-mini-flag i:nth-child(2){background:#fff}
+.ipf-mini-flag i:nth-child(3){background:var(--ipf-red)}
+
+.ipf-title{
+  margin:0 0 20px;font-size:clamp(32px,5.4vw,58px);line-height:1.1;font-weight:800;
+  letter-spacing:-.02em;color:var(--ipf-navy);
+}
+.ipf-title-accent{
+  background:linear-gradient(90deg,var(--ipf-blue) 0%,var(--ipf-blue) 40%,var(--ipf-red) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  position:relative;white-space:nowrap;
+}
+.ipf-title-accent::after{
+  content:"";position:absolute;left:0;right:0;bottom:-4px;height:6px;border-radius:6px;
+  background:linear-gradient(90deg,var(--ipf-blue) 0 33.33%,#dfe5f3 33.33% 66.66%,var(--ipf-red) 66.66%);
+}
+
+.ipf-lead{max-width:760px;margin:0 auto 32px;font-size:clamp(16px,1.9vw,19px);line-height:1.7;color:var(--ipf-muted)}
+.ipf-lead strong{color:var(--ipf-ink)}
+.ipf-lead a{color:var(--ipf-blue);font-weight:700;text-decoration:underline;text-decoration-color:var(--ipf-red);text-underline-offset:4px;text-decoration-thickness:2px}
+.ipf-lead a:hover{color:var(--ipf-red)}
+
+.ipf-ctas{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin-bottom:40px}
+.ipf-btn{
+  display:inline-flex;align-items:center;gap:10px;padding:16px 30px;border-radius:999px;
+  font-size:17px;font-weight:700;text-decoration:none;transition:transform .2s,box-shadow .2s,background .2s;
+}
+.ipf-btn-primary{background:var(--ipf-navy);color:#fff;box-shadow:0 12px 28px rgba(11,31,77,.30),inset 0 -3px 0 var(--ipf-red)}
+.ipf-btn-primary:hover{background:var(--ipf-blue);color:#fff;transform:translateY(-2px);box-shadow:0 16px 34px rgba(0,35,149,.35),inset 0 -3px 0 var(--ipf-red)}
+.ipf-btn-ghost{background:#fff;color:var(--ipf-navy);border:2px solid rgba(11,31,77,.18)}
+.ipf-btn-ghost:hover{border-color:var(--ipf-red);color:var(--ipf-red);transform:translateY(-2px)}
+.ipf-btn:focus-visible{outline:3px solid var(--ipf-red);outline-offset:3px}
+
+.ipf-trust{
+  list-style:none;margin:0 0 26px;padding:0;width:100%;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:14px;
+}
+.ipf-trust li{
+  display:flex;align-items:center;gap:12px;text-align:left;padding:14px 16px;border-radius:16px;
+  background:#fff;border:1px solid rgba(15,23,42,.08);box-shadow:0 8px 24px rgba(11,31,77,.06);
+}
+.ipf-trust svg{flex:0 0 38px;width:38px;height:38px;padding:8px;border-radius:12px;color:#fff;background:var(--ipf-blue)}
+.ipf-trust li:nth-child(even) svg{background:var(--ipf-red)}
+.ipf-trust span{font-size:13px;line-height:1.35;color:var(--ipf-muted)}
+.ipf-trust strong{display:block;font-size:15px;color:var(--ipf-ink)}
+
+.ipf-devices{margin:0;font-size:14px;color:var(--ipf-muted)}
+
+@media (max-width:900px){.ipf-trust{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:520px){
+  .ipf-trust{grid-template-columns:1fr}
+  .ipf-btn{width:100%;justify-content:center}
+  .ipf-title-accent{white-space:normal}
+  .ipf-hero::before,.ipf-hero::after{display:none}
+}
+@media (prefers-reduced-motion:reduce){.ipf-btn{transition:none}}
+</style>
